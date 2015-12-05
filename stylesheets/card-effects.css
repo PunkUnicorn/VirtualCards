@@ -1,0 +1,338 @@
+﻿.card-flash, .card-flash-delay1, .card-flash-delay2, .card-flash-delay4 {
+   -webkit-animation:card-flash 1s ease-out; /* Safari and Chrome */
+   -moz-animation:card-flash 1s ease-out; /* Firefox */
+   -o-animation:card-flash 1s ease-out; /*opera*/
+   -ms-animation:card-flash 1s ease-out; /*ie*/
+   animation: card-flash 1s ease-out;
+}
+
+.card-twisle, .card-twisle-delay1, .card-twisle-delay2, .card-twisle-delay4 {
+   -webkit-animation:card-spin 0.2s linear 0s 2,
+            card-spin 0.2s ease-out 0.4s,
+            card-spin 0.3s ease-out 0.6s,
+            card-spin 0.6s linear 0.9s,
+            card-spin 1.6s ease-out 1.5s;/* Safari and Chrome */
+            
+   -moz-animation: card-spin 0.2s linear 0s 2,
+            card-spin 0.2s ease-out 0.4s,
+            card-spin 0.3s ease-out 0.6s,
+            card-spin 0.6s linear 0.9s,
+            card-spin 1.6s ease-out 1.5s;/* Firefox */
+            
+   -o-animation: card-spin 0.2s linear 0s 2,
+            card-spin 0.2s ease-out 0.4s,
+            card-spin 0.3s ease-out 0.6s,
+            card-spin 0.6s linear 0.9s,
+            card-spin 1.6s ease-out 1.5s;/*opera*/
+            
+   -ms-animation:card-spin 0.2s linear 0s 2,
+            card-spin 0.2s ease-out 0.4s,
+            card-spin 0.3s ease-out 0.6s,
+            card-spin 0.6s linear 0.9s,
+            card-spin 1.6s ease-out 1.5s;   /*ie*/
+            
+   animation: card-spin 0.2s linear 0s 2,
+              card-spin 0.2s ease-out 0.4s,
+              card-spin 0.3s ease-out 0.6s,
+              card-spin 0.6s linear 0.9s,
+              card-spin 1.6s ease-out 1.5s;
+            
+   /* http://cubic-bezier.com/#.57,.07,.44,2 */
+   /* http://www.roblaplaca.com/examples/bezierBuilder/ */
+}
+
+.card-spin, .card-spin-delay1, .card-spin-delay2, .card-spin-delay4 {
+   -webkit-animation:card-spin 0.5s; /* Safari and Chrome */
+   -moz-animation:card-spin 0.5s; /* Firefox */
+   -o-animation:card-spin 0.5s; /*opera*/
+   -ms-animation:card-spin 0.5s;   /*ie*/
+   animation: card-spin 0.5s;
+   
+   -webkit-transition-timing-function: cubic-bezier(1, .07, .99, .01);
+   -moz-transition-timing-function: cubic-bezier(1, .07, .99, .01);
+   -o-transition-timing-function: cubic-bezier(1, .07, .99, .01);
+   -ms-transition-timing-function: cubic-bezier(1, .07, .99, .01);
+   transition-timing-function: cubic-bezier(1, .07, .99, .01);
+}
+
+.card-jiggle, .card-jiggle-delay1, .card-jiggle-delay2, .card-jiggle-delay4 {
+   -webkit-animation:card-jump 0.25s ease-in;
+   -moz-animation:card-jump 0.25s ease-in;
+   -o-animation:card-jump 0.25s ease-in;
+   -ms-animation:card-jump 0.25s ease-in;
+   animation: card-jump 0.25s ease-in;
+   -webkit-animation-iteration-count: 2;
+   -moz-animation-iteration-count: 2;
+   -o-animation-iteration-count: 2; 
+   -ms-animation-iteration-count: 2;
+   animation-iteration-count: 2;
+}
+
+/* http://www.roblaplaca.com/examples/bezierBuilder/ */
+
+.card-jump, .card-jump-delay1, .card-jump-delay2, .card-jump-delay4 {
+   -webkit-animation:card-jump 0.5s;
+   -moz-animation:card-jump 0.5s;
+   -o-animation:card-jump 0.5s;
+   -ms-animation:card-jump 0.5s;
+   animation: card-jump 0.5s;
+   -webkit-animation-iteration-count: 1;
+   -moz-animation-iteration-count: 1;
+   -o-animation-iteration-count: 1;
+   -ms-animation-iteration-count: 1;
+   animation-iteration-count: 1;
+   -webkit-transition-timing-function: cubic-bezier(-.01, 1.01, .97, .03); 
+   -moz-transition-timing-function: cubic-bezier(-.01, 1.01, .97, .03); 
+   -o-transition-timing-function: cubic-bezier(-.01, 1.01, .97, .03); 
+   -ms-transition-timing-function: cubic-bezier(-.01, 1.01, .97, .03);
+   transition-timing-function: cubic-bezier(-.01, 1.01, .97, .03);
+}
+
+.card-shake, .card-shake-delay1, .card-shake-delay2, .card-shake-delay4 {
+   -webkit-animation:card-shake 0.1s ease-out;
+   -moz-animation:card-shake 0.1s ease-out;
+   -o-animation:card-shake 0.1s ease-out;
+   -ms-animation:card-shake 0.1s ease-out;
+   animation: card-shake 0.1s ease-out;
+   -webkit-animation-iteration-count: 2;
+   -moz-animation-iteration-count: 2;
+   -o-animation-iteration-count: 2;
+   -ms-animation-iteration-count: 2;
+   animation-iteration-count: 2;
+}
+
+
+/* http://stackoverflow.com/questions/1065435/can-a-css-class-inherit-one-or-more-other-classes */
+.card-flash-delay1 {
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+   animation-delay:1s;
+}
+
+.card-flash-delay2 {
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+   animation-delay:2s;
+}
+
+.card-flash-delay4 {
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+   animation-delay:4s;
+}
+
+.card-twisle-delay1
+{
+   animation-delay:1s;   
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+}
+.card-twisle-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-twisle-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
+
+.card-spin-delay1
+{
+   animation-delay:1s;   
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+}
+.card-spin-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-spin-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
+
+.card-jump-delay1
+{
+   animation-delay:1s;   
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+}
+.card-jump-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-jump-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
+
+.card-jiggle-delay1
+{
+   animation-delay:1s;   
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+}
+.card-jiggle-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-jiggle-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
+
+.card-shake-delay1
+{
+   animation-delay:1s;   
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+}
+.card-shake-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-shake-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
+
+
+@keyframes card-jump
+{
+   50% {transform: scale(1.5,1.5);}
+   100% {transform: scale(1, 1);}
+}
+@-moz-keyframes card-jump
+{
+   50% {transform: scale(1.5,1.5);}
+   100% {transform: scale(1, 1);}
+}
+@-webkit-keyframes card-jump
+{
+   50% {transform: scale(1.5,1.5);}
+   100% {transform: scale(1, 1);}
+}
+
+@keyframes card-flash
+{
+   0%   {background:red;}
+   25%  {background:yellow;}
+   50%  {background:purple;}
+   100% {background:white;}
+}
+@-moz-keyframes card-flash /* Firefox */
+{
+   0%   {background:red;}
+   25%  {background:yellow;}
+   50%  {background:purple;}
+   100% {background:white;}
+}
+@-webkit-keyframes card-flash /* Safari and Chrome */
+{
+   0%   {background:red;}
+   15%  {background:none;}
+   30%  {background:red;}
+}
+
+@keyframes card-shake
+{
+   25%  {transform: rotateZ(10deg);}
+   50%  {transform: none;}
+   75% {transform: rotateZ(-10deg);}
+   100% {transform: none;}
+}
+@-moz-keyframes card-shake
+{
+   25%  {transform: rotateZ(10deg);}
+   50%  {transform: none;}
+   75% {transform: rotateZ(-10deg);}
+   100% {transform: none;}
+}
+@-webkit-keyframes card-shake
+{
+   25%  {transform: rotateZ(10deg);}
+   50%  {transform: rotateZ(0deg);}
+   75% {transform: rotateZ(-10deg);}
+   100% {transform: rotateZ(0deg);}
+}
+
+@keyframes card-spin {
+  to { transform: rotateY(360deg); }
+}
+@-moz-keyframes card-spin {
+   to { transform: rotateY(360deg); }
+}
+@-webkit-keyframes card-spin {
+   to { transform: rotateY(1360deg); }
+}
+
+@keyframes card-scale {
+   from { transform: scale(1.2,1.2); }
+   to { transform: scale(1,1); }
+}
+@-moz-keyframes card-scale
+{
+   from { transform: scale(1.2,1.2); }
+   to { transform: scale(1,1); }
+}
+@-webkit-keyframes card-scale
+{
+   from { transform: scale(1.2,1.2); }
+   to { transform: scale(1,1); }
+}

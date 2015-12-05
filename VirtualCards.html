@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Virtual Cards against Cards</title>
+
+        <link rel="stylesheet" href="stylesheets/w3.css">
+        <link rel="stylesheet" href="stylesheets/cards.css">
+        <link rel="stylesheet" href="stylesheets/card-effects.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta property="og:title" content="Virtual Cards against Cards" />
+    </head>
+    <body>
+    <script src="javascripts/jQuery.js"></script>
+    <script type="text/javascript"> var cardUi = {}; var dragDrop = {}; </script>
+    <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
+    <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+
+    <script type="text/javascript">
+        window.onload = cardUi.setCardSelectionEffects();
+    </script>
+    <script type="text/javascript">
+        function dragStart(ev) {
+            console.log('drag effect func dragStart called');
+            console.log(ev.target);
+        }
+    </script>
+        <div id='wrapper'>
+            <div class='w3-animate-opacity'>
+                <div class='w3-card-8 card-area card-twisle'>
+                    <header>
+                        <h1 class='w3-center'>Virtual Cards against Cards</h1>
+                    </header>
+                </div>
+            </div>
+            <div class='w3-row'>
+                <div class='w3-card-16 card-area w3-col m2 l2'>
+                    <div class='card card-spin' onclick='cardUi.onCardSelect(event)'>1</div>
+                    <div class='card card-spin' onclick='cardUi.onCardSelect(event)'>2</div>
+                    <div class='card card-spin' onclick='cardUi.onCardSelect(event)'>3</div>
+                    <div class='card card-spin' onclick='cardUi.onCardSelect(event)'>4</div>
+                    <div class='card card-spin' onclick='cardUi.onCardSelect(event)'>5</div>               
+                    <button class='card-jump w3-btn' onclick='onClickDraw(event)'>Draw Card</button>
+                </div>
+            </div>
+            <div id='card1' class='w3-card-24 card card-spin' 
+                            ondrop="dragDrop.drop(event, dragStart)" 
+                            ondragover="dragDrop.allowDrop(event, dragStart)" 
+                            draggable="true" 
+                            ondragstart="dragDrop.drag(event, dragStart)">
+                <h1 id='H1'>6</h1>
+            </div>
+            <div id='card2' class='w3-card w3-yellow card' 
+                            ondrop="dragDrop.drop(event, dragStart)" 
+                            ondragover="dragDrop.allowDrop(event, dragStart)" 
+                            draggable="true" 
+                            ondragstart="dragDrop.drag(event, dragStart)">
+                <h1 id='H2'>7</h1>
+            </div>
+            <section class='copy'>
+                <section class='example' id='grid-b'>
+                    <div id='box10' class='card card-flash' 
+                            ondrop="dragDrop.drop(event, dragStart)" 
+                            ondragover="dragDrop.allowDrop(event, dragStart)" 
+                        <h1 id='box11'>1</h1>
+                    </div>
+                    <div id='box20' class='card card-twisle' 
+                            ondrop="drop(event, dragStart)" 
+                            ondragover="allowDrop(event, dragStart)" 
+                            draggable="true" 
+                            ondragstart="drag(event, dragStart)">
+                        <h1 id='box21'>2</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>8</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>9</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>10</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>11</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>12</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>13</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>14</h1>
+                    </div>
+                    <div class='card'>
+                        <h1>15</h1>
+                    </div>
+                </section>
+
+            </section>
+        </div>
+        
+        <script>
+
+
+            function onClickDraw(event) {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("POST", 'http://localhost:8080/card');
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        console.log("onClickDraw: " + event.toString());
+                        if (xmlhttp.status == 400) {
+                            console.log('ok');
+                        } else {
+                            console.log('error')
+                        }
+                    }
+                }
+                xmlhttp.send();
+            }
+
+//            // refire the animation
+//            $(".card").click(function () {
+//                var stripEffects = function () {
+//                    return $('div.card')
+//                        .removeClass('card-twisle card-spin card-jiggle card-flash card-twisle card-jump card-shake');
+//                }
+
+//                console.log('click ::::');
+//                stripEffects()
+//                    .ready(cardUi.fireEffect($(this)));
+//            });
+        </script>
+
+    </body>
+</html>
