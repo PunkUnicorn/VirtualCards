@@ -1,0 +1,826 @@
+	#NAME?											
+	http://cardsagainsthumanity.com/											
+												
+	Edition	US	US	US	US	US	US	US	UK	CA	US	
+	Cards Against Humanity: Main Deck	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	50,000 volts straight to the nipples.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	72 virgins.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	8 oz. of sweet Mexican black-tar heroin.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A bag of magic beans.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A balanced breakfast.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	(I am doing Kegels right now.)	v1.0	v1.1									
+	A bitch slap.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A bleached asshole.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A Bop It™.			v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A brain tumor.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A cooler full of organs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A defective condom.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A disappointing birthday party.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A falcon with a cap on its head.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A fetus.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	2 Girls 1 Cup.	v1.0	v1.1									
+	A gassy antelope.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A gentle caress of the inner thigh.	v1.0	v1.1	v1.2		v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A good sniff.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A homoerotic volleyball montage.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A lifetime of sadness.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A live studio audience.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	400 years of colonial atrocities.								v1.6			
+	A mating display.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A micropenis.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A micropig wearing a tiny raincoat and booties.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A middle-aged man on roller skates.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A mime having a stroke.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A monkey smoking a cigar.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A mopey zoo lion.	v1.0		v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A murder most foul.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A pyramid of severed heads.		v1.1		v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A really cool hat.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A robust mongoloid.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A sad handjob.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A salty surprise.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A sassy black woman.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A ball of earwax, semen, and toenail clippings.							v1.6	v1.6	v1.6	v1.7	
+	A sea of troubles.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A snapping turtle biting the tip of your penis.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A stray pube.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A subscription to Men's Fitness.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A Super Soaker™ full of cat pee.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A thermonuclear detonation.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A time travel paradox.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A tiny horse.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A tribe of warrior women.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A windmill full of corpses.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A zesty breakfast burrito.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Active listening.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Asians who aren't good at math.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	African children.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Agriculture.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	AIDS.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Alcoholism.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Altar boys.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Amputees.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An asymmetric boob job.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A big hoopla about nothing.	v1.0	v1.1	v1.2	v1.3							
+	An erection that lasts longer than four hours.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An icepick labotomy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An M. Night Shyamalan plot twist.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An Oedipus complex.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An oversized lollipop.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An ugly face.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Anal beads.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Arnold Schwarzenegger.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Assless chaps.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Authentic Mexican cuisine.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Auschwitz.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	AXE Body Spray.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Autocannibalism.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Bill Nye the Science Guy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Balls.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Barack Obama.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	BATMAN!!!	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Battlefield amputations.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Becoming a blueberry.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Bees?	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being a dick to children.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being a motherfucking sorcerer.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being fabulous.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being fat and stupid.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being marginalized.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being on fire.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Being rich.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Bingeing and purging.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Boogers.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A bit of slap and tickle.								v1.6			
+	Bitches.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Black people.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Concealing a boner.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Breaking out into song and dance.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Brown people.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Cards Against Humanity.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Catapults.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Centaurs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Chainsaws for hands.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Child abuse.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Child beauty pageants.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Children on leashes.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Christopher Walken.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A bleached arsehole.								v1.6			
+	Civilian casualties.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Classist undertones.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Coat hanger abortions.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Count Chocula.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Consensual sex.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Dick Cheney	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A brain tumour.								v1.6			
+	Crippling debt.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Crucifixion.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Doin' it in the butt.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Crystal meth.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Cuddling.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Cybernetic enhancements.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Daddy issues.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Domino's™ Oreo™ Dessert Pizza.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A caress of the inner thigh				v1.3							
+	Darth Vader.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A cartoon camel enjoying the smooth, refreshing taste of a cigarette.	v1.0	v1.1									
+	Dead babies.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Dead parents.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Destroying the evidence.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Eating the last known bison.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Dick fingers.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Edible underpants.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Doing the right thing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Extremely tight pants.				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Drinking alone.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Dropping a chandelier on your enemies and riding the rope up.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Dry heaving.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Dying.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Fancy Feast®.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Fiery poops.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Elderly Japanese men.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Embryonic stem cells.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A Chelsea smile. 								v1.6			
+	Emotions.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Erectile dysfunction.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A clandestine butt scratch.	v1.0	v1.1	v1.2								
+	Estrogen.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Ethnic cleansing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Eugenics.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Exactly what you'd expect.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Expecting a burp and vomiting on the floor.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Explosions.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Five-Dollar Footlongs™.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Famine.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Former President George W. Bush.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Farting and walking away.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Fear itself.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Getting naked and watching Nickelodeon.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Finger painting.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Fingering.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Firing a rifle into the air while balls deep in a squealing hog.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Half-assed foreplay.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Flesh-eating bacteria.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Flightless birds.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Flying sex snakes.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Foreskin.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Heteronormativity.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Free samples.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Friction.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Friendly fire.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Frolicking.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Full frontal nudity.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Funky fresh rhymes.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Gandhi.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Geese.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A drive-by shooting.	v1.0	v1.1	v1.2								
+	German dungeon porn.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Jerking off into a pool of children's tears.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Getting really high.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Getting so angry that you pop a boner.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Ghosts.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A fanny fart. 								v1.6			
+	Gloryholes.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Goblins.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	God.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Grandma.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Grave robbing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Growing a pair.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Jewish fraternities.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Harry Potter erotica.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A Fleshlight.							v1.6	v1.6	v1.6	v1.7	
+	Heartwarming orphans.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Her Majesty, Queen Elizabeth II.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Judge Judy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A foetus. 								v1.6			
+	Homeless people.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Hope.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Hormone injections.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Horrifying laser hair removal accidents.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Horse meat.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Hospice care.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Hot cheese.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Hot people.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Inappropriate yodeling.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Incest.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A ginger's freckled ballsack.								v1.6			
+	A grande sugar-free iced soy caramel macchiato.	v1.0	v1.1									
+	Italians.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Kanye West.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Kids with ass cancer.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A Gypsy curse.	v1.0	v1.1	v1.2								
+	Lunchables™.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Justin Bieber.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Kamikaze pilots.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Michelle Obama's arms.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Keanu Reeves.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Mr. Clean, right behind you.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Lactation.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Lady Gaga.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Lance Armstrong's missing testicle.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Land mines.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Laying an egg.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Leprosy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Licking things to claim them as your own.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Lockjaw.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Lumberjack fantasies.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Not wearing pants.				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A LAN party.	v1.0	v1.1									
+	Making a pouty face.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Man meat.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Masturbation.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Me time.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	MechaHitler.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Men.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Menstrual rage.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Michael Jackson.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pedophiles.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A look-see.	v1.0	v1.1	v1.2	v1.3							
+	Morgan Freeman's voice.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Mouth herpes.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Poopy diapers.				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Multiple stab wounds.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Mutually assured destruction.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Queefing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	My collection of high-tech sex toys.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A mad cow.								v1.6			
+	My genitals.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	My humps.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	My inner demons.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	My relationship status.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	My sex life.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	My soul.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	My vagina.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Natural male enhancement.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Natural selection.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Nazis.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Necrophilia.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Nickelback.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Nicolas Cage.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Nipple blades.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Not giving a shit about the Third World.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Not reciprocating oral sex.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Republicans.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Object permanence.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Old-people smell.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	One trillion dollars.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Oompa-Loompas.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Opposable thumbs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Overcompensation.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pac-Man uncontrollably guzzling cum.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Panda sex.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Passive-aggressive Post-it notes.			v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Road head.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Peeing a little bit.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A madman who lives in a police box and kidnaps women.								v1.6			
+	Penis envy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pictures of boobs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pixelated bukkake.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Police Brutality.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pooping back and forth. Forever.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Robert Downey Jr.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Poor life choices.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Poor people.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Poorly-timed Holocaust jokes.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Powerful thighs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Praying the gay away.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Preteens.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pretending to care.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Puberty.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Pulling out.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Puppies!	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Shaquille O'Neal's acting career.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Racism.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Raptor attacks.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Repression.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Skeletor.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Smallpox blankets.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Switching to Geico®.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	RoboCop.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A man on the brink of orgasm.							v1.6	v1.6	v1.6	v1.7	
+	A moment of silence.		v1.1	v1.2								
+	Science.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Scientology.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Sean Connery.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Sean Penn.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Amish.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Self-loathing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Seppuku.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Serfdom.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A much younger woman.										v1.7	
+	A neglected Tamagotchi™.	v1.0	v1.1									
+	Sexual tension.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Sexy pillow fights.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Shapeshifters.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Boy Scouts of America.				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Shiny objects.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Silence.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Care Bear Stare.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The entire Mormon Tabernacle Choir.				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Smegma.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Sniffing glue.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Hamburglar.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Soup that is too hot.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Spectacular abs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Sperm whales.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Spontaneous human combustion.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Stalin.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Stephen Hawking talking dirty.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A nice cup of tea.								v1.6			
+	Sunshine and rainbows.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Surprise sex!	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Sweet, sweet vengeance.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The hardworking Mexican.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Swooping.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Synergistic management solutions.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Taking off your shirt.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Tasteful sideboob.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Teaching a robot to love.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Teenage pregnancy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Tentacle porn.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Testicular torsion.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Hustle.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The Big Bang.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Blood of Christ.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The invisible hand.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The Kool-Aid Man.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The Chinese gymnastics team.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The clitoris.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A pangender octopus who roams the cosmos in search of love.										v1.7	
+	The Devil Himself.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Little Engine That Could.	v1.0		v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The female orgasm.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Force.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The gays.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The glass ceiling.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Great Depression.					v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Make-A-Wish® Foundation.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The penny whistle solo from "My Heart Will Go On".				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The heart of a child.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Holy Bible.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The homosexual agenda.	v1.0	v1.1	v1.2		v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Rapture.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The inevitable heat death of the universe.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The South.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The Jews.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The KKK	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Underground Railroad.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Third base.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Toni Morrison's vagina.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The milkman.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The miracle of childbirth.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A posh wank.								v1.6			
+	Used panties.				v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	Vehicular manslaughter.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A saxophone solo.							v1.6	v1.6	v1.6	v1.7	
+	The placenta.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The Pope.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The profoundly handicapped.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Waking up half-naked in a Denny's parking lot.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The Rev. Dr. Martin Luther King, Jr.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A sickly child-king.										v1.7	
+	Wiping her butt.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	The terrorists.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The true meaning of Christmas.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Women in yogurt commercials.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7	
+	A sober Irishman who doesn't care for potatoes.								v1.6			
+	The violation of our most basic human rights.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A can of whoop-ass.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	The World of Warcraft.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A spastic nerd.				v1.3		v1.5					
+	All-you-can-eat shrimp for $4.99.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	A thousand Scottish warriors lifting their kilts in unison.								v1.6			
+	Throwing a virgin into a volcano.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Tom Cruise.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	An M16 assault rifle.				v1.3	v1.4	v1.5	v1.6		v1.6		
+	Two midgets shitting into a bucket.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Unfathomable stupidity.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Cheating in the Special Olympics.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	Helplessly giggling at the mention of Hutus and Tutsis.			v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	Viagra®.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Vigorous jazz hands.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Vikings.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Waiting till marriage.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Home video of Oprah sobbing into a Lean Cuisine®.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	Wet dreams.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Whipping it out.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	White people.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	White privilege.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Hurricane Katrina.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	Wifely duties.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	William Shatner.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Winking at old people.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	The chronic.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	The Tempur-Pedic® Swedish Sleep System™.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6		
+	Women's suffrage.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	World peace.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	Yeast.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7	
+	A Tim Hortons franchise.									v1.6		
+	A bucket of fish heads.				v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Advice from a wise, old black man.					v1.4	v1.5	v1.6		v1.6	v1.7	
+	A vajazzled vagina.	v1.0	v1.1									
+	A vindaloo poo. 								v1.6			
+	A wheelchair death race.	v1.0	v1.1									
+	A white van man.								v1.6			
+	Some god damn peace and quiet.					v1.4	v1.5	v1.6		v1.6	v1.7	
+	Abstinence.	v1.0										
+	Accidentally slipping yourself a roofie.	v1.0	v1.1									
+	Adult Friendfinder.	v1.0	v1.1									
+	All-you-can-eat shrimp for $8.99.										v1.7	
+	Dying of dysentery.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Genghis Khan.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	America.	v1.0	v1.1									
+	American Gladiators.	v1.0	v1.1	v1.2								
+	An AK-47 assault rifle.								v1.6			
+	An AR-15 assault rifle.										v1.7	
+	An argument with Richard Dawkins.								v1.6			
+	An endless stream of diarrhea.							v1.6	v1.6	v1.6	v1.7	
+	An entrenched class system.								v1.6			
+	Muhammad (Praise Be Unto Him).	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	An honest cop with nothing left to lose.	v1.0	v1.1	v1.2	v1.3							
+	Natalie Portman.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	An icy handjob from an Edmonton hooker.									v1.6		
+	Anything that comes out of Prince Philip's mouth.								v1.6			
+	Prancing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Public ridicule.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Badger culling.								v1.6			
+	Same-sex ice dancing.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Bananas in Pajamas.	v1.0	v1.1									
+	Being Canadian.									v1.6		
+	Being hunted like a fox.								v1.6			
+	Bestiality.	v1.0	v1.1									
+	Take-backsies.	v1.0	v1.1		v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Bio-engineered assault turtles with acid breath.							v1.6	v1.6	v1.6	v1.7	
+	The art of seduction.					v1.4	v1.5	v1.6	v1.6	v1.6		
+	Blood, toil, tears, and sweat.								v1.6			
+	Blowing up Parliament.								v1.6			
+	The folly of man.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	The light of a billion suns.					v1.4	v1.5	v1.6	v1.6	v1.6		
+	Bogies.								v1.6			
+	Bond, James Bond.	v1.0	v1.1									
+	Bono.	v1.0	v1.1									
+	The token minority.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Vigilante justice.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	When you fart and a little bit comes out.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	YOU MUST CONSTRUCT ADDITIONAL PYLONS.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6		
+	Aaron Burr.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Adderall™.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Figgy pudding.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Getting married, having a few kids, buying some stuff, retiring to Florida, and dying.				v1.3	v1.4	v1.5	v1.6			v1.7	
+	GoGurt®.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Hot Pockets®.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Racially-biased SAT questions.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Ronald Reagan.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Rush Limbaugh's soft, shitty body.				v1.3	v1.4	v1.5	v1.6			v1.7	
+	The Three-Fifths compromise.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	The Trail of Tears	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6			v1.7	
+	Historically black colleges.		v1.1	v1.2	v1.3	v1.4	v1.5	v1.6				
+	John Wilkes Booth	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6				
+	Booby-trapping the house to foil burglars.	v1.0	v1.1	v1.2								
+	Buckfast Tonic Wine.								v1.6			
+	Burning down the White House.									v1.6		
+	Canada: America's Hat.									v1.6		
+	Canned tuna with extra dolphin.	v1.0	v1.1									
+	Giving 110%	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6		v1.7	
+	A death ray.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	A hot mess.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Charisma.	v1.0	v1.1	v1.2								
+	A sausage festival.	v1.0	v1.1	v1.2	v1.3	v1.4						
+	Cheating in the Paralympics.								v1.6			
+	A wisecracking terrorist.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Actually taking candy from a baby.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Chivalry.								v1.6			
+	New Age music.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6		v1.7	
+	An uppercut.				v1.3	v1.4	v1.5					
+	Another goddamn vampire movie.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Attitude.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Bling.	v1.0	v1.1	v1.2	v1.3	v1.4						
+	Britney Spears at 55.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Capturing Newt Gingrich and forcing him to dance in a monkey suit.				v1.3	v1.4	v1.5					
+	Chunks of dead prostitute.				v1.3	v1.4	v1.5					
+	Chunks of dead hitchhiker.							v1.6	v1.6	v1.6	v1.7	
+	Chutzpah.		v1.1	v1.2	v1.3							
+	Dental dams.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Eating all of the cookies before the AIDS bake-sale.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Cockfights.	v1.0	v1.1	v1.2								
+	Feeding Rosie O'Donnell.	v1.0	v1.1	v1.2	v1.3	v1.4						
+	College.	v1.0	v1.1	v1.2								
+	The American Dream	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6		v1.7	
+	Four Loko.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Friends with benefits.	v1.0	v1.1	v1.2	v1.3	v1.4						
+	Genital piercings.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Getting drunk on mouthwash.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Golden showers.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Guys who don't call.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Hulk Hogan.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Completely unwarranted confidence.										v1.7	
+	Concealing an erection.								v1.6			
+	Consultants.	v1.0	v1.1	v1.2								
+	Cookie Monster devouring the Eucharist wafers.	v1.0	v1.1									
+	Cottaging. 								v1.6			
+	Leaving an awkward voicemail.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Court-ordered rehab.							v1.6	v1.6	v1.6	v1.7	
+	Creed.	v1.0	v1.1									
+	Obesity.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Crumbs all over the bloody carpet.								v1.6			
+	Pabst Blue Ribbon.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Crumbs all over the god damn carpet.							v1.6		v1.6	v1.7	
+	Crumpets with the Queen.	v1.0	v1.1									
+	A foul mouth.	v1.0	v1.1	v1.2	v1.3	v1.4			v1.6			
+	Customer service representatives.	v1.0	v1.1	v1.2								
+	Parting the Red Sea.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Passable transvestites.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Passing a kidney stone.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Picking up girls at the abortion clinic.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Popped collars.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Daddies® Brown Sauce.								v1.6			
+	Daniel Radcliffe's delicious arsehole.								v1.6			
+	Porn stars.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Daniel Radcliffe's delicious asshole.							v1.6		v1.6	v1.7	
+	Danny DeVito.										v1.7	
+	Dark and mysterious forces beyond our control.							v1.6	v1.6	v1.6	v1.7	
+	Date rape.	v1.0	v1.1	v1.2	v1.3							
+	Dave Matthews Band.	v1.0	v1.1									
+	Rehab.		v1.1	v1.2	v1.3	v1.4	v1.5					
+	David Bowie flying in on a tiger made of lightning. 						v1.5	v1.6	v1.6	v1.6	v1.7	
+	Roofies.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	David Cameron.								v1.6			
+	Sarah Palin.	v1.0	v1.1	v1.2	v1.3	v1.4						
+	Dirty nappies.								v1.6			
+	Saxophone solos.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Scalping.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Scrubbing under the folds.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Dogging.								v1.6			
+	Sexting.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Sharing needles.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Stormtroopers.				v1.3	v1.4	v1.5					
+	Doing a shit in Pudsey Bear's eyehole.								v1.6			
+	Doing crimes.										v1.7	
+	Don Cherry's wardrobe.									v1.6		
+	Stranger danger.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Tangled Slinkys.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	That thing that electrocutes your abs.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Donald Trump.	v1.0	v1.1									
+	The Dance of the Sugar Plum Fairy.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Douchebags on their iPhones.	v1.0	v1.1									
+	Dr. Martin Luther King, Jr.	v1.0	v1.1									
+	Drinking out of the toilet and eating garbage.										v1.7	
+	The taint; the grundle; the fleshy fun-bridge.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	The Übermensch.	v1.0	v1.1	v1.2	v1.3	v1.4						
+	Drowning the kids in the bathtub.										v1.7	
+	Druids.								v1.6			
+	Drum circles.	v1.0	v1.1									
+	The Virginia Tech Massacre	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Wearing underwear inside-out to avoid doing laundry.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5					
+	Dwarf tossing.	v1.0	v1.1	v1.2								
+	Eastern European Turbo-Folk music.	v1.0	v1.1									
+	Eating too much of a lamp.	v1.0	v1.1									
+	Ecstasy.								v1.6			
+	Ed Balls.								v1.6			
+	Edible underwear.								v1.6			
+	Electricity.				v1.3		v1.5					
+	Emma Watson.						v1.5	v1.6	v1.6	v1.6	v1.7	
+	England								v1.6			
+	Establishing dominance.						v1.5	v1.6	v1.6	v1.6	v1.7	
+	Euphoria™ by Calvin Klein.	v1.0	v1.1	v1.2								
+	Excalibur.								v1.6			
+	Exchanging pleasantries.	v1.0	v1.1	v1.2								
+	Existentialists.	v1.0	v1.1									
+	Extremely tight trousers.								v1.6			
+	Fading away into nothingness.										v1.7	
+	Copping a feel.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6			
+	Faffing about. 								v1.6			
+	Faith healing.	v1.0	v1.1									
+	FALCON PUNCH!!!	v1.0	v1.1									
+	Farting into your petticoats and wafting it at Lord Gregory.	v1.0	v1.1									
+	Filling Sean Hannity with helium and watching him float away.				v1.3							
+	Five litres of Special Brew.								v1.6			
+	Flash flooding.	v1.0	v1.1	v1.2								
+	Flavored condoms.	v1.0	v1.1									
+	Forgetting the Alamo.	v1.0	v1.1	v1.2								
+	Friends who eat all the snacks.	v1.0	v1.1	v1.2								
+	Front butt.	v1.0	v1.1									
+	Garth Brooks.	v1.0	v1.1									
+	Gary Coleman.	v1.0	v1.1									
+	Gary Glitter. 								v1.6			
+	Gentleman's Relish®.								v1.6			
+	Genuine human connection.		v1.1					v1.6	v1.6	v1.6	v1.7	
+	Germans on holiday.								v1.6			
+	Getting crushed by a vending machine.										v1.7	
+	Getting naked and watching CBeebies. 								v1.6			
+	Getting pregnant again.										v1.7	
+	Getting wed, having a few kids, taking some pictures, retiring to the south of France, and dying.								v1.6			
+	Girls who shouldn't go wild.	v1.0	v1.1									
+	Giving birth to the Antichrist.							v1.6	v1.6	v1.6	v1.7	
+	Glenn Beck being harried by a swarm of buzzards.	v1.0	v1.1	v1.2								
+	Glenn Beck catching his scrotum on a curtain hook.	v1.0	v1.1	v1.2								
+	Glenn Beck convulsively vomiting as a brood of crab spiders hatches in his brain and erupts from his tear ducts.	v1.0	v1.1	v1.2								
+	Glenn Beck.	v1.0	v1.1									
+	Global warming.	v1.0	v1.1	v1.2								
+	Goats eating cans.	v1.0	v1.1	v1.2								
+	Goats eating coins.	v1.0										
+	Haggis.								v1.6			
+	Have some more kugel.	v1.0	v1.1									
+	Having anuses for eyes.							v1.6	v1.6	v1.6	v1.7	
+	Having big dreams but no realistic way to achieve them.										v1.7	
+	Heath Ledger.	v1.0	v1.1									
+	Her Royal Highness, Queen Elizabeth II.	v1.0	v1.1	v1.2								
+	Heritage minutes.									v1.6		
+	Hip hop jewels.							v1.6	v1.6	v1.6		
+	Holding down a child and farting all over him.							v1.6	v1.6	v1.6	v1.7	
+	Homo milk.									v1.6		
+	However much weed $20 can buy.										v1.7	
+	Hunting "accidents".	v1.0	v1.1									
+	Hurling one's body down a hill in pursuit of a wheel of cheese.								v1.6			
+	I'm friends with your dad on Facebook.	v1.0	v1.1									
+	Impotence.	v1.0	v1.1									
+	Improvised explosive devices.	v1.0	v1.1									
+	Inappropriate yelling.	v1.0										
+	Inserting a Mason jar into my anus.							v1.6	v1.6	v1.6	v1.7	
+	Intelligent design.	v1.0	v1.1	v1.2								
+	Invading Poland.							v1.6	v1.6	v1.6	v1.7	
+	Irritable Bowel Syndrome.	v1.0	v1.1									
+	Jade Goody's cancerous remains.								v1.6			
+	Jedward.								v1.6			
+	Jehovah's Witnesses.								v1.6			
+	Jennifer Lawrence.										v1.7	
+	Jew-fros.	v1.0	v1.1	v1.2								
+	Jibber-jabber.	v1.0	v1.1	v1.2	v1.3							
+	Jimmy Savile.								v1.6			
+	Jobs.							v1.6	v1.6	v1.6	v1.7	
+	Joe Biden.							v1.6			v1.7	
+	Just touching David Beckham's hair.								v1.6			
+	Keeping Christ in Christmas.	v1.0	v1.1									
+	Keg stands.	v1.0	v1.1	v1.2								
+	Kibbles n' Bits.	v1.0	v1.1									
+	Kids with bum cancer.								v1.6			
+	Kim Jong-il.	v1.0	v1.1	v1.2								
+	Leaked footage of Kate Middleton's colonoscopy.								v1.6			
+	Letting yourself go.	v1.0	v1.1									
+	Loose lips.	v1.0	v1.1	v1.2	v1.3							
+	LYNX® Body Spray.								v1.6			
+	Mad cow disease.	v1.0	v1.1									
+	Madeleine McCann.								v1.6			
+	Magnets.							v1.6	v1.6	v1.6	v1.7	
+	Making sex at her.	v1.0	v1.1									
+	Marky Mark and the Funky Bunch.	v1.0	v1.1									
+	Martha Stewart.	v1.0	v1.1									
+	Mathletes.	v1.0	v1.1	v1.2								
+	Maureen of Blackpool, Reader's Wife of the Year 1988.								v1.6			
+	Menstruation.	v1.0	v1.1	v1.2								
+	Miley Cyrus at 55.							v1.6	v1.6	v1.6	v1.7	
+	Millwall fans.								v1.6			
+	Mining accidents.								v1.6			
+	Mistaking a retarded person for someone who's merely deaf.	v1.0	v1.1									
+	Mountain Dew Code Red.	v1.0	v1.1									
+	Mr. Dressup.									v1.6		
+	Mr. Snuffleupagus.	v1.0	v1.1									
+	Muhammad (Peace Be Upon Him).										v1.7	
+	Muzzy.	v1.0	v1.1									
+	My balls on your face.										v1.7	
+	My black ass.							v1.6		v1.6	v1.7	
+	My ex-wife.						v1.5	v1.6	v1.6	v1.6	v1.7	
+	Naked News.									v1.6		
+	Newfies.									v1.6		
+	Nip slips.	v1.0	v1.1									
+	Nocturnal emissions.	v1.0	v1.1	v1.2								
+	Not wearing trousers.								v1.6			
+	One Direction's supple, hairless bodies.								v1.6			
+	Our first chimpanzee President.							v1.6			v1.7	
+	Oversized lollipops.	v1.0	v1.1	v1.2	v1.3							
+	Paedophiles.								v1.6			
+	Paris Hilton.	v1.0	v1.1									
+	Party poopers.	v1.0	v1.1	v1.2								
+	Passive-aggression.	v1.0	v1.1									
+	PCP.	v1.0	v1.1									
+	Peanut Butter Jelly Time.	v1.0	v1.1									
+	Penis breath.							v1.6	v1.6	v1.6	v1.7	
+	People who smell their own socks.	v1.0	v1.1									
+	Perfunctory foreplay.								v1.6			
+	Permanent Orgasm-Face Disorder.										v1.7	
+	Pooping in a laptop and closing it.										v1.7	
+	Pooping in the soup.	v1.0	v1.1									
+	Poutine.									v1.6		
+	Poverty.										v1.7	
+	Pronouncing the names of northern Welsh towns.								v1.6			
+	Prosti-tots.	v1.0	v1.1									
+	Pterodactyl eggs.	v1.0	v1.1	v1.2	v1.3							
+	Punching a congressman in the face.										v1.7	
+	Queen Elizabeth's immaculate anus.								v1.6			
+	Rap music.										v1.7	
+	Raping and pillaging.	v1.0	v1.1	v1.2	v1.3							
+	Re-gifting.	v1.0	v1.1	v1.2								
+	Ring Pops™.	v1.0	v1.1									
+	Rip Torn dropkicking anti-Semitic lesbians.	v1.0	v1.1									
+	Ripping off the Beatles.								v1.6			
+	Rob Ford.									v1.6		
+	Robbing a sperm bank.	v1.0	v1.1									
+	Rubbing Boris Johnson's belly until he falls asleep. 								v1.6			
+	Running out of semen.							v1.6	v1.6	v1.6	v1.7	
+	Saying "I love you."							v1.6	v1.6	v1.6	v1.7	
+	Scalping the Milkybar Kid.								v1.6			
+	Schmirler the Curler.									v1.6		
+	Scousers.								v1.6			
+	Seduction.	v1.0	v1.1	v1.2	v1.3							
+	Seeing Grandma naked.							v1.6		v1.6	v1.7	
+	Seeing Granny naked.								v1.6			
+	Seething with quiet resentment.										v1.7	
+	Selling crack to children.										v1.7	
+	Sex with Patrick Stewart.							v1.6	v1.6	v1.6	v1.7	
+	Sexual peeing.							v1.6	v1.6	v1.6	v1.7	
+	Shitting out a perfect Cumberland sausage.								v1.6			
+	Riding off into the sunset.	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6			
+	Shorties and blunts.	v1.0	v1.1									
+	Showing up to an orgy for the food.	v1.0	v1.1									
+	Sipping artificial popcorn butter.	v1.0	v1.1									
+	Slapping a biscuit out of an orphan's mouth.								v1.6			
+	Snotsicles.									v1.6		
+	Sobbing into a Hungry-Man™ Frozen Dinner.	v1.0	v1.1									
+	Soiling oneself.	v1.0	v1.1	v1.2								
+	Solving problems with violence.										v1.7	
+	Some bloody peace and quiet.								v1.6			
+	Spaniards.								v1.6			
+	Stephen Harper.									v1.6		
+	Steve Irwin.	v1.0	v1.1									
+	Stifling a giggle at the mention of Hutus and Tutsis.	v1.0	v1.1	v1.2								
+	Still being a virgin.										v1.7	
+	Strong female characters.						v1.5	v1.6	v1.6	v1.6	v1.7	
+	Stunt doubles.	v1.0	v1.1									
+	Substitute teachers.	v1.0	v1.1									
+	Sucking some dicks to not get drafted.	v1.0	v1.1									
+	Swag.						v1.5					
+	Syrupy sex with a maple tree.									v1.6		
+	Tap dancing like there's no tomorrow.										v1.7	
+	Team-building exercises.	v1.0	v1.1	v1.2								
+	Terry Fox's prosthetic leg.									v1.6		
+	That one gay Teletubby.	v1.0	v1.1									
+	The Black Death.								v1.6			
+	The bloody Welsh. 								v1.6			
+	The BNP.								v1.6			
+	The cool, refreshing taste of Pepsi®.							v1.6	v1.6	v1.6	v1.7	
+	The deformed.	v1.0	v1.1									
+	The Donald Trump Seal of Approval.™	v1.0	v1.1	v1.2								
+	The drama club.	v1.0	v1.1									
+	The end of days.								v1.6			
+	The entire cast of Downton Abbey.								v1.6			
+	The FLQ									v1.6		
+	The forbidden fruit.	v1.0	v1.1	v1.2								
+	The French.								v1.6			
+	The Hillsborough Disaster.								v1.6			
+	The homosexual lifestyle.				v1.3							
+	The Honey Monster.								v1.6			
+	The morbidly obese.							v1.6	v1.6	v1.6	v1.7	
+	The North.								v1.6			
+	The Official Languages Act. La Loi sur les langues officielles.									v1.6		
+	The Patriarchy.							v1.6		v1.6	v1.7	
+	The People's Elbow.	v1.0	v1.1									
+	The petty troubles of the landed gentry.								v1.6			
+	The pirate's life.							v1.6	v1.6	v1.6	v1.7	
+	The plot of a Michael Bay movie.	v1.0										
+	The Red Menace.	v1.0										
+	The rhythms of Africa.							v1.6	v1.6	v1.6	v1.7	
+	The Royal Canadian Mounted Police.									v1.6		
+	The Scouts. 								v1.6			
+	The screams...the terrible screams.										v1.7	
+	The Stig.								v1.6			
+	The sudden appearance of the Go Compare man.								v1.6			
+	The Superdome.	v1.0	v1.1									
+	The Thong Song.	v1.0	v1.1									
+	The unstoppable tide of Islam.						v1.5	v1.6	v1.6	v1.6	v1.7	
+	The way James Bond treats women.								v1.6			
+	The wonders of the Orient.							v1.6		v1.6	v1.7	
+	The wrath of Vladimir Putin.							v1.6	v1.6	v1.6	v1.7	
+	This answer is postmodern.	v1.0	v1.1									
+	This year's mass shooting.							v1.6			v1.7	
+	Those times when you get sand in your vagina.	v1.0	v1.1									
+	Three dicks at the same time.							v1.6	v1.6	v1.6	v1.7	
+	Tickle Me Elmo.	v1.0	v1.1									
+	Tiger Woods.	v1.0	v1.1									
+	Too much hair gel.	v1.0	v1.1	v1.2								
+	Tories.								v1.6			
+	Tickling Sean Hannity, even after he tells you to stop.					v1.4	v1.5					
+	Touching a pug right on his penis.										v1.7	
+	Trench foot.								v1.6			
+	Tweeting.	v1.0	v1.1	v1.2								
+	Twinkies®.	v1.0	v1.1									
+	Uppercuts.	v1.0	v1.1	v1.2								
+	Used knickers.								v1.6			
+	Vehicular homicide.	v1.0										
+	Waking up half-naked in a Little Chef car park.								v1.6			
+	Wanking into a pool of children's tears.								v1.6			
+	Waterboarding.	v1.0	v1.1	v1.2								
+	White-man scalps.							v1.6		v1.6	v1.7	
+	Will Smith.	v1.0	v1.1									
+	Wiping her bum. 								v1.6			
+	Women in yoghurt adverts.								v1.6			
+	Your weird brother. 							v1.6	v1.6	v1.6	v1.7	
+												
+												
+												
+												
+												
+												
+	TOTALS	542	546	463	463	463	465	460	459	460	460	
+												
+												
+												

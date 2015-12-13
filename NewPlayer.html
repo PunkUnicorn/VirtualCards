@@ -1,0 +1,117 @@
+﻿<!doctype html>
+<html>
+	<head> <!--DUPLICATE CODE START-->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>Virtual Cards against Cards</title>
+
+		<link rel="stylesheet" href="stylesheets/w3.css">
+		<link rel="stylesheet" href="stylesheets/cards.css">
+		<link rel="stylesheet" href="stylesheets/card-effects.css">
+
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta property="og:title" content="Virtual Cards against Cards" />
+	</head>
+	<body>
+		<style>
+			.save-enabled {}
+			.wait-for-load {}
+		</style>
+		<div id='wrapper'> <!--class='w3-animate-opacity'>-->
+			<div class='w3-animate-top'>
+				<div class='w3-animate-bottom'>
+					<div class='w3-card-8 card-area card-twisle'>
+						<header>
+							<h1 class='w3-center'>Virtual Cards against Cards</h1>
+						</header>
+					</div>
+				</div>
+				<div class='w3-center'>
+					<div class='w3-card-16 card-area w3-animate-top'>
+						<p>Welcome Douchebag!</p>
+						<label for='txtPlayerName' class='w3-animate-opacity w3-large'>Please enter player name:</label>
+						<input id='txtPlayerName' oninput="$('.save-enabled').toggle(this.value.length > 2)" class='w3-input w3-light-green'/>                        
+						<div class='card'>
+							<div class='card'>
+								<div class='card'>
+									<div class='card'>
+										<button 
+											onclick='onClick()' 
+											class='save-enabled w3-btn w3-blue w3-animate-opacity'>Create Player <span class='wait-for-load fa fa-bell w3-small w3-spin'/></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- DUP CODE BREAK STARTS -->
+		<script src="javascripts/jQuery.js"></script>
+		<script type="text/javascript">
+
+			var cardUi = {};
+
+			var dragDrop = {}; 
+
+		</script>
+		<script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
+		<script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+		<script type="text/javascript">
+			//window.onload = cardUi.setCardSelectionEffects();
+		</script>
+		<script type="text/javascript">
+			function dragStart(ev) {
+				console.log('drag effect func dragStart called');
+				console.log(ev.target);
+			}
+		</script> <!--DUPLICATE CODE END-->        
+		<script>
+			window.onload = function (event) {
+			    $('.save-enabled').toggle($('.save-enabled').val().length > 2);
+			    $('.wait-for-load').hide();
+			    $('#txtPlayerName').val('').focus();
+			};
+
+			function onClick(event) {
+				var xmlhttp = new XMLHttpRequest();
+
+
+				var location = window.document.URL + 'CreatePlayer?Player=' + $('#txtPlayerName').val();
+
+
+				xmlhttp.open("GET", location);
+				xmlhttp.onreadystatechange = function () {
+					if (xmlhttp.readyState == 4) {
+						$('.wait-for-load').hide();
+						if (xmlhttp.status == 400 || xmlhttp.status == 200) {
+
+
+							var passName = $('#txtPlayerName').val();
+
+
+							if (xmlhttp.responseText == passName) {
+
+								var location = window.location.protocol + '//' + window.location.host + '/ChooseGame?Player=' + passName;
+								window.location = location;
+
+
+							}
+							else {
+								console.log("passName error " + passName);
+							}
+						}
+						else {
+							console.log('unsuccessful request');
+						}
+					}
+				}
+				xmlhttp.send();
+				$('.wait-for-load').show();               
+			}
+		</script>
+	</body>
+</html>

@@ -160,23 +160,6 @@
    -o-animation-delay:1s;
    -ms-animation-delay:1s;
 }
-.card-spin-delay2
-{
-   animation-delay:2s;   
-   -webkit-animation-delay: 2s; 
-   -moz-animation-delay:2s;
-   -o-animation-delay:2s;
-   -ms-animation-delay:2s;
-}
-.card-spin-delay4
-{
-   animation-delay:4s;   
-   -webkit-animation-delay: 4s; 
-   -moz-animation-delay:4s;
-   -o-animation-delay:4s;
-   -ms-animation-delay:4s;
-}
-
 .card-jump-delay1
 {
    animation-delay:1s;   

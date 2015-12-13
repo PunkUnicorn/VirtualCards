@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+    <head> <!--DUPLICATE CODE START-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Virtual Cards against Cards</title>
+
+        <link rel="stylesheet" href="stylesheets/w3.css">
+        <link rel="stylesheet" href="stylesheets/cards.css">
+        <link rel="stylesheet" href="stylesheets/card-effects.css">
+
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta property="og:title" content="Virtual Cards against Cards" />
+    </head>
+    <body>
+        <script src="javascripts/jQuery.js"></script>
+        <script type="text/javascript">
+
+            var cardUi = {}; 
+
+            var dragDrop = {}; 
+
+        </script>
+        <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
+        <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+
+        <script type="text/javascript">
+            //window.onload = cardUi.setCardSelectionEffects();
+        </script>
+        <script type="text/javascript">
+            function dragStart(ev) {
+                console.log('drag effect func dragStart called');
+                console.log(ev.target);
+            }
+        </script> <!--DUPLICATE CODE END-->
+        <style>
+            .join-enabled {}
+            .wait-for-load {}
+            .card-horizontal 
+            {
+                float:left;
+                display:inline;
+            }
+        </style>
+        <div id='wrapper' class='w3-animate-opacity'>
+            <div class='w3-animate-top'>
+                <div class='w3-animate-bottom'>
+                    <div class='w3-card-8 card-area card-spin'>
+                        <header>
+                            <h1 class='w3-center'>Virtual Cards against Cards</h1>
+                        </header>
+                    </div>
+                </div>
+                <div class='w3-row w3-center'>
+                    <div class='w3-col w3-card-16 card-area m7 w3-animate-top'>
+                        <p>Welcome who ever you are.</p>
+                        <p>It's not my place to judge you.</p>
+                        <p>Enter the name of an existing game or a new one to create it.</p>
+                        <label for='txtGameName' class='w3-animate-opacity w3-large'>Game name:</label>
+                        <input id='txtGameName' oninput="$('.join-enabled').toggle(this.value.length > 2)" class='w3-input w3-blue-grey'/> 
+                        <div class='w3-center'>
+                            <div class='card card-horizontal'></div>
+                            <div class='card card-horizontal'></div>
+                            <div class='card card-horizontal'></div>
+                            <div class='card card-horizontal'></div>
+                            <div class='card card-horizontal'></div>
+                        </div>
+                        <div class='wait-for-load fa fa-bell w3-small w3-animate-opacity'></div>
+                        <button 
+                            onclick='onClick()'
+                            class='join-enabled w3-btn w3-blue w3-animate-opacity'>Create/Join Game</button>                                           
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            window.onload = function (event) {
+                $('.join-enabled').toggle($('.join-enabled').val().length > 2);
+                $('.wait-for-load').hide();
+                $('#txtGameName').val('').focus();
+            };
+
+            function onClick(event) {
+                var xmlhttp = new XMLHttpRequest();
+
+                var location = window.document.URL + 'Submit?Name=' + $('#txtGameName').val();
+
+                xmlhttp.open("GET", location);
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        $('.wait-for-load').hide();
+                        if (xmlhttp.status == 400 || xmlhttp.status == 200) {
+
+                            var passName = $('#txtGameName').val();
+
+                            if (xmlhttp.responseText == passName) {
+
+                                window.location = window.location.protocol + '//' + window.location.host + '/NewGame?Name=' + passName;
+
+                            }
+                            else {
+                                console.log("passName error " + passName);
+                            }
+                        }
+                        else {
+                            console.log('unsucessfull request');
+                        }
+                    }
+                }
+                xmlhttp.send();
+                $('.wait-for-load').show();
+            }
+        </script>
+    </body>
+</html>

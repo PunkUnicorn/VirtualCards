@@ -1,0 +1,237 @@
+<!doctype html>
+<html> //https://www.youtube.com/watch?v=j-rwdRE1p50#
+    <head> <!--DUPLICATE CODE START-->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Virtual Cards against Cards</title>
+
+        <link rel="stylesheet" href="stylesheets/w3.css">
+        <link rel="stylesheet" href="stylesheets/cards.css">
+        <link rel="stylesheet" href="stylesheets/card-effects.css">
+
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta property="og:title" content="Virtual Cards against Cards" />
+    </head>
+    <body>
+        <script src="javascripts/jQuery.js"></script>
+        <script type="text/javascript">
+
+            var cardUi = {}; 
+
+            var dragDrop = {}; 
+
+        </script>
+        <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
+        <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+
+        <script type="text/javascript">
+            function dragStart(ev) {
+                console.log('drag effect func dragStart called');
+                console.log(ev.target);
+            }
+        </script> <!--DUPLICATE CODE END-->
+        <style>
+            .join-enabled {}
+            .wait-for-load {}
+            .wait-for-game {}
+            .wait-for-game-info1 {}
+            .wait-for-game-info2 {}
+            .wait-for-game-info3 {}
+            .wait-for-game-info4 {}
+            .wait-for-game-info5 {}
+            .start-game {}
+            .card-horizontal 
+            {
+                float:left;
+                display:inline;
+            }
+        </style>
+        <div id='wrapper' class='w3-animate-opacity'>
+            <div><!--  class='w3-animate-top'> -->
+                <div> <!-- class='w3-animate-bottom'> -->
+                    <div class='w3-card-8 card-area card-twisle'>
+                        <header>
+                            <h1 class='w3-center'>Virtual Cards against Cards</h1>
+                        </header>
+                    </div>
+                </div>
+                <div class='w3-row w3-center'>
+                    <div class='w3-col w3-card-16 card-area w3-animate-top'>
+                        <p>Welcome <span id='txtPlayerName'>douchebag</span></p>
+                        <p>It's not my place to judge you</p>
+                        <p>Enter the name of an existing game. Or enter the name of a new game to create it</p>
+                        <label for='txtGameName' class='w3-large'>Name</label>
+                        <input id='txtGameName' oninput="cleanUi()" class='w3-input w3-blue-grey'/> 
+                        <div class='w3-center'>
+                            <div class='card card-horizontal wait-for-game-info1 w3-padding-tiny w3-tiny'></div>
+                            <div class='card card-horizontal wait-for-game-info2 w3-padding-tiny w3-tiny'></div>
+                            <div class='card card-horizontal wait-for-game-info3 w3-padding-tiny w3-tiny'></div>
+                            <div class='card card-horizontal wait-for-game-info4 w3-padding-tiny w3-tiny'></div>
+                            <div class='card card-horizontal wait-for-game-info5 w3-padding-tiny w3-tiny'>
+                                <p><button 
+                                    onclick='onClickJoinCreate()'
+                                    class='join-enabled w3-btn w3-blue w3-animate-opacity'>Create/Join game <span 
+                                        class='wait-for-load fa fa-bell w3-small w3-spin' />
+                                </button></p>
+                                <p><button 
+                                    onclick='onClickStart()'
+                                    class='start-game w3-btn w3-grey'>Start game <span
+                                        class='wait-for-game fa fa-cube w3-small w3-spin' />										
+                                </button></p>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function cleanUi() {
+                $('.wait-for-game-info1').html('');
+                $('.wait-for-game-info2').html('');
+                $('.wait-for-game-info3').html('');
+                $('.wait-for-game-info4').html('');
+                
+                $('.join-enabled').text("Join/Create Game");
+                
+                var txtLen = $('#txtGameName').val().length;
+                if (txtLen > 2) $('.join-enabled').show()
+                else $('.join-enabled').hide();
+                
+                $('.wait-for-load').hide();
+                $('.start-game').hide();
+                $('.wait-for-game').hide();
+            };
+            
+            window.onload = function (event) {                
+                var getParameterByName = function (name) { //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+                    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                        results = regex.exec(location.search);
+
+                    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+                }
+
+                cleanUi();
+
+                var player = getParameterByName('Player');
+                $('#txtPlayerName').html(player);
+
+                $('#txtGameName').val('')
+                    .delay(3000)
+                    .focus();
+            };
+
+            function joinOrCreateOrStartGame(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
+                var requestIt = function () {
+                    if (xmlhttp.readyState == 4) {
+                        $('.wait-for-load').hide();
+                        if (xmlhttp.status == 400 || xmlhttp.status == 200) {
+                            successFunc(xmlhttp, passName, playerName, joinOnly);
+                        }
+                        else {
+                            console.log('unsuccessful request');
+                        }
+                    }
+                } 
+
+                xmlhttp.open("GET", location);
+                xmlhttp.onreadystatechange = requestIt;
+                $('.wait-for-load').show();
+                xmlhttp.send();
+            };
+            
+            function playRound(passName, playerName) {
+                var playRoundLocation = window.document.referrer + 'PlayRound?Game=' + passName + '&Player=' + playerName;
+                window.document.location = playRoundLocation;
+            };
+            
+            function onClickStart(event) {
+                var xmlhttp = new XMLHttpRequest();
+
+                var passName = $('#txtGameName').val();
+                var playerName = $('#txtPlayerName').html();
+
+                var startGameLocation = window.document.referrer + 'CreateRound?Game=' + passName + '&Player=' + playerName;
+                var startSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
+                    playRound(passName, playerName);
+                }
+
+                joinOrCreateOrStartGame(xmlhttp, startGameLocation, passName, playerName, startSuccessFunc, false);
+            }
+            
+            function onClickJoinCreate(event) {			
+                var xmlhttp = new XMLHttpRequest();
+
+                var passName = $('#txtGameName').val();
+                var playerName = $('#txtPlayerName').html();
+
+                var joinGameLocation = window.document.referrer + 'JoinGame?Game=' + passName + '&Player=' + playerName;
+                var joinSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
+
+                    console.log(joinOnly + ': ' + xmlhttp.responseText);
+
+                    var responseObj = JSON.parse(xmlhttp.responseText);
+                    console.log(responseObj);
+
+                    if (responseObj.game == passName) {
+                        var getPlayerCount = function(responseObj) {
+                            var playerListObj = responseObj.list;
+
+                            var playerCount = 0;
+                            for (var player in playerListObj) { playerCount++; }
+                            return playerCount;
+                        };
+                        
+                        var setUi = function (responseObj, playerCount, passName, playerName) {
+                            $('.wait-for-game').show();
+                            $('.join-enabled').text('Refresh');
+                            
+                            $('.wait-for-game-info1').html('<b>' + responseObj.game + '</b>');
+                            $('.wait-for-game-info3').html('<i>' + playerCount 
+                                    + ' player(s)</i><p>waiting for '
+                                    + responseObj.creator 
+                                    + ' <span class="fa fa-spinner fa-pulse" /></p>');
+                                    
+                            var playerListObj = responseObj.list;
+                            var playerListStr = '';
+                            for (i=0;i<playerListObj.length;i++){
+                                playerListStr += '<p class="card-spin"><span class="fa fa-thumbs-up" /><i> '+playerListObj[i]+'</i></p>';
+                            }
+
+                            $('.wait-for-game-info4').html(playerListStr);
+
+                            if (responseObj.creator == playerName) {
+                                $('.wait-for-game-info2').html('<b class="w3-red w3-animate-opacity w3-middle">YOU CREATED THIS GAME</b>');
+                            
+                                $('.start-game').show();
+                            }
+                        };
+                        
+                        var playerCount = getPlayerCount(responseObj);
+                        setUi(responseObj, playerCount, passName, playerName);
+                        
+                        if (responseObj.roundNumber == 1) {
+                            playRound(passName, playerName);
+                        }
+                    } else {
+                        var createGameLocation = window.location.protocol + '//' + window.location.host + '/CreateGame?Game=' + passName + '&Player=' + playerName;
+                        var createSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
+                            joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, true);
+                        }
+
+                        if (!joinOnly) {
+                            joinOrCreateOrStartGame(xmlhttp, createGameLocation, passName, playerName, createSuccessFunc, false);
+                        }
+                    }
+                }
+
+                joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, false);
+
+            }
+        </script>
+    </body>
+</html>
