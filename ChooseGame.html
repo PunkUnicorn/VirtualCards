@@ -22,10 +22,13 @@
             var cardUi = {}; 
 
             var dragDrop = {}; 
+			
+			var cardApi = {};
 
         </script>
         <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
         <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+        <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
         <script type="text/javascript">
             function dragStart(ev) {
@@ -43,11 +46,6 @@
             .wait-for-game-info4 {}
             .wait-for-game-info5 {}
             .start-game {}
-            .card-horizontal 
-            {
-                float:left;
-                display:inline;
-            }
         </style>
         <div id='wrapper' class='w3-animate-opacity'>
             <div><!--  class='w3-animate-top'> -->
@@ -107,25 +105,24 @@
             };
             
             window.onload = function (event) {                
-                var getParameterByName = function (name) { //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+                /* var getParameterByName = function (name) { //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
                     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
                     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                         results = regex.exec(location.search);
 
                     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-                }
+                } */
 
                 cleanUi();
 
-                var player = getParameterByName('Player');
+                var player = cardApi.getParameterByName('Player');
                 $('#txtPlayerName').html(player);
 
-                $('#txtGameName').val('')
-                    .delay(3000)
-                    .focus();
+				var game = cardApi.getParameterByName('Game');
+                $('#txtGameName').val(game).focus();
             };
 
-            function joinOrCreateOrStartGame(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
+/*             function joinOrCreateOrStartGame(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
                 var requestIt = function () {
                     if (xmlhttp.readyState == 4) {
                         $('.wait-for-load').hide();
@@ -143,7 +140,7 @@
                 $('.wait-for-load').show();
                 xmlhttp.send();
             };
-            
+ */            
             function playRound(passName, playerName) {
                 var playRoundLocation = window.document.referrer + 'PlayRound?Game=' + passName + '&Player=' + playerName;
                 window.document.location = playRoundLocation;
@@ -160,7 +157,7 @@
                     playRound(passName, playerName);
                 }
 
-                joinOrCreateOrStartGame(xmlhttp, startGameLocation, passName, playerName, startSuccessFunc, false);
+                cardApi.joinOrCreateOrStartGame(xmlhttp, startGameLocation, passName, playerName, startSuccessFunc, false);
             }
             
             function onClickJoinCreate(event) {			
@@ -178,13 +175,14 @@
                     console.log(responseObj);
 
                     if (responseObj.game == passName) {
-                        var getPlayerCount = function(responseObj) {
-                            var playerListObj = responseObj.list;
+                        //var getPlayerCount = function(responseObj) {
+						//	return responseObj.list.length;
+                            //var playerListObj = responseObj.list;
 
-                            var playerCount = 0;
-                            for (var player in playerListObj) { playerCount++; }
-                            return playerCount;
-                        };
+                            //var playerCount = 0;
+                            //for (var player in playerListObj) { playerCount++; }
+                            //return playerCount;
+                        //};
                         
                         var setUi = function (responseObj, playerCount, passName, playerName) {
                             $('.wait-for-game').show();
@@ -211,7 +209,7 @@
                             }
                         };
                         
-                        var playerCount = getPlayerCount(responseObj);
+                        var playerCount = responseObj.list.length;
                         setUi(responseObj, playerCount, passName, playerName);
                         
                         if (responseObj.roundNumber == 1) {
@@ -220,16 +218,16 @@
                     } else {
                         var createGameLocation = window.location.protocol + '//' + window.location.host + '/CreateGame?Game=' + passName + '&Player=' + playerName;
                         var createSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
-                            joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, true);
+                            cardApi.joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, true);
                         }
 
                         if (!joinOnly) {
-                            joinOrCreateOrStartGame(xmlhttp, createGameLocation, passName, playerName, createSuccessFunc, false);
+                            cardApi.joinOrCreateOrStartGame(xmlhttp, createGameLocation, passName, playerName, createSuccessFunc, false);
                         }
                     }
                 }
 
-                joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, false);
+                cardApi.joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, false);
 
             }
         </script>

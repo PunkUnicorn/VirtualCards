@@ -8,24 +8,42 @@
         <link rel="stylesheet" href="stylesheets/w3.css">
         <link rel="stylesheet" href="stylesheets/cards.css">
         <link rel="stylesheet" href="stylesheets/card-effects.css">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <meta property="og:title" content="Virtual Cards against Cards" />
     </head>
     <body>
+        <style>
+            .wait-for-load {}
+            .answers {}
+        </style>	
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
 
-            var cardUi = {};
+            var cardUi = {}; 
 
             var dragDrop = {}; 
+            
+            var cardApi = {};
 
         </script>
         <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
         <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+        <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
         <script type="text/javascript">
-            window.onload = cardUi.setCardSelectionEffects();
+            window.onload = function(event) {
+                //cardUi.setCardSelectionEffects();
+                var player = cardApi.getParameterByName('Player');
+                console.log(' @@@@@ ' +player);
+                $('#txtPlayerName').text(player);
+
+                var game = cardApi.getParameterByName('Game');
+                console.log(' @@@@@ g' + game);
+                $('#txtGameName').text(game);
+
+            }
         </script>
         <script type="text/javascript">
             function dragStart(ev) {
@@ -34,38 +52,41 @@
             }
         </script> <!--DUPLICATE CODE END-->
         <div id='wrapper'> <!--class='w3-animate-opacity'>-->
-            <div class='w3-animate-bottom'>
-                <div class='w3-card-8 card-area card-twisle'>
-                    <header>
-                        <h1 class='w3-center'>Virtual Cards against Cards</h1>
-                    </header>
+    <!--             <div class='w3-animate-bottom'> -->
+            <div class='w3-card-8 card-area card-twisle'>
+                <header>
+                    <h1 class='w3-center'>Virtual Cards against Cards</h1>
+                </header>
+            </div>
+            <!-- </div> -->
+            <div class='w3-row'>
+                <div class='w3-card-16 card-area w3-col w3-container m6'>
+                    <p>
+                        <span id='txtPlayerName'>douchebag</span> <i><span id='txtGameName'></span></i>(<span id='txtRoundNumber'>)</span>
+                    </p> 
+                    <div class='card card-horizontal card-spin-delay1' 
+                        onclick='cardUi.onCardSelect(event)'
+                        ondrop="dragDrop.drop(event, dragStart)" 
+                        ondragover="dragDrop.allowDrop(event, dragStart)" 
+                        draggable="true" 
+                        ondragstart="dragDrop.drag(event, dragStart)"
+                        id='card1' >1</div>
+                    <div class='card card-horizontal card-jump' onclick='cardUi.onCardSelect(event)'>2</div>
+                    <div class='card card-horizontal card-jump-delay1' onclick='cardUi.onCardSelect(event)'>3</div>
+                    <div class='card card-horizontal card-jump-delay2' onclick='cardUi.onCardSelect(event)'>4</div>
+                    <div class='card card-horizontal card-spin-delay2' onclick='cardUi.onCardSelect(event)'>5</div>               
+                    <button 
+                        class='w3-btn w3-blue' 
+                        onclick='onClickDraw(event)'>Refresh <span class='wait-for-load fa fa-bell w3-small w3-spin' /></button>
                 </div>
-        </div>
-        <div class='w3-row'>
-            <div class='w3-card-16 card-area w3-col m2 l2'>
-                <div class='card card-spin-delay1' onclick='cardUi.onCardSelect(event)'>1</div>
-                <div class='card card-jump' onclick='cardUi.onCardSelect(event)'>2</div>
-                <div class='card card-jump-delay1' onclick='cardUi.onCardSelect(event)'>3</div>
-                <div class='card card-jump-delay2' onclick='cardUi.onCardSelect(event)'>4</div>
-                <div class='card card-spin-delay2' onclick='cardUi.onCardSelect(event)'>5</div>               
-                <button class='card-jump w3-btn' onclick='onClickDraw(event)'>Draw Card</button>
+                <div class='w3-card-16 card-area w3-col s10 w3-container m2'>
+                    <p>Question</p>
+                    <div id ='txtQuestion' class ='card w3-padding-tiny w3-tiny'></div>				
+                </div>
+            </div>
+            <div class='w3-card-16 card-area answers w3-container w3-row'>
             </div>
         </div>
-        <div id='card1' class='w3-card-24 card card-spin' 
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)">
-            <h1 id='H1'>6</h1>
-        </div>
-        <div id='card2' class='w3-card w3-yellow card' 
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)">
-            <h1 id='H2'>7</h1>
-        </div>
-    </div>
         
     <script>
 /*
@@ -91,18 +112,56 @@
 
             function onClickDraw(event) {
                 var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("POST", 'http://localhost:8080/card');
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4) {
-                        console.log("onClickDraw: " + event.toString());
-                        if (xmlhttp.status == 400) {
-                            console.log('ok');
-                        } else {
-                            console.log('error')
+
+                var passName = $('#txtGameName').text();
+                var playerName = $('#txtPlayerName').text();
+
+                var len = window.document.referrer.lastIndexOf('/');
+                if (len == -1) len = window.document.referrer.length;
+                var url = window.document.referrer.substr(0, len);
+                
+                var updateRoundLocation = url + '/UpdateRound?Game=' + passName + '&Player=' + playerName;
+                var updateRoundSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
+
+                    console.log(joinOnly + ': ' + xmlhttp.responseText);
+
+                    var responseObj = JSON.parse(xmlhttp.responseText);
+                    console.log(responseObj);
+
+                    if (responseObj.game == passName) {
+                        $('#txtRoundNumber').text('Round #' + responseObj.roundNumber);
+                        $('#txtQuestion').text(responseObj.question);
+
+                        /*var votedCount = 0;
+                        try {
+                            votedCount = responseObj.players.voted.length;
+                        } catch(err) {                        
+                        }*/
+                        
+                        for (var myCard in responseObj.heldCards) {
+                            console.log(responseObj.heldCards[myCard]);
+                        }                        
+                        
+                        if (responseObj.players.voted.length > 0) {
+                            // voted
+                            var votedStr = '<h6>Voted</h6>';
+                            for (var voted in responseObj.round.voted) {
+                                var name = responseObj.game.list[voted];
+                                votedStr += '<p class="card-spin"><span class="fa fa-thumbs-up" /><i> '+name+'</i></p>';
+                            }
+                        } else if (responseObj.players.submitted.length > 0) {
+                            // submitted
+                            var submittedStr = '<h6>Submitted</h6>';
+                            for (var submitted in responseObj.round.submitted) {
+                                var name = responseObj.game.list[submitted];
+                                submittedStr += '<p class="card-spin"><span class="fa fa-thumbs-up" /><i> '+name+'</i></p>';
+                            }
                         }
                     }
                 }
-                xmlhttp.send();
+
+                cardApi.joinOrCreateOrStartGame(xmlhttp, updateRoundLocation, passName, playerName, updateRoundSuccessFunc, false);
+
             }
 
 //            // refire the animation

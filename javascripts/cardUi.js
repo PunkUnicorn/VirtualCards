@@ -2,6 +2,7 @@
 cardUi = {
     setCardSelectionEffects: function (card, isSelected) {
         var inWithTheNewNOTSelected = function (cardi, isSelected) {
+            if (cardi.length == 0) return cardi;
             var isNotSelected = !isSelected;
             cardi.toggleClass('w3-card', isNotSelected)
                 .toggleClass('card-shake', isNotSelected);
@@ -10,31 +11,36 @@ cardUi = {
         };
 
         var inWithTheNewSelected = function (cardi, isSelected) {
+            if (cardi.length == 0) return cardi;
             var isTrueSelected = !!isSelected;
             cardi.toggleClass('w3-card-8', isTrueSelected)
                 .toggleClass('card-spin', isTrueSelected);
             return cardi;
         };
 
-        var outWithTheOldNOTSelected = function (cardii, isSelected) {
+        var ons = function (cardii, isSelected) {
+            if (cardii.length == 0) return cardii;
             var isTrueSelected = !!isSelected;
             cardii.toggleClass('w3-card-8', isTrueSelected);
             return cardii;
         };
 
         var outWithTheOldSelected = function (cardi, isSelected) {
+            if (cardi.length == 0) return cardi;
             var isNotSelected = !isSelected;
             cardi.toggleClass('w3-card', isNotSelected);                
             return cardi;
         };
 
         var notSelected = function (cardi, isSelected) {
-            outWithTheOldNOTSelected(cardi, isSelected);
+            if (cardi.length == 0) return cardi;
+            ons(cardi, isSelected);
             inWithTheNewNOTSelected(cardi, isSelected);
             return cardi;
         };
 
         var selected = function (cardi, isSelected) {
+            if (cardi.length == 0) return cardi;
             // outWithTheOldSelected(cardi, isSelected)
                 // .ready(inWithTheNewSelected(cardi, isSelected));
             outWithTheOldSelected(cardi, isSelected);
@@ -43,7 +49,7 @@ cardUi = {
         };
 
         // notSelected(card, isSelected)
-                // .ready(selected(card, isSelected));
+        // .ready(selected(card, isSelected));
         notSelected(card, isSelected);
         selected(card, isSelected);        
     },
