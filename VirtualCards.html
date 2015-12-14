@@ -16,7 +16,7 @@
     <body>
         <style>
             .wait-for-load {}
-            /*.answers {}*/
+            .gravel-selected {}
         </style>	
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
@@ -207,6 +207,14 @@
                 getRefreshed(cardSelection);
             }
             
+            function voteClick(event) {
+                var dontSelect = $(event.target).hasClass('fa-gavel');
+                $('.gravel-selected').removeClass('fa-gavel');
+                if (dontSelect) return;
+
+                $(event.target).addClass('fa-gavel');
+            }
+            
             function getRoot(referrer) {
                 var len = referrer.lastIndexOf('/');
                 if (len == -1) len = referrer.length;
@@ -304,7 +312,7 @@
                                 console.log(gameObj.heldCards[myCard]);
                             }                        
                             
-                            if (gameObj.players.voted.length > 0) {
+                            if (gameObj.haveVoted && gameObj.players.voted.length > 0) {
                                 // voted
                                 var votedStr = '<h6>Voted</h6>';
                                 for (var playerIndex in gameObj.players.list) {
@@ -315,7 +323,7 @@
                                 }
                             } 
                             
-                            if (gameObj.players.submitted.length > 0) {
+                            if (gameObj.haveSubmitted && gameObj.players.submitted.length > 0) {
                                 // submitted
                                 var submittedStr = '';
                                 for (var playerIndex in gameObj.players.list) {
@@ -323,7 +331,7 @@
                                     if (typeof ansCards === 'undefined') continue;
                                     if (ansCards.length == 0) continue;
                                     var filledOut = fillQuestion(gameObj, ansCards);
-                                    submittedStr += '<li class="card-spin">'+filledOut+'</li>';
+                                    submittedStr += '<li class="card-spin"><button class="gravel-selected w3-deep-purple w3-btn fa" onclick="voteClick(event)"></button> '+filledOut+'</li>';
                                 }
                                 $('#txtAnswers').html('<ul class="w3-ul w3-dark-grey w3-border"> '+ submittedStr + '</ul>');
                                 $('#txtQuestion').hide();
