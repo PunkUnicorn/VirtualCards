@@ -40,14 +40,14 @@
             window.onload = function(event) {
                 //$('.answers').hide();
                 $('#divAnswersArea').hide();
+                $('#divQuestionArea').hide();
                 $('#btnSubmitAnswer').hide();
+                //$('#btnSubmitVote').hide();
 
                 var player = cardApi.getParameterByName('Player');
-                console.log(' @@@@@ ' +player);
                 $('#txtPlayerName').text(player);
 
                 var game = cardApi.getParameterByName('Game');
-                console.log(' @@@@@ g' + game);
                 $('#txtGameName').text(game);
                               
                 getRefreshed(cardSelection);
@@ -66,7 +66,7 @@
                 </header>
             </div>
             <div class='w3-row'>
-                <div class='w3-card-16 card-area w3-col w3-container m3 w3-animate-opacity'>
+                <div class='w3-card-16 card-area w3-col w3-container m4 w3-animate-opacity'>
                     <p class='w3-padding-small w3-tiny'>
                         <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
                     </p> 
@@ -109,14 +109,14 @@
                         <button id='btnResetSelection' class='w3-btn w3-khaki' onclick='onClickResetSelection(event)'>Reset <span class='fa fa-eraser'> </span></button>
                     </div>
                 </div>
-                <div class='w3-card-16 card-area w3-container w3-col m5 w3-animate-opacity'>
+                <div class='w3-card-16 card-area w3-container w3-col m6 w3-black w3-animate-opacity'>
+                    <h4>Questions and Answers</h4>
                     <div id='divQuestionArea'>
-                        <p>Question</p>
                         <div id ='txtQuestion' class ='w3-padding-small w3-large'></div>
-                        <button id ='btnSubmitAnswer' class='w3-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event)'>Submit <span class='fa fa-gavel'> </span></button>
+                        <button id ='btnSubmitAnswer' class='w3-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event)'>Submit <span class='fa fa-paper-plane'> </span></button>
                     </div>
                     <div id='divAnswersArea'>                    
-                        <div id='txtAnswers' class ='w3-padding-small w3-large'><div>asdfasdfasdfasdf</div></div>
+                        <div id='txtAnswers' class ='w3-padding-small w3-large'><div>Put crass answer here</div></div>
                         <button id ='btnSubmitVote' class='w3-btn w3-deep-purple w3-animate-opacity w3-right' onclick='onSubmitVote(event)'>Vote <span class='fa fa-gavel'> </span></button>
                     </div>
                        
@@ -158,6 +158,8 @@
             
 */
             function cardSelect(ev) {
+                if (gameObj.haveSubmitted) return;
+                
                 var negociateSelection = function (target, isSelected, cardSelection) {                    
                     //console.log(txt);
                     if (!isSelected) {
@@ -186,18 +188,10 @@
                         refreshQuestionText(gameObj, cardSelection);                        
                     }, 0, gameObj);
                     
-                    //console.log(JSON.stringify(cardSelection));
                     return true;
                 }
                 
                 cardUi.onCardSelect(ev, cardSelection, negociateSelection)
-
-              /*   if (cardSelection.length == 0) {
-                    $('#btnResetSelection').hide();
-                } else {
-                    $('#btnResetSelection').show();
-                } */
-                
             }
             
             function onClickResetSelection(event) {
@@ -228,14 +222,23 @@
                 
                 var answer = $('#txtQuestion').html();
                 var url = getRoot(window.document.referrer);
-                var submitAnswerLocation = url + '/SubmitAnswer?Game=' + passName + '&Player=' + playerName + '&Answer=' + answer;
+                var submitAnswerLocation = url + '/SubmitAnswer?Game=' 
+                    + passName
+                    + '&Player=' 
+                    + playerName
+                    //+ '&Answer=' 
+                    //+ encodeURI(answer)
+                    + '&Cards=' 
+                    + JSON.stringify(cardSelection);
                 
                 xmlhttp.open("GET", submitAnswerLocation);
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                            $('#divQuestionArea').hide();
-                            $('#divAnswersArea').show();                            
+                            /* $('#divQuestionArea').hide();
+                            $('#divAnswersArea').show();   */
+
+                            onClickResetSelection(null);
                             getRefreshed(cardSelection);
                         }
                     }
@@ -245,16 +248,23 @@
                 
             }
             
-            function refreshQuestionText(gameObj, cardSelection) {
-                var filledInQuestion = gameObj.question.replace(/________/g, '______');
+            function fillQuestion(gameObj, cardSelection) {
+                var filledInQuestion = gameObj.question;
                 
                 for (var answer in cardSelection) {
                     filledInQuestion = filledInQuestion.replace(/______/, '<span class="w3-small">' + cardSelection[answer] + '</span>');
                 }
+                return filledInQuestion;
+            }
+            
+            function refreshQuestionText(gameObj, cardSelection) {
+                var filledInQuestion = fillQuestion(gameObj, cardSelection);
                 $('#txtQuestion').html(filledInQuestion, cardSelection);
-                
+
                 if (cardSelection.length > 0 && cardSelection.length == gameObj.questionBlankCount) {
-                    $('#btnSubmitAnswer').show();
+                    if (!gameObj.haveSubmitted && !gameObj.haveVoted) {
+                        $('#btnSubmitAnswer').show();
+                    }
                 } else {
                     $('#btnSubmitAnswer').hide();
                 }
@@ -266,26 +276,25 @@
                 var passName = $('#txtGameName').text();
                 var playerName = $('#txtPlayerName').text();
 
-/*                 var getRoot = function getRoot(referrer) {
-                    var len = referrer.lastIndexOf('/');
-                    if (len == -1) len = referrer.length;
-                    var url = referrer.substr(0, len);
-                    return url;
-                }; */
                 var url = getRoot(window.document.referrer);
-                
-                var updateRoundLocation = url + '/UpdateRound?Game=' + passName + '&Player=' + playerName;
+
+                var updateRoundLocation = url + encodeURI('/UpdateRound?Game=' + passName + '&Player=' + playerName);
                 var updateRoundSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
 
                     console.log(joinOnly + ': ' + xmlhttp.responseText);
 
                     gameObj = JSON.parse(xmlhttp.responseText);
                     console.log(gameObj);
-
+                    
+                    $('#divQuestionArea').toggle(!gameObj.haveSubmitted && !gameObj.haveVoted);
+                    $('#divAnswersArea').toggle(gameObj.haveSubmitted || gameObj.haveVoted);
+                    
                     if (gameObj.game == passName) {
                         window.setTimeout( function () {
                             $('#txtRoundNumber').text('Round ' + gameObj.roundCount);
-                            refreshQuestionText(gameObj, cardSelection);                        
+                            
+                            if (!gameObj.haveSubmitted) 
+                                refreshQuestionText(gameObj, cardSelection);                        
                             
                             var cardIdSelectorTemplate = '#card';
                             var index = 0;
@@ -298,22 +307,30 @@
                             if (gameObj.players.voted.length > 0) {
                                 // voted
                                 var votedStr = '<h6>Voted</h6>';
-                                for (var voted in gameObj.voted) {
-                                    var name = gameObj.game.list[voted];
-                                    votedStr += '<p class="card-spin"><span class="fa fa-thumbs-up" /><i> '+name+'</i></p>';
+                                for (var playerIndex in gameObj.players.list) {
+                                    var voted = gameObj.players.voted[playerIndex];
+                                    if (typeof ans === 'undefined') continue;
+                                    if (ans.length == 0) continue;
+                                    votedStr += '<p class="card-spin"><i> '+gameObj.players.list[playerIndex]+'</i></p>';
                                 }
                             } 
                             
                             if (gameObj.players.submitted.length > 0) {
                                 // submitted
-                                var submittedStr = '<h6>Submitted</h6>';
-                                for (var submitted in gameObj.submitted) {
-                                    var name = gameObj.game.list[submitted];
-                                    submittedStr += '<p class="card-spin"><span class="fa fa-thumbs-up" /><i> '+name+'</i></p>';
-                                    //$('.answers').show();
+                                var submittedStr = '';
+                                for (var playerIndex in gameObj.players.list) {
+                                    var ansCards = gameObj.players.submitted[playerIndex];
+                                    if (typeof ansCards === 'undefined') continue;
+                                    if (ansCards.length == 0) continue;
+                                    var filledOut = fillQuestion(gameObj, ansCards);
+                                    submittedStr += '<li class="card-spin">'+filledOut+'</li>';
                                 }
-                                $('#txtAnswers').html(submittedStr);
-                                $('#divQuestionArea').show();
+                                $('#txtAnswers').html('<ul class="w3-ul w3-dark-grey w3-border"> '+ submittedStr + '</ul>');
+                                $('#txtQuestion').hide();
+                                $('#divAnswersArea').show();
+                            } else if (gameObj.haveSubmitted || gameObj.haveVoted) {
+                                $('#txtQuestion').hide();
+                                $('#divAnswersArea').show();                            
                             }
                         }, 0);
                     }

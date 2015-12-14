@@ -11,9 +11,9 @@ div.card
   width:73.6px;
   height: 102.35px;
   
-  margin: 16px;
+  margin: 8px;
   
-  padding: 16px;
+  padding: 8px;
 }
 
 div.card-horizontal 
@@ -29,9 +29,9 @@ div.card-selected
   
   background: #E0E0E0;
   
-  margin: 16px;
+  margin: 8px;
   
-  padding: 16px;
+  padding: 8px;
 }
 
 div.card-area {
@@ -41,7 +41,7 @@ div.card-area {
     background: #E9E9E9;
     
     height: 100%; 
-    width: 84%;
+    width: 92%;
     
     padding-top: 2%;
     padding-bottom: 2%;
@@ -50,8 +50,8 @@ div.card-area {
     
     margin-top: 1.5%;
     margin-bottom: 1.5%;    
-    margin-left: 8%;
-    margin-right: 8%;    
+    margin-left: 4%;
+    margin-right: 4%;    
 }
 
 div.card-ltr {

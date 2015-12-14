@@ -6,6 +6,7 @@ var path = require('path');
 var url = require('url');
 var util = require('util');
 var hashmap = require('./hashmap-2.0.4/hashmap');
+var querystring = require("querystring");
 
 //Lets define a port we want to listen to
 const PORT=8080; 
@@ -13,6 +14,7 @@ const PORT=8080;
 var whiteCards = {deck:[], notes:'answer cards'};
 var blackCards = {deck:[], notes:'questions'};
 
+//http://stackoverflow.com/questions/11286979/how-to-search-in-an-array-in-node-js-in-a-non-blocking-way
 
 //    _                 _______          _    
 //   | |               | |  _  \        | |   
@@ -122,6 +124,7 @@ function getGame(reqObj) {
 function getPlayer(reqObj) {
     var player = '';
     try {
+        console.log('here');
         player = reqObj.query.Player;
         console.log('@' + player);
     }
@@ -130,20 +133,19 @@ function getPlayer(reqObj) {
     }
     return player;
 };       
-                               
-function getAnswer(reqObj) {
-    var answer = '';
+
+
+function getCards(reqObj) {
+    var cards = [];
     try {
-        answer = reqObj.query.Answer;
-        console.log('@' + answer);
+        cards = JSON.parse( reqObj.query.Cards );
+        console.log('@' + JSON.stringify(cards));
     }
     catch(err) {
-        console.log('er... ' + err);                    
+        console.log('er... ' + err);       
     }
-    return answer;
-};                                                                                                                                  
-         
-                                                                                            
+    return cards;
+};                                                                                          
                                 // _     _      
                                // | |   | |     
  // _ __  _ __ ___  __ _ _ __ ___ | |__ | | ___ 
@@ -238,6 +240,57 @@ function getGameIndex(pram) {
     return gameInfo;
 };
 
+function replaceCards(games, gameInfo, pram, cards) {
+    var heldCards = games[gameInfo.index].heldCards;
+    var heldCardsIndexes = heldCards.get(pram.playerName);
+    
+    var removeIndexes = [];
+    for (var cardIndex in heldCardsIndexes) {
+        var cardDesc = whiteCards.deck[heldCardsIndexes[cardIndex]];
+        console.log('-----');
+        console.log('cardDesc:' + cardDesc);
+        console.log('heldCardsIndexes[cardIndex]:' + heldCardsIndexes[cardIndex]);
+        
+        var removeIndex = cards.indexOf(cardDesc);
+        if (removeIndex > -1)  removeIndexes.push( heldCardsIndexes[cardIndex] );                    
+    }
+    
+    console.log('game.heldCardsIndexes: ' + JSON.stringify(heldCardsIndexes));
+    console.log('removeIndexes: ' + JSON.stringify(removeIndexes));
+    
+    var removeIndexesIndexes = []; //yo dawg
+    for (var spentIndex in removeIndexes) {
+        for (var index in heldCardsIndexes) {
+            if (heldCardsIndexes[index] == removeIndexes[spentIndex]) {
+                removeIndexesIndexes.push(index);
+                break; 
+            }
+        }
+    }                
+    
+    console.log('-----------------------------------');
+    for (var removeThisIndexFromHeldCards in removeIndexesIndexes) {
+        console.log('remove this index from heldCardsIndexes' + removeIndexesIndexes[removeThisIndexFromHeldCards]);
+        var newCard = getWhiteCard(games, gameInfo);
+        heldCardsIndexes.splice(removeIndexesIndexes[removeThisIndexFromHeldCards], 1, newCard);
+    }
+};
+
+function hasCardsBeenDelt(game, gameInfo, pram) {
+    var retval = {};
+    retval.cardsDelt = false;
+    retval.hasCards = false;
+    try {
+        // if player has been delt cards let them in.
+        retval.cardsDelt = (games[gameInfo.index].heldCards.keys().length > 0);
+        retval.hasCards = games[gameInfo.index].heldCards.has(pram.playerName);
+    } catch (err) {
+        retval.cardsDelt = false ;                    
+    }
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 5555555');
+    return retval;
+};
+
 function cloneRound(games, gameInfo, pram) {
         
     var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
@@ -250,6 +303,19 @@ function cloneRound(games, gameInfo, pram) {
         console.log(cardIndex);
         cloneOfRound.heldCards.push(whiteCards.deck[cards[cardIndex]]);
     }
+    
+    var playerIndex =  cloneOfRound.players.list.indexOf(pram.playerName);    
+    
+    cloneOfRound.haveSubmitted = false; 
+    try {        
+        cloneOfRound.haveSubmitted = (cloneOfRound.players.submitted[playerIndex].length > 0);
+    } catch (err) { cloneOfRound.haveSubmitted = false; }
+    
+    cloneOfRound.haveVoted = false; 
+    try {        
+        cloneOfRound.haveVoted = (cloneOfRound.players.votes[playerIndex].length > 0);
+    } catch (err) { cloneOfRound.haveVoted = false; }
+    
     return cloneOfRound;
 };
 
@@ -321,19 +387,8 @@ function handleRequest(req, res) {
                 var gameExists = gameInfo.gameExists;
                 var playerInGame = gameInfo.playerInGame;
                 
-                var cardsDelt = false;
-                var hasCards = false;
-                try {
-                    // if player has been delt cards let them in.
-                    cardsDelt = (games[gameInfo.index].heldCards.keys().length > 0);
-                    hasCards = games[gameInfo.index].heldCards.has(pram.playerName);
-                } catch (err) {
-                    cardsDelt = false ;                    
-                }
-                
-                // not there when cards delt, not in the game
-                if (cardsDelt && !hasCards) return false;
-                               
+                var cardState = hasCardsBeenDelt(games, gameInfo, pram);
+                if (cardState.cardsDelt && !cardState.hasCards) return false;
 
                 if (gameExists && !playerInGame) {
                     var haveList = true;
@@ -401,50 +456,64 @@ function handleRequest(req, res) {
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
                 
             var iMadeThisGame = (pram.player == gameInfo.creator);
-            if (!iMadeThisGame) break
-                        
-            // ??SHUFFLE THE CARDS??
-            games[gameInfo.index].blackCards = [];
-            games[gameInfo.index].blackCardIndex = 0;
-            for (var cardIndex in blackCards.deck) {
-                games[gameInfo.index].blackCards.push(cardIndex);
-            }
+            if (!iMadeThisGame) break;
+            
+            var cardState = hasCardsBeenDelt(games, gameInfo, pram);
+            if (!cardState.cardsDelt) {
+                if (games[gameInfo.index].roundCount > 0) break; //exception
+                
+                var dealCards = function(game, gameInfo) {
+                    // ??SHUFFLE THE CARDS??
+                    games[gameInfo.index].blackCards = [];
+                    games[gameInfo.index].blackCardIndex = 0;
+                    for (var cardIndex in blackCards.deck) {
+                        games[gameInfo.index].blackCards.push(cardIndex);
+                    }
 
-            games[gameInfo.index].whiteCards = [];
-            games[gameInfo.index].whiteCardIndex = 0;
-            for (var cardIndex in whiteCards.deck) {
-                games[gameInfo.index].whiteCards.push(cardIndex);
+                    games[gameInfo.index].whiteCards = [];
+                    games[gameInfo.index].whiteCardIndex = 0;
+                    for (var cardIndex in whiteCards.deck) {
+                        games[gameInfo.index].whiteCards.push(cardIndex);
+                    }
+                };
+                
+                dealCards(games, gameInfo);               
             }
             
             // get a question card
             var roundObj = {};
-            var useIndex = getBlackCard(games, gameInfo);//games[gameInfo.index].blackCards[games[gameInfo.index].blackCardIndex++];
-            roundObj.question = blackCards.deck[useIndex];
+            var useIndex = getBlackCard(games, gameInfo);
+            roundObj.question 
+                = blackCards.deck[useIndex].replace(/________/g, '______');;
             
-            var count = (roundObj.question.match(/______/g) || []).length;
-            count +=  (roundObj.question.match(/________/g) || []).length;
-            if (count == 0) count = 1;
+            //var evenQuestionBlanks = roundObj.question.replace(/________/g, '______');
+            var count = (roundObj.question .match(/______/g) || []).length;
+            //count +=  (roundObj.question.match(/________/g) || []).length;
+            //if (count == 0) count = 1;
             
             roundObj.questionBlankCount = count;
-            roundObj.players = { names:[], submitted:[], voted :[], };
-            roundObj.players.names = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
+            roundObj.players = { list:[], submitted:[], voted :[], };
+            roundObj.players.list = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
             roundObj.game = games[gameInfo.index].game; //(this is the game name)
-            roundObj.roundCount = ++games[gameInfo.index].roundCount;
+            roundObj.roundCount = (++games[gameInfo.index].roundCount);
             
             games[gameInfo.index].round = roundObj;
-            var heldCards 
-                = games[gameInfo.index].heldCards 
-                    = new hashmap.HashMap();
-                    
-            var playerList = roundObj.players.names;
-            for (var playerIndex in playerList) {                
-                var cardArray = [];
-                for (var i = 0; i < 5; i++) 
-                    cardArray.push(getWhiteCard(games, gameInfo));
+            
+            if (!cardState.cardsDelt) {
+                var heldCards 
+                    = games[gameInfo.index].heldCards 
+                        = new hashmap.HashMap();
+                        
+                var playerList = roundObj.players.list;
+                for (var playerIndex in playerList) {                
+                    var cardArray = [];
+                    for (var i = 0; i < 5; i++) 
+                        cardArray.push(getWhiteCard(games, gameInfo));
 
-                var player = playerList[playerIndex];
-                heldCards.set(player, cardArray);
-                console.log(JSON.stringify(heldCards));
+                    var player = playerList[playerIndex];
+                    heldCards.set(player, cardArray);
+                    console.log(JSON.stringify(heldCards));
+                }
             }
             
             var thisGame = games[gameInfo.index];
@@ -469,22 +538,30 @@ function handleRequest(req, res) {
             if (!pram.isOk) break;
             var gameInfo = getGameIndex(pram);
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
+                   
+            var cards = getCards(reqObj);
             
-            var answer = getAnswer(reqObj);
-            console.log(answer);
-            
+            if (cards.length != games[gameInfo.index].round.questionBlankCount) break;
+                        
             var alreadySubmitted = games[gameInfo.index].round.players.submitted;
             var isAlreadySubmitted = false;
             for (var s in alreadySubmitted) {
-                if (alreadySubmitted[s] == answer) isAlreadySubmitted = true;
+                if (JSON.stringify(alreadySubmitted[s]) == cards) isAlreadySubmitted = true;
                 if (isAlreadySubmitted) break;
             }
             
             if (!isAlreadySubmitted) {
-                alreadySubmitted.push(answer);
-                console.log('pushed ############## ' + answer);
-            } else  {
-                console.log('NOT PUSHED!!!! ############## ' + answer);
+                var playerList = games[gameInfo.index].round.players.list;
+                
+                // match indexs between ...round.players.[list|submitted|voted]
+                // i.e. those three arrays share the same index per player
+                for (var player in playerList) {
+                    if (playerList[player] == pram.playerName) {
+                        alreadySubmitted[player] = JSON.parse( JSON.stringify(cards) );
+                        replaceCards(games, gameInfo, pram, cards);
+                        break;
+                    }
+                }
             }
             
             var cloneOfRound = cloneRound(games, gameInfo, pram);
