@@ -63,7 +63,7 @@ cardUi = {
         el.remove();
     },
 
-    onCardSelect: function (ev) {
+    onCardSelect: function (ev, cardSelection, negociateSelection) {
         var stripEffectsFromAllCards = function () { // The universe can only deal with one animation on a thing at a time wut? accommodate the universe
             return $('div.card')
                 .removeClass('card-twisle card-spin card-jiggle card-flash card-jump card-shake')
@@ -88,11 +88,23 @@ cardUi = {
 
         var isSelected = target.hasClass('card-selected');
 
-        var isNowSelected = (!isSelected);
-
-        target.toggleClass('card-selected', isNowSelected)
-            .ready(this.setCardSelectionEffects(target, isNowSelected))
-                .ready(cardUi.fireEffect(target));
-
+        var isNowSelected = (!isSelected);        
+        
+        if (!negociateSelection(target, isNowSelected, cardSelection)) 
+        {
+            this.setCardSelectionEffects(target, false);
+            cardUi.fireEffect(target);
+            return;
+        }
+        
+        // target.toggleClass('card-selected', isNowSelected)
+            // .ready(this.setCardSelectionEffects(target, isNowSelected))
+                // .ready(cardUi.fireEffect(target));
+        target.toggleClass('card-selected', isNowSelected);
+        
+        window.setTimeout( function() {
+            cardUi.setCardSelectionEffects(target, isNowSelected);
+            cardUi.fireEffect(target);
+        }, 0);
     }
 };

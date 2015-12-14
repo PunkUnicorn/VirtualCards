@@ -22,8 +22,8 @@
             var cardUi = {}; 
 
             var dragDrop = {}; 
-			
-			var cardApi = {};
+            
+            var cardApi = {};
 
         </script>
         <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
@@ -105,44 +105,17 @@
             };
             
             window.onload = function (event) {                
-                /* var getParameterByName = function (name) { //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-                    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-                    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                        results = regex.exec(location.search);
-
-                    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-                } */
-
                 cleanUi();
 
                 var player = cardApi.getParameterByName('Player');
                 $('#txtPlayerName').html(player);
 
-				var game = cardApi.getParameterByName('Game');
+                var game = cardApi.getParameterByName('Game');
                 $('#txtGameName').val(game).focus();
             };
 
-/*             function joinOrCreateOrStartGame(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
-                var requestIt = function () {
-                    if (xmlhttp.readyState == 4) {
-                        $('.wait-for-load').hide();
-                        if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                            successFunc(xmlhttp, passName, playerName, joinOnly);
-                        }
-                        else {
-                            console.log('unsuccessful request');
-                        }
-                    }
-                } 
-
-                xmlhttp.open("GET", location);
-                xmlhttp.onreadystatechange = requestIt;
-                $('.wait-for-load').show();
-                xmlhttp.send();
-            };
- */            
             function playRound(passName, playerName) {
-                var playRoundLocation = window.document.referrer + 'PlayRound?Game=' + passName + '&Player=' + playerName;
+                var playRoundLocation = window.document.referrer + 'PlayRoundUi?Game=' + passName + '&Player=' + playerName;
                 window.document.location = playRoundLocation;
             };
             
@@ -175,15 +148,6 @@
                     console.log(responseObj);
 
                     if (responseObj.game == passName) {
-                        //var getPlayerCount = function(responseObj) {
-						//	return responseObj.list.length;
-                            //var playerListObj = responseObj.list;
-
-                            //var playerCount = 0;
-                            //for (var player in playerListObj) { playerCount++; }
-                            //return playerCount;
-                        //};
-                        
                         var setUi = function (responseObj, playerCount, passName, playerName) {
                             $('.wait-for-game').show();
                             $('.join-enabled').text('Refresh');
@@ -203,7 +167,7 @@
                             $('.wait-for-game-info4').html(playerListStr);
 
                             if (responseObj.creator == playerName) {
-                                $('.wait-for-game-info2').html('<b class="w3-red w3-animate-opacity w3-middle">YOU CREATED THIS GAME</b>');
+                                $('.wait-for-game-info2').html('<b class="w3-red w3-animate-opacity w3-middle">YOU CREATED THIS GAME. CLICK START TO START.</b>');
                             
                                 $('.start-game').show();
                             }
@@ -212,7 +176,7 @@
                         var playerCount = responseObj.list.length;
                         setUi(responseObj, playerCount, passName, playerName);
                         
-                        if (responseObj.roundNumber == 1) {
+                        if (responseObj.roundCount == 1) {
                             playRound(passName, playerName);
                         }
                     } else {
@@ -228,7 +192,6 @@
                 }
 
                 cardApi.joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, false);
-
             }
         </script>
     </body>

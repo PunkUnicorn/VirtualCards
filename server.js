@@ -13,61 +13,70 @@ const PORT=8080;
 var whiteCards = {deck:[], notes:'answer cards'};
 var blackCards = {deck:[], notes:'questions'};
 
+
+//    _                 _______          _    
+//   | |               | |  _  \        | |   
+//   | | ___   __ _  __| | | | |___  ___| | __
+//   | |/ _ \ / _` |/ _` | | | / _ \/ __| |/ /
+//   | | (_) | (_| | (_| | |/ /  __/ (__|   < 
+//   |_|\___/ \__,_|\__,_|___/ \___|\___|_|\_\
+                                         
+
 function loadDeck(file, cards) {  
-	// http://anwajler.com/node.html
-	var path = file;
-	var offset = 0;
-	var buffer;
-	var position = null;
+    // http://anwajler.com/node.html
+    var path = file;
+    var offset = 0;
+    var buffer;
+    var position = null;
 
-	var fd = fs.openSync(path ,'rs');
+    var fd = fs.openSync(path ,'rs');
 
-	fs.stat(path, function(err, stats) {	
-		buffer = new Buffer(stats.size);
-		fs.open(path, 'r', function(err, fd) {
-			console.log('File opened');
-			fs.read(fd, buffer, offset, buffer.length, position, function(err, bytesRead, buffer) {
-				console.log('Read ' + bytesRead + ' bytes from file');
+    fs.stat(path, function(err, stats) {	
+        buffer = new Buffer(stats.size);
+        fs.open(path, 'r', function(err, fd) {
+            console.log('File opened');
+            fs.read(fd, buffer, offset, buffer.length, position, function(err, bytesRead, buffer) {
+                console.log('Read ' + bytesRead + ' bytes from file');
 
-				var bigString = buffer.toString();
-				arrayOfLines = bigString.match(/[^\r\n]+/g); //http://stackoverflow.com/questions/5034781/js-regex-to-split-by-line
-				var started = false;
-				for (var line in arrayOfLines) {
-					var splitLine = arrayOfLines[line].split('\t');//\s*[\s\t]\s*/);
-					var columnCount = 0;
-					for (var col in splitLine) {
-						columnCount++;
-						if (columnCount == 2) {
-							if (splitLine[col].trim().length == 0) continue; //ignore blank entries in column 2
+                var bigString = buffer.toString();
+                arrayOfLines = bigString.match(/[^\r\n]+/g); //http://stackoverflow.com/questions/5034781/js-regex-to-split-by-line
+                var started = false;
+                for (var line in arrayOfLines) {
+                    var splitLine = arrayOfLines[line].split('\t');//\s*[\s\t]\s*/);
+                    var columnCount = 0;
+                    for (var col in splitLine) {
+                        columnCount++;
+                        if (columnCount == 2) {
+                            if (splitLine[col].trim().length == 0) continue; //ignore blank entries in column 2
 
-							var startTrigger = 'Cards Against Humanity:';							
-							var endTrigger='TOTALS';
-							
-							//console.log(splitLine[col].substr(0,startTrigger.length));
-							//console.log(startTrigger);
-							if (started == false) {
-								started = (splitLine[col].substr(0,startTrigger.length).toString() === startTrigger.toString());
-								//console.log('##################################################################' + started);
-							} else {
-								if (splitLine[col] === endTrigger) break;
-								cards.deck.push(splitLine[col]);
-							}
-						}
-					}
-				}
-				bigString = '';
-				arrayOfLines = 0;
-			});	
-			fs.close(fd, function(err){
-				console.log('File closed');
-				console.log(file + ' contents start');
-				for (var card in cards.deck) {
-					console.log(cards.deck[card]);
-				}
-				console.log(file + ' contents end ' + cards.deck.length);				
-			});
-		});	
-	});	
+                            var startTrigger = 'Cards Against Humanity:';							
+                            var endTrigger='TOTALS';
+                            
+                            //console.log(splitLine[col].substr(0,startTrigger.length));
+                            //console.log(startTrigger);
+                            if (started == false) {
+                                started = (splitLine[col].substr(0,startTrigger.length).toString() === startTrigger.toString());
+                                //console.log('##################################################################' + started);
+                            } else {
+                                if (splitLine[col] === endTrigger) break;
+                                cards.deck.push(splitLine[col]);
+                            }
+                        }
+                    }
+                }
+                bigString = '';
+                arrayOfLines = 0;
+            });	
+            fs.close(fd, function(err){
+                console.log('File closed');
+                console.log(file + ' contents start');
+                for (var card in cards.deck) {
+                    console.log(cards.deck[card]);
+                }
+                console.log(file + ' contents end ' + cards.deck.length);				
+            });
+        });	
+    });	
 }
 
 //http://book.mixu.net/node/ch10.html
@@ -78,6 +87,16 @@ var games = []; //{ list: { name: '', players: [] } };
 var rounds = { };
 
 
+
+//             _   _____                      
+//            | | |  __ \                     
+//   __ _  ___| |_| |  \/ __ _ _ __ ___   ___ 
+//  / _` |/ _ \ __| | __ / _` | '_ ` _ \ / _ \
+// | (_| |  __/ |_| |_\ \ (_| | | | | | |  __/
+//  \__, |\___|\__|\____/\__,_|_| |_| |_|\___|
+//   __/ |                                    
+//  |___/  
+       
 function getGame(reqObj) {
     var name = '';
     try {
@@ -90,6 +109,16 @@ function getGame(reqObj) {
     return name;                
 };
 
+
+/*          _  ______ _                       
+           | | | ___ \ |                      
+  __ _  ___| |_| |_/ / | __ _ _   _  ___ _ __ 
+ / _` |/ _ \ __|  __/| |/ _` | | | |/ _ \ '__|
+| (_| |  __/ |_| |   | | (_| | |_| |  __/ |   
+ \__, |\___|\__\_|   |_|\__,_|\__, |\___|_|   
+  __/ |                        __/ |          
+ |___/                        |___/  
+  */
 function getPlayer(reqObj) {
     var player = '';
     try {
@@ -100,7 +129,30 @@ function getPlayer(reqObj) {
         console.log('er... ' + err);                    
     }
     return player;
-};
+};       
+                               
+function getAnswer(reqObj) {
+    var answer = '';
+    try {
+        answer = reqObj.query.Answer;
+        console.log('@' + answer);
+    }
+    catch(err) {
+        console.log('er... ' + err);                    
+    }
+    return answer;
+};                                                                                                                                  
+         
+                                                                                            
+                                // _     _      
+                               // | |   | |     
+ // _ __  _ __ ___  __ _ _ __ ___ | |__ | | ___ 
+// | '_ \| '__/ _ \/ _` | '_ ` _ \| '_ \| |/ _ \
+// | |_) | | |  __/ (_| | | | | | | |_) | |  __/
+// | .__/|_|  \___|\__,_|_| |_| |_|_.__/|_|\___|
+// | |                                          
+// |_| 
+
 
 function preamble(reqObj) {
     var ret = {};
@@ -116,9 +168,42 @@ function preamble(reqObj) {
     return ret;
 };
 
+/*          _   _    _ _     _ _       _____               _ 
+           | | | |  | | |   (_) |     /  __ \             | |
+  __ _  ___| |_| |  | | |__  _| |_ ___| /  \/ __ _ _ __ __| |
+ / _` |/ _ \ __| |/\| | '_ \| | __/ _ \ |    / _` | '__/ _` |
+| (_| |  __/ |_\  /\  / | | | | ||  __/ \__/\ (_| | | | (_| |
+ \__, |\___|\__|\/  \/|_| |_|_|\__\___|\____/\__,_|_|  \__,_|
+  __/ |                                                      
+ |___/  
+ */
+
 function getWhiteCard(games, gameInfo) {
     return games[gameInfo.index].whiteCards[games[gameInfo.index].whiteCardIndex++];
 }
+/* 
+            _  ______ _            _    _____               _ 
+           | | | ___ \ |          | |  /  __ \             | |
+  __ _  ___| |_| |_/ / | __ _  ___| | _| /  \/ __ _ _ __ __| |
+ / _` |/ _ \ __| ___ \ |/ _` |/ __| |/ / |    / _` | '__/ _` |
+| (_| |  __/ |_| |_/ / | (_| | (__|   <| \__/\ (_| | | | (_| |
+ \__, |\___|\__\____/|_|\__,_|\___|_|\_\\____/\__,_|_|  \__,_|
+  __/ |                                                       
+ |___/     
+ */
+
+function getBlackCard(games, gameInfo) {
+    return games[gameInfo.index].blackCards[games[gameInfo.index].blackCardIndex++];    
+}
+
+/*          _   _____                     _____          _           
+           | | |  __ \                   |_   _|        | |          
+  __ _  ___| |_| |  \/ __ _ _ __ ___   ___ | | _ __   __| | _____  __
+ / _` |/ _ \ __| | __ / _` | '_ ` _ \ / _ \| || '_ \ / _` |/ _ \ \/ /
+| (_| |  __/ |_| |_\ \ (_| | | | | | |  __/| || | | | (_| |  __/>  < 
+ \__, |\___|\__|\____/\__,_|_| |_| |_|\___\___/_| |_|\__,_|\___/_/\_\
+  __/ |                                                              
+ |___/       */
 
 function getGameIndex(pram) {
     var gameInfo = {};
@@ -153,6 +238,32 @@ function getGameIndex(pram) {
     return gameInfo;
 };
 
+function cloneRound(games, gameInfo, pram) {
+        
+    var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
+    cloneOfRound.heldCards = [];
+
+    var heldCards = games[gameInfo.index].heldCards;
+    var cards = heldCards.get(pram.playerName);
+
+    for (var cardIndex in cards) {
+        console.log(cardIndex);
+        cloneOfRound.heldCards.push(whiteCards.deck[cards[cardIndex]]);
+    }
+    return cloneOfRound;
+};
+
+/* 
+ _                     _ _     ______                           _   
+| |                   | | |    | ___ \                         | |  
+| |__   __ _ _ __   __| | | ___| |_/ /___  __ _ _   _  ___  ___| |_ 
+| '_ \ / _` | '_ \ / _` | |/ _ \    // _ \/ _` | | | |/ _ \/ __| __|
+| | | | (_| | | | | (_| | |  __/ |\ \  __/ (_| | |_| |  __/\__ \ |_ 
+|_| |_|\__,_|_| |_|\__,_|_|\___\_| \_\___|\__, |\__,_|\___||___/\__|
+                                             | |                    
+                                             |_|      
+ */
+
 //We need a function which handles requests and send response
 function handleRequest(req, res) {
     var reqObj = url.parse(req.url, true);
@@ -167,13 +278,13 @@ function handleRequest(req, res) {
             doCard(reqObj, res);
             break;
 
-        case '/':
+        case '/': //Ui
             console.log('index');
-            doPageFile('./NewPlayer.html', reqObj, res, true);
+            doPageFile('./index.html', reqObj, res, true);
             break;
 
         case '/CreatePlayer':
-            // REJECT DUPLICATE PLAYER NAMES
+            // ???REJECT DUPLICATE GAME NAMES???
             var isOk = true;
             if (reqObj.query == null) isOk = false;
             var playerName = getPlayer(reqObj);
@@ -184,11 +295,6 @@ function handleRequest(req, res) {
 
             if (isOk) {
                 players.list.push( { name: playerName, ip: req.ip } );
-                // playersMap = players.list.map(function(obj, playersList){ 
-                   // var rObj = {};
-                   // rObj[playersList.length-1] = { name: obj.name, ip: obj.ip };
-                   // return rObj;
-                // }, players.list);
                 res.write(playerName);
             } else {
                 res.write('WTF');
@@ -196,7 +302,7 @@ function handleRequest(req, res) {
             res.end();
             break;
 
-        case '/ChooseGame':
+        case '/ChooseGameUi':
             if (reqObj.query == null) break;
             var playerName = getPlayer(reqObj);
             if (playerName == '') break;
@@ -205,7 +311,7 @@ function handleRequest(req, res) {
             break;
 
         case '/JoinGame':
-            var doJoinGame = function(reqObj, req, res) {
+            var doJoinGame = function(reqObj, req, res) {                
                 var pram = preamble(reqObj);
                 if (!pram.isOk) return false;
                 
@@ -214,7 +320,21 @@ function handleRequest(req, res) {
                 var index = gameInfo.index;
                 var gameExists = gameInfo.gameExists;
                 var playerInGame = gameInfo.playerInGame;
-                                
+                
+                var cardsDelt = false;
+                var hasCards = false;
+                try {
+                    // if player has been delt cards let them in.
+                    cardsDelt = (games[gameInfo.index].heldCards.keys().length > 0);
+                    hasCards = games[gameInfo.index].heldCards.has(pram.playerName);
+                } catch (err) {
+                    cardsDelt = false ;                    
+                }
+                
+                // not there when cards delt, not in the game
+                if (cardsDelt && !hasCards) return false;
+                               
+
                 if (gameExists && !playerInGame) {
                     var haveList = true;
                     try {
@@ -227,19 +347,11 @@ function handleRequest(req, res) {
                         var anArray = [];
                         anArray.push(pram.playerName);
                         games[index].list = anArray;
-                    } else {
-                        var roundNumber = 0;
-                        try {
-                            roundNumber = games[gameInfo.index].roundNumber;
-                        } catch (err) {
-                            roundNumber = 0;
-                        }
-                        
-                        if (roundNumber > 0) return false;                        
+                    } else {                       
                         games[index].list.push(pram.playerName);
                     }
                 }
-
+                               
                 if (gameExists) {
                     res.write(JSON.stringify(games[index]));
                 } else {
@@ -254,14 +366,13 @@ function handleRequest(req, res) {
             
             if (!doJoinGame(reqObj, req, res)) {
                 res.write("I'm sorry Dave I can't let you do that");
-                res.error = 404;
+                res.error = 405;
                 res.end();
             }
             break;
 
         case '/CreateGame':
-            // REJECT DUPLICATE GAME NAMES
-            // from playersMap
+            // ???REJECT DUPLICATE GAME NAMES???
 
             var pram = preamble(reqObj);
             if (!pram.isOk) break;
@@ -273,7 +384,7 @@ function handleRequest(req, res) {
                 var anArray = [];
                 gameObj.list =  anArray;
                 gameObj.creator = pram.playerName;
-                gameObj.roundNumber = 0; // no round
+                gameObj.roundCount = 0; // no round
                 gameObj.heldCards = {};
                 games.push(gameObj);
             } else {
@@ -291,10 +402,7 @@ function handleRequest(req, res) {
                 
             var iMadeThisGame = (pram.player == gameInfo.creator);
             if (!iMadeThisGame) break
-            
-            // dish out five cards each
-            // get a question
-            
+                        
             // ??SHUFFLE THE CARDS??
             games[gameInfo.index].blackCards = [];
             games[gameInfo.index].blackCardIndex = 0;
@@ -310,12 +418,18 @@ function handleRequest(req, res) {
             
             // get a question card
             var roundObj = {};
-            var useIndex = games[gameInfo.index].blackCards[games[gameInfo.index].blackCardIndex++];
+            var useIndex = getBlackCard(games, gameInfo);//games[gameInfo.index].blackCards[games[gameInfo.index].blackCardIndex++];
             roundObj.question = blackCards.deck[useIndex];
+            
+            var count = (roundObj.question.match(/______/g) || []).length;
+            count +=  (roundObj.question.match(/________/g) || []).length;
+            if (count == 0) count = 1;
+            
+            roundObj.questionBlankCount = count;
             roundObj.players = { names:[], submitted:[], voted :[], };
-            roundObj.players.names = JSON.parse(JSON.stringify(games[gameInfo.index].list)); //clone
-            roundObj.game = games[gameInfo.index].game
-            roundObj.roundNumber = ( ++games[gameInfo.index].roundNumber );
+            roundObj.players.names = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
+            roundObj.game = games[gameInfo.index].game; //(this is the game name)
+            roundObj.roundCount = ++games[gameInfo.index].roundCount;
             
             games[gameInfo.index].round = roundObj;
             var heldCards 
@@ -333,46 +447,49 @@ function handleRequest(req, res) {
                 console.log(JSON.stringify(heldCards));
             }
             
-            // games[gameInfo.index].heldCards = playerList.map(function(obj, playersList){ 
-               // var rObj = {};
-               
-               // rObj[obj] = [];
-               
-               // var card = getWhiteCard(games, gameInfo);
-               // rObj[obj].push(card);
-
-               // card = games[gameInfo.index].whiteCards[games[gameInfo.index].whiteCardIndex++];
-               // rObj[obj].push(card);
-
-               // card = games[gameInfo.index].whiteCards[games[gameInfo.index].whiteCardIndex++];
-               // rObj[obj].push(card);
-
-               // card = games[gameInfo.index].whiteCards[games[gameInfo.index].whiteCardIndex++];
-               // rObj[obj].push(card);
-
-               // card = games[gameInfo.index].whiteCards[games[gameInfo.index].whiteCardIndex++];
-               // rObj[obj].push(card);
-               
-               // return rObj;
-            // }, playerList);
-            
-            //console.log(JSON.stringify(games[gameInfo.index]));
-            //console.log(JSON.stringify(games[gameInfo.index]));
             var thisGame = games[gameInfo.index];
             
             res.write(JSON.stringify(thisGame.round));
             res.end();
             break;
 
-        case '/PlayRound':
+        case '/PlayRoundUi':
             var pram = preamble(reqObj);
             if (!pram.isOk) break;
             var gameInfo = getGameIndex(pram);
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
             
-            if (games[gameInfo.index].roundNumber == 0) break;
+            if (games[gameInfo.index].roundCount == 0) break;
             
             doPageFile('VirtualCards.html', reqObj, res, true);
+            break;
+
+        case '/SubmitAnswer':
+            var pram = preamble(reqObj);
+            if (!pram.isOk) break;
+            var gameInfo = getGameIndex(pram);
+            if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
+            
+            var answer = getAnswer(reqObj);
+            console.log(answer);
+            
+            var alreadySubmitted = games[gameInfo.index].round.players.submitted;
+            var isAlreadySubmitted = false;
+            for (var s in alreadySubmitted) {
+                if (alreadySubmitted[s] == answer) isAlreadySubmitted = true;
+                if (isAlreadySubmitted) break;
+            }
+            
+            if (!isAlreadySubmitted) {
+                alreadySubmitted.push(answer);
+                console.log('pushed ############## ' + answer);
+            } else  {
+                console.log('NOT PUSHED!!!! ############## ' + answer);
+            }
+            
+            var cloneOfRound = cloneRound(games, gameInfo, pram);
+            res.write(JSON.stringify(cloneOfRound));
+            res.end();
             break;
 
         case '/UpdateRound':
@@ -380,25 +497,24 @@ function handleRequest(req, res) {
             if (!pram.isOk) break;
             var gameInfo = getGameIndex(pram);			
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
+                        
+            // var cloneRound = function(games, gameInfo, pram) {
+                    
+                // var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
+                // cloneOfRound.heldCards = [];
+
+                // var heldCards = games[gameInfo.index].heldCards;
+                // var cards = heldCards.get(pram.playerName);
+
+                // for (var cardIndex in cards) {
+                    // console.log(cardIndex);
+                    // cloneOfRound.heldCards.push(whiteCards.deck[cards[cardIndex]]);
+                // }
+                // return cloneOfRound;
+            // }
             
-            var cloneOfRound = JSON.parse(JSON.stringify(games[gameInfo.index].round));
-            var heldCards = games[gameInfo.index].heldCards;
+            var cloneOfRound = cloneRound(games, gameInfo, pram);
             
-            console.log(JSON.stringify(heldCards));
-            cloneOfRound.heldCards = [];
-            var cards = heldCards.get(pram.playerName);
-            console.log(JSON.stringify(cards));
-            //var whiteCardsShort = games[gameInfo.index].whiteCards;
-            for (var cardIndex in cards) {
-                console.log(cardIndex);
-              //  console.log((heldCards[pram.playerName].get(card]));
-                cloneOfRound.heldCards.push(whiteCards.deck[cards[cardIndex]]);
-            }
-            
-            
-            //console.log('heldCards:'+JSON.stringify(heldCards));
-            //cloneOfRound.heldCards = JSON.parse(JSON.stringify(heldCards));
-            //console.log('SECOND:'+JSON.stringify(cloneOfRound));
             res.write(JSON.stringify(cloneOfRound));
             res.end();
             break;
@@ -414,68 +530,10 @@ function handleRequest(req, res) {
 }
 
 /*
-create player
-join game or create game
-click start game
-(start round)
-(- get question)
-click submit answer
-(x has chosen ...)
-show answers
-click chosen winner
-(store result)
-show winner
-(goto start round)
- 
-end game
-
-
-player
-    name
-    from
-
-player
-    create - (offer random names)
-
-round
-    start time
-    question
-
-    players
-    players selection
-
-    players answers
-    
-    winning answer
-    winning player
-
-game
-    id
-    description
-    players - list of names
-    players points - list of points against name
-    start time - game start time
-
-game
-    create - create game
-    get - list
-    delete - delete game
-    update - add player
-
-
-
-game
-
-draw question
-
-draw card
 
 submit answer (formatted string)
 
 submit vote (formatted string)
-
-
-
 
 */
 
