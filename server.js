@@ -459,7 +459,9 @@ function handleRequest(req, res) {
             if (!iMadeThisGame) break;
             
             var cardState = hasCardsBeenDelt(games, gameInfo, pram);
-            if (!cardState.cardsDelt) {
+            if (!cardState.cardsDelt) { 
+            
+            //???PROBABLY IF CARDS DELT RETURN???
                 if (games[gameInfo.index].roundCount > 0) break; //exception
                 
                 var dealCards = function(game, gameInfo) {
@@ -483,19 +485,20 @@ function handleRequest(req, res) {
             // get a question card
             var roundObj = {};
             var useIndex = getBlackCard(games, gameInfo);
-            roundObj.question 
-                = blackCards.deck[useIndex].replace(/________/g, '______');;
             
-            //var evenQuestionBlanks = roundObj.question.replace(/________/g, '______');
+            roundObj.question = blackCards.deck[useIndex].replace(/________/g, '______');;            
             var count = (roundObj.question .match(/______/g) || []).length;
-            //count +=  (roundObj.question.match(/________/g) || []).length;
-            //if (count == 0) count = 1;
             
             roundObj.questionBlankCount = count;
             roundObj.players = { list:[], submitted:[], voted :[], };
             roundObj.players.list = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
             roundObj.game = games[gameInfo.index].game; //(this is the game name)
-            roundObj.roundCount = (++games[gameInfo.index].roundCount);
+            
+            if (!cardState.cardsDelt) {
+                roundObj.roundCount = (++games[gameInfo.index].roundCount);
+            } else {
+                roundObj.roundCount = games[gameInfo.index].roundCount;
+            }
             
             games[gameInfo.index].round = roundObj;
             
@@ -507,7 +510,8 @@ function handleRequest(req, res) {
                 var playerList = roundObj.players.list;
                 for (var playerIndex in playerList) {                
                     var cardArray = [];
-                    for (var i = 0; i < 5; i++) 
+                    const FIVECARDS = 5;
+                    for (var i = 0; i < FIVECARDS; i++) 
                         cardArray.push(getWhiteCard(games, gameInfo));
 
                     var player = playerList[playerIndex];
@@ -548,15 +552,17 @@ function handleRequest(req, res) {
             for (var s in alreadySubmitted) {
                 if (JSON.stringify(alreadySubmitted[s]) == cards) isAlreadySubmitted = true;
                 if (isAlreadySubmitted) break;
+                //???OR IF ANYTHING IN SUBMITTED IS ALREADY SUBMITTED???
             }
             
             if (!isAlreadySubmitted) {
                 var playerList = games[gameInfo.index].round.players.list;
                 
-                // match indexs between ...round.players.[list|submitted|voted]
+                // match indexs between .round.players.[list|submitted|voted]
                 // i.e. those three arrays share the same index per player
-                for (var player in playerList) {
+                for (var player in playerList) {                 
                     if (playerList[player] == pram.playerName) {
+                        // ???OR [].indexOf???
                         alreadySubmitted[player] = JSON.parse( JSON.stringify(cards) );
                         replaceCards(games, gameInfo, pram, cards);
                         break;
@@ -574,22 +580,7 @@ function handleRequest(req, res) {
             if (!pram.isOk) break;
             var gameInfo = getGameIndex(pram);			
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
-                        
-            // var cloneRound = function(games, gameInfo, pram) {
-                    
-                // var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
-                // cloneOfRound.heldCards = [];
 
-                // var heldCards = games[gameInfo.index].heldCards;
-                // var cards = heldCards.get(pram.playerName);
-
-                // for (var cardIndex in cards) {
-                    // console.log(cardIndex);
-                    // cloneOfRound.heldCards.push(whiteCards.deck[cards[cardIndex]]);
-                // }
-                // return cloneOfRound;
-            // }
-            
             var cloneOfRound = cloneRound(games, gameInfo, pram);
             
             res.write(JSON.stringify(cloneOfRound));

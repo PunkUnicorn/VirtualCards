@@ -16,6 +16,8 @@
     <body>
         <style>
             .wait-for-load {}
+            .wait-for-submit {}
+            .wait-for-vote {}
             .gravel-selected {}
         </style>	
         <script src="javascripts/jQuery.js"></script>
@@ -37,20 +39,23 @@
         <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
         <script type="text/javascript">
-            window.onload = function(event) {
-                //$('.answers').hide();
+            window.onload = function(event) {             
                 $('#divAnswersArea').hide();
                 $('#divQuestionArea').hide();
                 $('#btnSubmitAnswer').hide();
-                //$('#btnSubmitVote').hide();
+                $('#btnResetSelection').hide();
+                $('#btnSubmitVote').hide();
 
                 var player = cardApi.getParameterByName('Player');
                 $('#txtPlayerName').text(player);
 
                 var game = cardApi.getParameterByName('Game');
                 $('#txtGameName').text(game);
-                              
+
                 getRefreshed(cardSelection);
+                
+                $('.wait-for-submit').hide();
+                $('.wait-for-vote').hide();                
             }
         </script>
         <script type="text/javascript">
@@ -106,18 +111,19 @@
                         ondragstart="dragDrop.drag(event, dragStart)"
                         id='card5' >5</div>
                     <div class='w3-center'>
-                        <button id='btnResetSelection' class='w3-btn w3-khaki' onclick='onClickResetSelection(event)'>Reset <span class='fa fa-eraser'> </span></button>
+                        <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event)'>Reset <span class='fa fa-eraser'> </span></button>
                     </div>
                 </div>
                 <div class='w3-card-16 card-area w3-container w3-col m6 w3-black w3-animate-opacity'>
                     <h4>Questions and Answers</h4>
                     <div id='divQuestionArea'>
                         <div id ='txtQuestion' class ='w3-padding-small w3-large'></div>
-                        <button id ='btnSubmitAnswer' class='w3-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event)'>Submit <span class='fa fa-paper-plane'> </span></button>
+                        <button id ='btnSubmitAnswer' class='w3-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event)'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
                     </div>
                     <div id='divAnswersArea'>                    
                         <div id='txtAnswers' class ='w3-padding-small w3-large'><div>Put crass answer here</div></div>
-                        <button id ='btnSubmitVote' class='w3-btn w3-deep-purple w3-animate-opacity w3-right' onclick='onSubmitVote(event)'>Vote <span class='fa fa-gavel'> </span></button>
+                        <br />
+                        <button id ='btnSubmitVote' class='w3-btn w3-animate-opacity w3-right w3-deep-purple' onclick='onSubmitVote(event)'>Vote <span class='fa fa-gavel'> <span class='wait-for-vote fa fa-bell w3-small w3-spin'> </span></button>
                     </div>
                        
                 </div>
@@ -131,20 +137,6 @@
         
     <script>
 /*
-    submit
-        ~remove used cards
-        ~replace used cards
-        ~get other submitted answers        
-
-        ~hide question submision
-        ~show answers panel
-        ~fade out previous winner and answer
-    refresh
-    
-    select vote
-    
-    refresh
-    
     post vote
     
     refresh
@@ -161,7 +153,7 @@
                 if (gameObj.haveSubmitted) return;
                 
                 var negociateSelection = function (target, isSelected, cardSelection) {                    
-                    //console.log(txt);
+
                     if (!isSelected) {
                         var txt = target.text();
                         var removeIndex = -1;
@@ -192,9 +184,13 @@
                 }
                 
                 cardUi.onCardSelect(ev, cardSelection, negociateSelection)
+
+                var anySelected = ($('.card-selected').length > 0) ? true : false;
+                $('#btnResetSelection').toggle(anySelected); 
             }
             
             function onClickResetSelection(event) {
+                $('#btnResetSelection').hide(); 
                 var target = $('.card-selected');
                 cardUi.setCardSelectionEffects(target, false);
                 target.toggleClass('card-selected', false);
@@ -209,10 +205,19 @@
             
             function voteClick(event) {
                 var dontSelect = $(event.target).hasClass('fa-gavel');
-                $('.gravel-selected').removeClass('fa-gavel');
-                if (dontSelect) return;
-
-                $(event.target).addClass('fa-gavel');
+                $('.gravel-selected').removeClass('fa-gavel').text(' click to select ').hide();
+                
+                
+                if (!dontSelect) {
+                    $(event.target).addClass('fa-gavel').text('').show();
+                }
+                
+                var anySelected = ($('.fa-gavel').length > 1/*the button always has a gavel*/) ? true : false;
+                $('#btnSubmitVote').toggle(anySelected);
+                
+                if (!anySelected) {
+                    $('.gravel-selected').show();
+                }
             }
             
             function getRoot(referrer) {
@@ -248,10 +253,12 @@
 
                             onClickResetSelection(null);
                             getRefreshed(cardSelection);
+                            $('.wait-for-submit').hide();
                         }
                     }
                     
                 };
+                $('.wait-for-submit').show();
                 xmlhttp.send();
                 
             }
@@ -298,7 +305,9 @@
                     $('#divAnswersArea').toggle(gameObj.haveSubmitted || gameObj.haveVoted);
                     
                     if (gameObj.game == passName) {
-                        window.setTimeout( function () {
+                    
+                        window.setTimeout( function (playerName) {
+                        
                             $('#txtRoundNumber').text('Round ' + gameObj.roundCount);
                             
                             if (!gameObj.haveSubmitted) 
@@ -326,12 +335,14 @@
                             if (gameObj.haveSubmitted && gameObj.players.submitted.length > 0) {
                                 // submitted
                                 var submittedStr = '';
-                                for (var playerIndex in gameObj.players.list) {
+                                //var playerIndex = gameObj.players.list.indexOf(playerName);
+                                for (var playerIndex in gameObj.players.list) {                                
                                     var ansCards = gameObj.players.submitted[playerIndex];
                                     if (typeof ansCards === 'undefined') continue;
+                                    if (ansCards == null) continue;
                                     if (ansCards.length == 0) continue;
                                     var filledOut = fillQuestion(gameObj, ansCards);
-                                    submittedStr += '<li class="card-spin"><button class="gravel-selected w3-deep-purple w3-btn fa" onclick="voteClick(event)"></button> '+filledOut+'</li>';
+                                    submittedStr += '<li class="card-spin"><button class="gravel-selected w3-deep-purple w3-btn w3-tiny fa" onclick="voteClick(event)"> click to select </button> <br/>'+filledOut+'</li>';
                                 }
                                 $('#txtAnswers').html('<ul class="w3-ul w3-dark-grey w3-border"> '+ submittedStr + '</ul>');
                                 $('#txtQuestion').hide();
@@ -340,7 +351,7 @@
                                 $('#txtQuestion').hide();
                                 $('#divAnswersArea').show();                            
                             }
-                        }, 0);
+                        }, 0, playerName);
                     }
                 }
 
