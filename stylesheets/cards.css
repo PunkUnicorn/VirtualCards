@@ -6,8 +6,8 @@ div.card
   border-radius: 4px;
   border: 1px solid #734242;
   
-  background: #F0F0F0;
   
+  background: #F3F3F3;
   /*width:73.6px;*/
   /*height: 102.35px;*/
   width:97.888px;
@@ -29,7 +29,7 @@ div.card-selected
   border-radius: 4px;
   border: 2px solid #734242;
   
-  background: #E0E0E0;
+  background: #F0F0F0;
   
   margin: 8px;
   

@@ -72,9 +72,6 @@
             </div>
             <div class='w3-row'>
                 <div class='w3-card-16 card-area w3-col w3-container m4 w3-animate-opacity'>
-                    <p class='w3-padding-small w3-tiny'>
-                        <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
-                    </p> 
                     <div class='card card-horizontal card-spin-delay1 w3-padding-small w3-tiny' 
                         onclick='cardSelect(event)'
                         ondrop="dragDrop.drop(event, dragStart)" 
@@ -128,10 +125,14 @@
                        
                 </div>
             </div>
+            
             <div class='w3-center'>
                 <button 
                     class='w3-btn w3-blue' 
-                        onclick='onClickRefresh(event)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
+                    onclick='onClickRefresh(event)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
+                <p class='w3-padding-small w3-tiny'>
+                    <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
+                </p>             
             </div>
         </div>
         
@@ -144,16 +145,18 @@
     if all voted show winner
     (delay showing the 'next' button)
     CreateRound/JoinRound
-    
-        
-
-            
+           
 */
+            var freezeSelect = false;
             function cardSelect(ev) {
                 if (gameObj.haveSubmitted) return;
                 
+                if (freezeSelect) return;
+                freezeSelect = true;
+                
                 var negociateSelection = function (target, isSelected, cardSelection) {                    
 
+                    // unselect if selected
                     if (!isSelected) {
                         var txt = target.text();
                         var removeIndex = -1;
@@ -169,8 +172,9 @@
                         try { questionBlankCount = gameObj.questionBlankCount; } 
                         catch (err) { return false;/*questionBlankCount = 1;*/ }
                         
+                        // simply refuse more than the alowed cards
                         if (cardSelection.length >= questionBlankCount) {
-                            return false;
+                            return false; // im sorry dave you can't do that
                         } else {
                             cardSelection.push(target.text());                            
                         }
@@ -186,7 +190,9 @@
                 cardUi.onCardSelect(ev, cardSelection, negociateSelection)
 
                 var anySelected = ($('.card-selected').length > 0) ? true : false;
-                $('#btnResetSelection').toggle(anySelected); 
+                $('#btnResetSelection').toggle(anySelected);
+                
+                freezeSelect = false;
             }
             
             function onClickResetSelection(event) {
@@ -316,14 +322,25 @@
                             var cardIdSelectorTemplate = '#card';
                             var index = 0;
                             for (var myCard in gameObj.heldCards) {
-                                index++;
+                                index++;                                
                                 $(cardIdSelectorTemplate + index.toString()).text(gameObj.heldCards[myCard]);
                                 console.log(gameObj.heldCards[myCard]);
-                            }                        
+                            }                 
+                            
+                            var isSelection = ($('.gravel-selected.fa-gavel').length > 0) ? true : false;
+                                
+                            var currentVoteSelection = '';
+                            
+                            if (isSelection) {
+                                currentVoteSelection = $('.gravel-selected')
+                                        .parent()
+                                        .attr('id');
+                            }
                             
                             if (gameObj.haveVoted && gameObj.players.voted.length > 0) {
                                 // voted
-                                var votedStr = '<h6>Voted</h6>';
+                                var votedStr = '<h6>Voted</h6>';                                
+                                
                                 for (var playerIndex in gameObj.players.list) {
                                     var voted = gameObj.players.voted[playerIndex];
                                     if (typeof ans === 'undefined') continue;
@@ -340,11 +357,24 @@
                                     var ansCards = gameObj.players.submitted[playerIndex];
                                     if (typeof ansCards === 'undefined') continue;
                                     if (ansCards == null) continue;
-                                    if (ansCards.length == 0) continue;
-                                    var filledOut = fillQuestion(gameObj, ansCards);
-                                    submittedStr += '<li class="card-spin"><button class="gravel-selected w3-deep-purple w3-btn w3-tiny fa" onclick="voteClick(event)"> click to select </button> <br/>'+filledOut+'</li>';
+                                    if (ansCards.length == 0) continue;                                    
+                                    var filledOut = fillQuestion(gameObj, ansCards);                                    
+                                    
+                                    var myId = 'ansNumber' + playerIndex.toString();                                    
+                                    var imSelected = (currentVoteSelection == myId);
+                                    var hasGavel =  imSelected ? ' fa-gavel' : '';
+                                    
+                                    var hasClickToSelect = imSelected ? '' :
+                                            (isSelection) ? '' : ' click to select ';
+                                        
+                                    submittedStr += '<li id="' + myId + '" class="card-spin">' 
+                                        +'<button class="gravel-selected w3-deep-purple w3-btn w3-tiny fa'+hasGavel+'" onclick="voteClick(event)">'
+                                        +hasClickToSelect + '</button> <br/>'+filledOut+'</li>';
                                 }
                                 $('#txtAnswers').html('<ul class="w3-ul w3-dark-grey w3-border"> '+ submittedStr + '</ul>');
+                                if (isSelection) {
+                                    $('.gravel-selected:not(.fa-gavel)').hide()
+                                }
                                 $('#txtQuestion').hide();
                                 $('#divAnswersArea').show();
                             } else if (gameObj.haveSubmitted || gameObj.haveVoted) {
@@ -358,18 +388,6 @@
                 cardApi.joinOrCreateOrStartGame(xmlhttp, updateRoundLocation, passName, playerName, updateRoundSuccessFunc, false);
 
             }
-
-//            // refire the animation
-//            $(".card").click(function () {
-//                var stripEffects = function () {
-//                    return $('div.card')
-//                        .removeClass('card-twisle card-spin card-jiggle card-flash card-twisle card-jump card-shake');
-//                }
-
-//                console.log('click ::::');
-//                stripEffects()
-//                    .ready(cardUi.fireEffect($(this)));
-//            });
         </script>
 
     </body>
