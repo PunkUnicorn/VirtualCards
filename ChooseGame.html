@@ -130,7 +130,7 @@
                     playRound(passName, playerName);
                 }
 
-                cardApi.joinOrCreateOrStartGame(xmlhttp, startGameLocation, passName, playerName, startSuccessFunc, false);
+                cardApi.joinOrCreateThing(xmlhttp, startGameLocation, passName, playerName, startSuccessFunc, false);
             }
             
             function onClickJoinCreate(event) {			
@@ -151,7 +151,7 @@
                         var setUi = function (responseObj, playerCount, passName, playerName) {
                             $('.wait-for-game').show();
                             $('.join-enabled').text('Refresh');
-                            
+
                             $('.wait-for-game-info1').html('<b>' + responseObj.game + '</b>');
                             $('.wait-for-game-info3').html('<i>' + playerCount 
                                     + ' player(s)</i><p>waiting for '
@@ -182,16 +182,16 @@
                     } else {
                         var createGameLocation = window.location.protocol + '//' + window.location.host + '/CreateGame?Game=' + passName + '&Player=' + playerName;
                         var createSuccessFunc = function (xmlhttp, passName, playerName, joinOnly) {
-                            cardApi.joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, true);
+                            cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, true);
                         }
 
                         if (!joinOnly) {
-                            cardApi.joinOrCreateOrStartGame(xmlhttp, createGameLocation, passName, playerName, createSuccessFunc, false);
+                            cardApi.joinOrCreateThing(xmlhttp, createGameLocation, passName, playerName, createSuccessFunc, false);
                         }
                     }
                 }
 
-                cardApi.joinOrCreateOrStartGame(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, false);
+                cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, passName, playerName, joinSuccessFunc, false);
             }
         </script>
     </body>

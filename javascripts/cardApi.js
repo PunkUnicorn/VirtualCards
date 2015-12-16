@@ -9,7 +9,7 @@ cardApi = {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     },
 
-    joinOrCreateOrStartGame: function(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
+    joinOrCreateThing: function(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
         var requestIt = function () {
             if (xmlhttp.readyState == 4) {
                 $('.wait-for-load').hide();
@@ -27,5 +27,25 @@ cardApi = {
         $('.wait-for-load').show();
         xmlhttp.send();
     },
+    
+    sendSomething: function(takeMeWithYouSuccessILoveYou, thingParams, beforeSend, onSuccess) {
+        var xmlhttp = new XMLHttpRequest();
+
+        var url = getRoot(window.document.referrer);
+        var submitThingLocation = url + thingParams
+        
+        xmlhttp.open("GET", submitThingLocation);
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4) {
+                if (xmlhttp.status == 400 || xmlhttp.status == 200) {
+                    onSuccess(takeMeWithYouSuccessILoveYou);
+                }
+            }
+            
+        };
+        beforeSend();
+        xmlhttp.send();                
+    },
+                
 
 }

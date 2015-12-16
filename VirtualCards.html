@@ -122,7 +122,6 @@
                         <br />
                         <button id ='btnSubmitVote' class='w3-btn w3-animate-opacity w3-right w3-deep-purple' onclick='onSubmitVote(event)'>Vote <span class='fa fa-gavel'> <span class='wait-for-vote fa fa-bell w3-small w3-spin'> </span></button>
                     </div>
-                       
                 </div>
             </div>
             
@@ -210,6 +209,8 @@
             }
             
             function voteClick(event) {
+                if (gameObj.haveVoted) return;
+                
                 var dontSelect = $(event.target).hasClass('fa-gavel');
                 $('.gravel-selected').removeClass('fa-gavel').text(' click to select ').hide();
                 
@@ -226,37 +227,94 @@
                 }
             }
             
+            function onSubmitVote(event) {
+                var passName = $('#txtGameName').text();
+                var playerName = $('#txtPlayerName').text();
+            
+                /* var sendSomething = function(cardSelection, thingParams, beforeSend, onSucess) {
+                    var xmlhttp = new XMLHttpRequest();
+                    
+                    var passName = $('#txtGameName').text();
+                    var playerName = $('#txtPlayerName').text();
+                                        
+                    var url = getRoot(window.document.referrer);
+                    var submitThingLocation = url + thingParams
+                    
+                    xmlhttp.open("GET", submitThingLocation);
+                    xmlhttp.onreadystatechange = function() {
+                        if (xmlhttp.readyState == 4) {
+                            if (xmlhttp.status == 400 || xmlhttp.status == 200) {
+                                onSuccess(cardSelection);
+                            }
+                        }
+                        
+                    };
+                    beforeSend();
+                    xmlhttp.send();                
+                };
+                 */
+                var beforeSend = function() {
+                    $('.wait-for-vote').show();
+                };
+                var onSuccess = function(cardSelection) {
+                    onClickResetSelection(null);
+                    getRefreshed(cardSelection);
+                    $('.wait-for-vote').hide();                    
+                };
+                
+                var currentVoteSelection = $('.fa-gavel')
+                                        .parent()
+                                        .attr('id');
+                                        
+                var vote = currentVoteSelection.substr(currentVoteSelection.length-1, 1);
+                
+                console.log('vote:'+vote);
+                cardApi.sendSomething(cardSelection, '/SubmitVote?Game=' 
+                                        + passName
+                                        + '&Player=' 
+                                        + playerName
+                                        + '&Vote=' + vote, beforeSend, onSuccess);
+            };
+            
             function getRoot(referrer) {
                 var len = referrer.lastIndexOf('/');
                 if (len == -1) len = referrer.length;
                 var url = referrer.substr(0, len);
                 return url;
             }
-            
+
             function onSubmitAnswer(event) {
-                var xmlhttp = new XMLHttpRequest();
+                var passName = $('#txtGameName').text();
+                var playerName = $('#txtPlayerName').text();
+                var beforeSend = function() {
+                    $('.wait-for-submit').show();
+                };
+                var onSuccess = function(cardSelection) {
+                    onClickResetSelection(null);
+                    getRefreshed(cardSelection);
+                    $('.wait-for-submit').hide();
+                };
+
+                cardApi.sendSomething(cardSelection, '/SubmitAnswer?Game=' + passName + '&Player=' + playerName + '&Cards=' 
+                    + JSON.stringify(cardSelection), beforeSend, onSuccess);            
+
+                /* var xmlhttp = new XMLHttpRequest();
                 
                 var passName = $('#txtGameName').text();
                 var playerName = $('#txtPlayerName').text();
                 
-                var answer = $('#txtQuestion').html();
                 var url = getRoot(window.document.referrer);
                 var submitAnswerLocation = url + '/SubmitAnswer?Game=' 
                     + passName
                     + '&Player=' 
                     + playerName
-                    //+ '&Answer=' 
-                    //+ encodeURI(answer)
                     + '&Cards=' 
                     + JSON.stringify(cardSelection);
                 
                 xmlhttp.open("GET", submitAnswerLocation);
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                            /* $('#divQuestionArea').hide();
-                            $('#divAnswersArea').show();   */
-
+                        if (xmlhttp.status == 400 || xmlhttp.status == 200) {                           
                             onClickResetSelection(null);
                             getRefreshed(cardSelection);
                             $('.wait-for-submit').hide();
@@ -265,7 +323,7 @@
                     
                 };
                 $('.wait-for-submit').show();
-                xmlhttp.send();
+                xmlhttp.send(); */
                 
             }
             
@@ -327,24 +385,26 @@
                                 console.log(gameObj.heldCards[myCard]);
                             }                 
                             
-                            var isSelection = ($('.gravel-selected.fa-gavel').length > 0) ? true : false;
-                                
+                            var isSelection = !gameObj.haveScores && ($('.gravel-selected.fa-gavel').length > 0) ? true : false;
                             var currentVoteSelection = '';
-                            
                             if (isSelection) {
                                 currentVoteSelection = $('.gravel-selected')
                                         .parent()
                                         .attr('id');
                             }
                             
-                            if (gameObj.haveVoted && gameObj.players.voted.length > 0) {
-                                // voted
+                            if (gameObj.haveVoted && gameObj.players.voted.length > 0) {                                
                                 var votedStr = '<h6>Voted</h6>';                                
                                 
                                 for (var playerIndex in gameObj.players.list) {
                                     var voted = gameObj.players.voted[playerIndex];
                                     if (typeof ans === 'undefined') continue;
                                     if (ans.length == 0) continue;
+                                    var scoreCharm='';
+                                    if (gameObj.haveScores) {
+                                        // scoreCharm
+                                        // add score charm per vote
+                                    }
                                     votedStr += '<p class="card-spin"><i> '+gameObj.players.list[playerIndex]+'</i></p>';
                                 }
                             } 
@@ -365,7 +425,8 @@
                                     var hasGavel =  imSelected ? ' fa-gavel' : '';
                                     
                                     var hasClickToSelect = imSelected ? '' :
-                                            (isSelection) ? '' : ' click to select ';
+                                            (isSelection) ? '' :
+                                            (gameObj.haveVoted) ? '' : ' click to select ';
                                         
                                     submittedStr += '<li id="' + myId + '" class="card-spin">' 
                                         +'<button class="gravel-selected w3-deep-purple w3-btn w3-tiny fa'+hasGavel+'" onclick="voteClick(event)">'
@@ -381,11 +442,12 @@
                                 $('#txtQuestion').hide();
                                 $('#divAnswersArea').show();                            
                             }
+                            if (gameObj.haveVoted) $('#btnSubmitVote').hide();
                         }, 0, playerName);
                     }
                 }
 
-                cardApi.joinOrCreateOrStartGame(xmlhttp, updateRoundLocation, passName, playerName, updateRoundSuccessFunc, false);
+                cardApi.joinOrCreateThing(xmlhttp, updateRoundLocation, passName, playerName, updateRoundSuccessFunc, false);
 
             }
         </script>

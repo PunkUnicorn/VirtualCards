@@ -144,7 +144,19 @@ function getCards(reqObj) {
         console.log('er... ' + err);       
     }
     return cards;
-};                                                                                          
+};
+
+function getVote(reqObj) {
+    var vote = -1;
+    try {
+        vote = JSON.parse( reqObj.query.Vote );
+        console.log('@' + JSON.stringify(vote));
+    }
+    catch(err) {
+        console.log('er... ' + err);       
+    }
+    return vote;
+}
                                 // _     _      
                                // | |   | |     
  // _ __  _ __ ___  __ _ _ __ ___ | |__ | | ___ 
@@ -296,9 +308,10 @@ function cloneRound(games, gameInfo, pram) {
     
     cloneOfRound.haveVoted = false; 
     try {        
-        cloneOfRound.haveVoted = (cloneOfRound.players.votes[playerIndex].length > 0);
+        cloneOfRound.haveVoted = (cloneOfRound.players.voted[playerIndex] === true);
     } catch (err) { cloneOfRound.haveVoted = false; }
     
+    cloneOfRound.haveScores = false;
     return cloneOfRound;
 };
 
@@ -329,7 +342,7 @@ function handleRequest(req, res) {
 
         case '/': //Ui
             console.log('index');
-            doPageFile('./index.html', reqObj, res, true);
+            doPageFile('./index.html', reqObj, res);
             break;
 
         case '/CreatePlayer':
@@ -360,7 +373,7 @@ function handleRequest(req, res) {
             var playerName = getPlayer(reqObj);
             if (playerName == '') break;
 
-            doPageFile('ChooseGame.html', reqObj, res, true);
+            doPageFile('ChooseGame.html', reqObj, res);
             break;
 
         case '/JoinGame':
@@ -438,9 +451,13 @@ function handleRequest(req, res) {
                     
                     retObj.gameInfo = getGameIndex(games, pram);
                     if (!retObj.gameInfo.gameExists) return retObj;
-                        
+                    
+                    console.log('/***********************************/');
+                    console.log('pram.player:' + pram.player);
+                    console.log('retObj.gameInfo.creator:'+retObj.gameInfo.creator);
                     var iMadeThisGame = (pram.player == retObj.gameInfo.creator);
                     if (!iMadeThisGame) return retObj;
+                    console.log('/***********************************/');
                     
                     retObj.result = true;
                     return retObj;
@@ -458,7 +475,7 @@ function handleRequest(req, res) {
                     
                         if (games[gameInfo.index].roundCount > 0) return retObj; 
                        
-                        var dealCards = function(games, gameInfo) {
+                        var dealCards = function(games, gameInfo) {                            
                             // ??SHUFFLE THE CARDS??
                             games[gameInfo.index].blackCards = [];
                             games[gameInfo.index].blackCardIndex = 0;
@@ -505,6 +522,8 @@ function handleRequest(req, res) {
                         roundObj.roundCount = games[gameInfo.index].roundCount;
                     }
                     
+                    games[gameInfo.index].votes = []; //reset votes
+                    games[gameInfo.index].voteCount = 0;                    
                     games[gameInfo.index].round = roundObj;
                     return roundObj;
                 };
@@ -552,39 +571,93 @@ function handleRequest(req, res) {
             
             if (games[gameInfo.index].roundCount == 0) break;
             
-            doPageFile('VirtualCards.html', reqObj, res, true);
+            doPageFile('VirtualCards.html', reqObj, res);
             break;
 
         case '/SubmitAnswer':
-            var pram = preamble(reqObj);
-            if (!pram.isOk) break;
-            var gameInfo = getGameIndex(games, pram);
-            if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
-                   
-            var cards = getCards(reqObj);
-            
-            if (cards.length != games[gameInfo.index].round.questionBlankCount) break;
-                        
-            var alreadySubmitted = games[gameInfo.index].round.players.submitted;
-            var isAlreadySubmitted = false;
-                            
-            for (var s in alreadySubmitted) {
-                if (JSON.stringify(alreadySubmitted[s]) == cards) isAlreadySubmitted = true;
-                if (isAlreadySubmitted) break;
-            }
+            var doSubmitAnswerChecks = function(games, reqObj) {
+                var b = {};
+                b.result = false;
+                
+                b.pram = preamble(reqObj);
+                if (!b.pram.isOk) 
+                    return b;
+                
+                b.gameInfo = getGameIndex(games, b.pram);
+                if (!b.gameInfo.gameExists || !b.gameInfo.playerInGame) 
+                    return b;
+                
+                b.cardsSubmitted = getCards(reqObj);            
+                if (b.cardsSubmitted.length != games[b.gameInfo.index].round.questionBlankCount) 
+                    return b;
+
+                b.isInList = false;
+                
+                var listOfCards = games[b.gameInfo.index].round.players.submitted;
+                for (var s in listOfCards) {
+                    if (JSON.stringify(listOfCards[s]) == b.cardsSubmitted) b.isInList = true;
+                    if (b.isInList) return b;
+                }
+                
+                b.result = true;
+                return b;
+            };
+
+            var b = doSubmitAnswerChecks(games, reqObj);
+            if (!b.result) break;
             
             //???OR IF ANYTHING IN SUBMITTED IS ALREADY SUBMITTED??? do we really need to match what was delt to them?
 
-            if (!isAlreadySubmitted) {
-                var playerList = games[gameInfo.index].round.players.list;
-                var playerIndex = playerList.indexOf(pram.playerName);
+            if (!b.isAlreadySubmitted) {
+                var playerList = games[b.gameInfo.index].round.players.list;
+                var playerIndex = playerList.indexOf(b.pram.playerName);
                 if (playerIndex == -1) break;
                 
-                alreadySubmitted[playerIndex] = JSON.parse( JSON.stringify(cards) ) /*clone wars*/;
-                replaceCards(games, gameInfo, pram, cards);
+                var alreadySubmitted = games[b.gameInfo.index].round.players.submitted;
+                alreadySubmitted[playerIndex] = JSON.parse( JSON.stringify(b.cardsSubmitted) ) /*clone wars*/;
+                replaceCards(games, b.gameInfo, b.pram, b.cardsSubmitted);
             }
+        
+            var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);
+            res.write(JSON.stringify(cloneOfRound));
+            res.end();
+            break;
             
-            var cloneOfRound = cloneRound(games, gameInfo, pram);
+            
+        case '/SubmitVote':
+            var doSubmitVoteChecks = function(games, reqObj) {
+                var b = {};
+                b.result = false;
+                
+                b.pram = preamble(reqObj);
+                if (!b.pram.isOk) 
+                    return b;
+                
+                b.gameInfo = getGameIndex(games, b.pram);
+                if (!b.gameInfo.gameExists || !b.gameInfo.playerInGame) 
+                    return b;
+                
+                b.vote = getVote(reqObj);
+                if (b.vote == -1) return b;
+                
+                b.result = true;
+                return b;    
+            };
+
+            var b = doSubmitVoteChecks(games, reqObj);
+            if (!b.result) break;
+
+            var playerList = games[b.gameInfo.index].round.players.list;
+            var myIndex = playerList.indexOf(b.pram.playerName);
+            if (myIndex == -1) break;
+            
+            games[b.gameInfo.index].votes[myIndex] = b.vote;
+            games[b.gameInfo.index].voteCount++;
+            games[b.gameInfo.index].round.players.voted[myIndex] = true;
+            
+            var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);            
+            //cloneOfRound.haveVoted = true;            
+
             res.write(JSON.stringify(cloneOfRound));
             res.end();
             break;
@@ -596,6 +669,38 @@ function handleRequest(req, res) {
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
 
             var cloneOfRound = cloneRound(games, gameInfo, pram);
+
+            try {
+                console.log(JSON.stringify(games[gameInfo.index].list));
+                console.log('############################');
+                console.log(' WIP ');
+                console.log('games[gameInfo.index].voteCount:' + games[gameInfo.index].voteCount);
+                console.log('games[gameInfo.index].players.list.length:' + games[gameInfo.index].list.length);
+            } catch (err) {
+                console.log(err.message);
+            };
+
+            
+            if (games[gameInfo.index].voteCount == games[gameInfo.index].list.length) {
+                var allVotes = games[gameInfo.index].votes;
+                var playerScores = [];
+                for (var playerIndex in games[gameInfo.index].list) { playerScores[playerIndex] = 0; }
+                for (var vote in allVotes) {
+                    playerScores[ allVotes[vote] ] += 1;
+                }
+                console.log(JSON.stringify(allVotes));
+                
+                // var winningIndex = -1;
+                // for (var winner in scores) {
+                    // var max = 0;                    
+                    // if (scores[winner] > max) {
+                        // winningIndex = winner;
+                        // max = scores[winner];
+                    // }
+                // }
+                cloneOfRound.haveScores = true;
+                cloneOfRound.scores = playerScores;
+            }
             
             res.write(JSON.stringify(cloneOfRound));
             res.end();
@@ -603,8 +708,7 @@ function handleRequest(req, res) {
             
         default:
             try {
-                var isHtml = reqObj.pathname.substr(-4) == 'html';
-                doPageFile('.' + reqObj.pathname, reqObj, res, isHtml);
+                doPageFile('.' + reqObj.pathname, reqObj, res);
             } catch(err) {
                 console.log(err.message);
             }
@@ -625,16 +729,22 @@ function doCard(reqObj, res) {
     res.end();
 }
 
-function doPageFile(file, reqObj, res, isHtml) {
+function doPageFile(file, reqObj, res) {
     //console.log(util.inspect(reqObj));
     //console.log(util.inspect(res));
-    try {
+    try {//reqObj.pathname
+        var isHtml = file.toLowerCase().substr(-4) == 'html';
+        var isCSS = file.toLowerCase().substr(-3) == 'css';
+        console.log('isHtml:' + isHtml);
+        console.log('isCSS' + isCSS);
         console.log(file);
         setTimeout( function() {
             fs.readFile(file, function (err, data){
                 console.log('error: ' + err);
                 if (isHtml) {
                     res.writeHeader(200, {"Content-Type": "text/html"});
+                } else if (isCSS) {
+                    res.writeHeader(200, {"Content-Type": "text/css"});
                 }
                 res.write(data);
                 res.end();
