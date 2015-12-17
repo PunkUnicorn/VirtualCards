@@ -192,7 +192,7 @@ function preamble(reqObj) {
  */
 
 function getWhiteCard(games, gameInfo) {
-    return games[gameInfo.index].whiteCards[games[gameInfo.index].whiteCardIndex++];
+    return games[gameInfo.index].whiteCards[ games[gameInfo.index].whiteCardIndex++ ];
 }
 /* 
             _  ______ _            _    _____               _ 
@@ -206,7 +206,10 @@ function getWhiteCard(games, gameInfo) {
  */
 
 function getBlackCard(games, gameInfo) {
-    return games[gameInfo.index].blackCards[games[gameInfo.index].blackCardIndex++];    
+    console.log('################################ hello ' + games[gameInfo.index].blackCardIndex);
+    var retval = games[gameInfo.index].blackCards[ games[gameInfo.index].blackCardIndex++ ];
+    console.log('hello again ' + games[gameInfo.index].blackCardIndex);
+    return retval;
 }
 
 /*          _   _____                     _____          _           
@@ -251,7 +254,7 @@ function replaceCards(games, gameInfo, pram, cards) {
     for (var cardIndex in heldCardsIndexes) {
         var cardDesc = whiteCards.deck[heldCardsIndexes[cardIndex]];
         var removeIndex = cards.indexOf(cardDesc);
-        if (removeIndex > -1)  removeIndexes.push( heldCardsIndexes[cardIndex] );                    
+        if (removeIndex > -1) removeIndexes.push( heldCardsIndexes[cardIndex] );                    
     }
     
     // console.log('game.heldCardsIndexes: ' + JSON.stringify(heldCardsIndexes));
@@ -290,6 +293,8 @@ function hasCardsBeenDelt(game, gameInfo, pram) {
 function cloneRound(games, gameInfo, pram) {
         
     var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
+    console.log('function cloneRound(games, gameInfo, pram) {');
+    console.log(JSON.stringify(games[gameInfo.index].round));
     cloneOfRound.heldCards = [];
 
     var heldCards = games[gameInfo.index].heldCards;
@@ -307,10 +312,12 @@ function cloneRound(games, gameInfo, pram) {
     } catch (err) { cloneOfRound.haveSubmitted = false; }
     
     cloneOfRound.haveVoted = false; 
+    cloneOfRound.votedFor = -1;
     try {        
         cloneOfRound.haveVoted = (cloneOfRound.players.voted[playerIndex] === true);
+        cloneOfRound.votedFor = games[gameInfo.index].votes[playerIndex];
     } catch (err) { cloneOfRound.haveVoted = false; }
-    
+
     cloneOfRound.haveScores = false;
     return cloneOfRound;
 };
@@ -334,7 +341,7 @@ function handleRequest(req, res) {
         console.log(util.inspect(req));
         console.log('============================================');
     };
-    console.log(reqObj.pathname);
+    console.log(' ---------------------------------> ' + reqObj.pathname);
     switch (reqObj.pathname) {
         case '/card':
             doCard(reqObj, res);
@@ -408,12 +415,14 @@ function handleRequest(req, res) {
             }
             break;
 
-        case '/CreateGame':            
+        case '/CreateGame':
             var doCreateGame = function(games, reqObj, pram, gameObj) {               
                 var pram = preamble(reqObj);
                 if (!pram.isOk) return false;
                 
                 // will currently alow duplicate names but not by design
+                
+                // player can create a game when it's already created but not by design
                 
                 console.log(pram.playerName + ', ' + pram.game + ', ' + pram.isOk);
                 
@@ -421,11 +430,11 @@ function handleRequest(req, res) {
                     gameObj.game = pram.game;
                     var anArray = [];
                     gameObj.list = anArray;
+                    console.log('pram.playerName:'+pram.playerName);
                     gameObj.creator = pram.playerName;
                     gameObj.roundCount = 0; 
                     gameObj.heldCards = {};
                     games.push(gameObj);
-                    //console.log('CreateGame:' + JSON.stringify( games[0] ));
                 } 
                 
                 return true;
@@ -452,30 +461,27 @@ function handleRequest(req, res) {
                     retObj.gameInfo = getGameIndex(games, pram);
                     if (!retObj.gameInfo.gameExists) return retObj;
                     
-                    console.log('/***********************************/');
-                    console.log('pram.player:' + pram.player);
-                    console.log('retObj.gameInfo.creator:'+retObj.gameInfo.creator);
-                    var iMadeThisGame = (pram.player == retObj.gameInfo.creator);
+                    var iMadeThisGame = (pram.playerName == games[retObj.gameInfo.index].creator);
                     if (!iMadeThisGame) return retObj;
-                    console.log('/***********************************/');
                     
                     retObj.result = true;
                     return retObj;
                 };
                 var retObjPhaseOne = phaseOneAuthenticate(games, reqObj, pram);
                 if (!retObjPhaseOne.result) return false;                
-
+                
                 
                 var phaseTwoDealWithTheDeck = function(games, gameInfo, pram) {
                     var retObj = {};
                     retObj.result = false;                    
                     retObj.cardState = hasCardsBeenDelt(games, gameInfo, pram);
-                    
-                    if (!retObj.cardState.cardsDelt) { 
-                    
-                        if (games[gameInfo.index].roundCount > 0) return retObj; 
-                       
-                        var dealCards = function(games, gameInfo) {                            
+
+                    retObj.initGame = (games[gameInfo.index].roundCount == 0);
+                    if (retObj.initGame) { 
+
+                        var dealCards = function(games, gameInfo) {
+                            console.log('initialising game');
+                            
                             // ??SHUFFLE THE CARDS??
                             games[gameInfo.index].blackCards = [];
                             games[gameInfo.index].blackCardIndex = 0;
@@ -499,45 +505,42 @@ function handleRequest(req, res) {
                 if (!retObjPhaseTwo.result) return false;
 
 
-                var phaseThreeRoundWeGoAgain = function(games, gameInfo, cardState) {
-                    // phase three make a new round
-                                    
-                    console.log( JSON.stringify(gameInfo) );
-                    
-                    // get a question card
-                    roundObj = {};
+                var phaseThreeRoundWeGoAgain = function(games, gameInfo) {
+                    console.log('allocating round info');
+                    var roundObj = {};              
                     var useIndex = getBlackCard(games, gameInfo);
-                    
+
                     roundObj.question = blackCards.deck[useIndex].replace(/________/g, '______');;            
                     var count = (roundObj.question .match(/______/g) || []).length;
-                    
+                    if (count == 0) count = 1;                        
+
                     roundObj.questionBlankCount = count;
                     roundObj.players = { list:[], submitted:[], voted :[], };
                     roundObj.players.list = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
                     roundObj.game = games[gameInfo.index].game; //(this is the game name)
-                    
-                    if (!cardState.cardsDelt) {
-                        roundObj.roundCount = (++games[gameInfo.index].roundCount);
-                    } else {
-                        roundObj.roundCount = games[gameInfo.index].roundCount;
-                    }
-                    
-                    games[gameInfo.index].votes = []; //reset votes
+
+                    roundObj.roundCount = ( ++games[gameInfo.index].roundCount );
+
+                    games[gameInfo.index].votes = []; 
                     games[gameInfo.index].voteCount = 0;                    
+                    games[gameInfo.index].round = {};
                     games[gameInfo.index].round = roundObj;
+
+                    console.log(JSON.stringify(roundObj));
+
                     return roundObj;
                 };
-                var gameInfo = retObjPhaseOne.gameInfo;
-                var roundObj = phaseThreeRoundWeGoAgain(games, retObjPhaseOne.gameInfo, retObjPhaseTwo.cardState);
-                
-                
+                var roundObj = phaseThreeRoundWeGoAgain(games, retObjPhaseOne.gameInfo);
+
+
                 var phaseFourTheCardsYoureDelt = function(games, gameInfo, roundObj) {
+                    console.log('dealing first cards');
                     var heldCards 
                         = games[gameInfo.index].heldCards 
                             = new hashmap.HashMap();
-                            
+
                     var playerList = roundObj.players.list;
-                    for (var playerIndex in playerList) {                
+                    for (var playerIndex in playerList) {
                         var cardArray = [];
                         const FIVECARDS = 5;
                         for (var i = 0; i < FIVECARDS; i++) 
@@ -548,11 +551,12 @@ function handleRequest(req, res) {
                         //console.log(JSON.stringify(heldCards));
                     }                    
                 };
-                if (!retObjPhaseTwo.cardState.cardsDelt)
+                
+                if (retObjPhaseTwo.initGame)
                     phaseFourTheCardsYoureDelt(games, retObjPhaseOne.gameInfo, roundObj);
 
                 
-                var thisGame = games[gameInfo.index];
+                var thisGame = games[retObjPhaseOne.gameInfo.index];
                 res.write(JSON.stringify(thisGame.round));                
                 return true;
             };
@@ -614,7 +618,7 @@ function handleRequest(req, res) {
                 if (playerIndex == -1) break;
                 
                 var alreadySubmitted = games[b.gameInfo.index].round.players.submitted;
-                alreadySubmitted[playerIndex] = JSON.parse( JSON.stringify(b.cardsSubmitted) ) /*clone wars*/;
+                alreadySubmitted[playerIndex] = JSON.parse( JSON.stringify(b.cardsSubmitted) ) /* clone wars II, deja vu */;
                 replaceCards(games, b.gameInfo, b.pram, b.cardsSubmitted);
             }
         
@@ -651,12 +655,27 @@ function handleRequest(req, res) {
             var myIndex = playerList.indexOf(b.pram.playerName);
             if (myIndex == -1) break;
             
-            games[b.gameInfo.index].votes[myIndex] = b.vote;
-            games[b.gameInfo.index].voteCount++;
-            games[b.gameInfo.index].round.players.voted[myIndex] = true;
+            // var haveVoted = false;
+            // var votedFor = -1;
+            // try {
+                // haveVoted = games[b.gameInfo.index].round.players.voted[myIndex];
+                // votedFor = games[b.gameInfo.index].votes[myIndex];
+            // } catch (err) {
+                // haveVoted = false;
+            // }
+            // games[b.gameInfo.index].round.haveVoted = true;
+            // games[b.gameInfo.index].round.votedFor = b.vote; //games[b.gameInfo.index].votes[myIndex]
             
+            var haveVoted = false;
+            try {
+                haveVoted = games[b.gameInfo.index].round.players.voted[myIndex]
+            } catch (err) {}
+            
+            if (!haveVoted) games[b.gameInfo.index].voteCount++;
+            games[b.gameInfo.index].round.players.voted[myIndex] = true;            
+            games[b.gameInfo.index].votes[myIndex] = b.vote;
+
             var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);            
-            //cloneOfRound.haveVoted = true;            
 
             res.write(JSON.stringify(cloneOfRound));
             res.end();
@@ -670,18 +689,17 @@ function handleRequest(req, res) {
 
             var cloneOfRound = cloneRound(games, gameInfo, pram);
 
-            try {
-                console.log(JSON.stringify(games[gameInfo.index].list));
-                console.log('############################');
-                console.log(' WIP ');
-                console.log('games[gameInfo.index].voteCount:' + games[gameInfo.index].voteCount);
-                console.log('games[gameInfo.index].players.list.length:' + games[gameInfo.index].list.length);
-            } catch (err) {
-                console.log(err.message);
-            };
+            // try {
+                // console.log(JSON.stringify(games[gameInfo.index].list));
+                // console.log('############################');
+                // console.log(' WIP ');
+                // console.log('games[gameInfo.index].voteCount:' + games[gameInfo.index].voteCount);
+                // console.log('games[gameInfo.index].players.list.length:' + games[gameInfo.index].list.length);
+            // } catch (err) {
+                // console.log(err.message);
+            // };
 
-            
-            if (games[gameInfo.index].voteCount == games[gameInfo.index].list.length) {
+            if (games[gameInfo.index].voteCount >= games[gameInfo.index].list.length) {
                 var allVotes = games[gameInfo.index].votes;
                 var playerScores = [];
                 for (var playerIndex in games[gameInfo.index].list) { playerScores[playerIndex] = 0; }
@@ -690,14 +708,6 @@ function handleRequest(req, res) {
                 }
                 console.log(JSON.stringify(allVotes));
                 
-                // var winningIndex = -1;
-                // for (var winner in scores) {
-                    // var max = 0;                    
-                    // if (scores[winner] > max) {
-                        // winningIndex = winner;
-                        // max = scores[winner];
-                    // }
-                // }
                 cloneOfRound.haveScores = true;
                 cloneOfRound.scores = playerScores;
             }

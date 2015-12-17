@@ -80,10 +80,10 @@
 				var xmlhttp = new XMLHttpRequest();
 
 
-				var location = window.document.URL + 'CreatePlayer?Player=' + $('#txtPlayerName').val();
+				var locationUrl = window.document.URL + 'CreatePlayer?Player=' + $('#txtPlayerName').val();
 
 
-				xmlhttp.open("GET", location);
+				xmlhttp.open("GET", locationUrl);
 				xmlhttp.onreadystatechange = function () {
 					if (xmlhttp.readyState == 4) {
 						$('.wait-for-load').hide();
@@ -95,8 +95,8 @@
 
 							if (xmlhttp.responseText == passName) {
 
-								var location = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + passName;
-								window.location = location;
+								var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + passName;
+								window.location = locationUrl;
 
 
 							}

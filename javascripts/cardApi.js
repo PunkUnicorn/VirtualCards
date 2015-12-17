@@ -9,12 +9,12 @@ cardApi = {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     },
 
-    joinOrCreateThing: function(xmlhttp, location, passName, playerName, successFunc, joinOnly) {
+    joinOrCreateThing: function(xmlhttp, slocation, gameObj, passName, playerName, successFunc, joinOnly) {
         var requestIt = function () {
             if (xmlhttp.readyState == 4) {
                 $('.wait-for-load').hide();
                 if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                    successFunc(xmlhttp, passName, playerName, joinOnly);
+                    successFunc(xmlhttp, gameObj, passName, playerName, joinOnly);
                 }
                 else {
                     console.log('unsuccessful request');
@@ -22,13 +22,13 @@ cardApi = {
             }
         } 
 
-        xmlhttp.open("GET", location);
+        xmlhttp.open("GET", slocation);
         xmlhttp.onreadystatechange = requestIt;
         $('.wait-for-load').show();
         xmlhttp.send();
     },
     
-    sendSomething: function(takeMeWithYouSuccessILoveYou, thingParams, beforeSend, onSuccess) {
+    sendSomething: function(takeMeWithYouSuccessILoveYou, thingParams, beforeSend, onSuccess, gameObj, passName, playerName) {
         var xmlhttp = new XMLHttpRequest();
 
         var url = getRoot(window.document.referrer);
@@ -38,7 +38,7 @@ cardApi = {
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
                 if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                    onSuccess(takeMeWithYouSuccessILoveYou);
+                    onSuccess(takeMeWithYouSuccessILoveYou, gameObj, passName, playerName);
                 }
             }
             
