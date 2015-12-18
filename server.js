@@ -54,11 +54,8 @@ function loadDeck(file, cards) {
                             var startTrigger = 'Cards Against Humanity:';							
                             var endTrigger='TOTALS';
                             
-                            //console.log(splitLine[col].substr(0,startTrigger.length));
-                            //console.log(startTrigger);
                             if (started == false) {
                                 started = (splitLine[col].substr(0,startTrigger.length).toString() === startTrigger.toString());
-                                //console.log('##################################################################' + started);
                             } else {
                                 if (splitLine[col] === endTrigger) break;
                                 cards.deck.push(splitLine[col]);
@@ -71,10 +68,6 @@ function loadDeck(file, cards) {
             });	
             fs.close(fd, function(err){
                 console.log('File closed');
-                //console.log(file + ' contents start');
-                //for (var card in cards.deck) {
-                //    console.log(cards.deck[card]);
-                //}
                 console.log(file + 'Deck:' + cards.deck.length);				
             });
         });	
@@ -256,10 +249,7 @@ function replaceCards(games, gameInfo, pram, cards) {
         var removeIndex = cards.indexOf(cardDesc);
         if (removeIndex > -1) removeIndexes.push( heldCardsIndexes[cardIndex] );                    
     }
-    
-    // console.log('game.heldCardsIndexes: ' + JSON.stringify(heldCardsIndexes));
-    // console.log('removeIndexes: ' + JSON.stringify(removeIndexes));
-    
+        
     var removeIndexesIndexes = []; //yo dawg
     for (var spentIndex in removeIndexes) {
         for (var index in heldCardsIndexes) {
@@ -293,8 +283,6 @@ function hasCardsBeenDelt(game, gameInfo, pram) {
 function cloneRound(games, gameInfo, pram) {
         
     var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
-    console.log('function cloneRound(games, gameInfo, pram) {');
-    console.log(JSON.stringify(games[gameInfo.index].round));
     cloneOfRound.heldCards = [];
 
     var heldCards = games[gameInfo.index].heldCards;
@@ -403,16 +391,14 @@ function handleRequest(req, res) {
                     gameObj.game = 'WTF!!!1';
                     res.write(JSON.stringify(gameObj));
                 }
-                res.end();
-                
                 return true;
             };
             
             if (!doJoinGame(games, reqObj, res, pram, gameObj)) {
                 res.write("I'm sorry Dave I can't let you do that");
                 res.error = 405;
-                res.end();
             }
+            res.end();
             break;
 
         case '/CreateGame':
@@ -430,7 +416,6 @@ function handleRequest(req, res) {
                     gameObj.game = pram.game;
                     var anArray = [];
                     gameObj.list = anArray;
-                    console.log('pram.playerName:'+pram.playerName);
                     gameObj.creator = pram.playerName;
                     gameObj.roundCount = 0; 
                     gameObj.heldCards = {};
@@ -548,7 +533,6 @@ function handleRequest(req, res) {
 
                         var player = playerList[playerIndex];
                         heldCards.set(player, cardArray);
-                        //console.log(JSON.stringify(heldCards));
                     }                    
                 };
                 
@@ -618,7 +602,7 @@ function handleRequest(req, res) {
                 if (playerIndex == -1) break;
                 
                 var alreadySubmitted = games[b.gameInfo.index].round.players.submitted;
-                alreadySubmitted[playerIndex] = JSON.parse( JSON.stringify(b.cardsSubmitted) ) /* clone wars II, deja vu */;
+                alreadySubmitted[playerIndex] = JSON.parse( JSON.stringify(b.cardsSubmitted) );
                 replaceCards(games, b.gameInfo, b.pram, b.cardsSubmitted);
             }
         
@@ -750,7 +734,7 @@ function doPageFile(file, reqObj, res) {
         console.log(file);
         setTimeout( function() {
             fs.readFile(file, function (err, data){
-                console.log('error: ' + err);
+                if (err != null) console.log('error: ' + err);
                 if (isHtml) {
                     res.writeHeader(200, {"Content-Type": "text/html"});
                 } else if (isCSS) {

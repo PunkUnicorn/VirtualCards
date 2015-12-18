@@ -139,7 +139,7 @@
                     onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
                 <p class='w3-padding-small w3-tiny'>
                     <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
-                </p>             
+                </p>
             </div>
         </div>
         
@@ -318,9 +318,7 @@
                     $('#divAnswersArea').toggle(gameObj.o.haveSubmitted || gameObj.o.haveVoted);
                     
                     if (gameObj.o.game == passName) {
-                        //var isVoteSubmitted = (gameObj.o.haveVoted || gameObj.o.haveSubmitted);
                         var isVoteSelectedOnUi = $('.gavelbtn-selected.fa-gavel').length > 0 ? true : false;
-                        //var isSomethingSelected = (/*isVoteSubmitted || */isVoteSelectedOnUi);
                         var currentVoteSelection = '';
                         if (isVoteSelectedOnUi) {
                             currentVoteSelection = $('.gavelbtn-selected.fa-gavel')
@@ -330,8 +328,7 @@
                         if (currentVoteSelection == '') {
                             if (gameObj.o.haveVoted) {
                                 var playerIndex = gameObj.o.players.list.indexOf(playerName);
-                                //var voted = gameObj.o.players.voted[playerIndex];
-                                currentVoteSelection = 'ansNumber' + o.votedFor;
+                                currentVoteSelection = 'ansNumber' + gameObj.o.votedFor;
                             } else {
                             
                             }                            
