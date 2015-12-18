@@ -286,9 +286,15 @@
             
             function fillQuestion(gameObj, cardSelection) {
                 var filledInQuestion = gameObj.o.question;
+                var hasBlank = gameObj.o.question.match(/______/) != null;
                 
                 for (var answer in cardSelection) {
-                    filledInQuestion = filledInQuestion.replace(/______/, '<span class="w3-small">' + cardSelection[answer] + '</span>');
+                    var thisAnswer = '<span class="w3-small">' + cardSelection[answer] + '</span>';
+                    if (hasBlank) {
+                        filledInQuestion = filledInQuestion.replace(/______/, thisAnswer);
+                    } else {                    
+                        filledInQuestion += '<br>'+thisAnswer;
+                    }
                 }
                 return filledInQuestion;
             }
