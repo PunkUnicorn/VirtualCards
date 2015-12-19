@@ -849,6 +849,9 @@ loadDeck('./cards/CardsAgainstHumanityCrabs.txt', whiteCardsMain);
 //Create a server
 var server = http.createServer(handleRequest);
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+
 //Lets start our server
 server.listen(PORT, function(){
     //Callback triggered when server is successfully listening. Hurray!
