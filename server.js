@@ -853,7 +853,7 @@ var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 
 //Lets start our server
-server.listen(PORT, function(){
+server.listen(server_port, function(){ //PORT
     //Callback triggered when server is successfully listening. Hurray!
     console.log("Server listening on: http://'+ server_ip_address+':%s", server_port); //PORT localhost
 });
