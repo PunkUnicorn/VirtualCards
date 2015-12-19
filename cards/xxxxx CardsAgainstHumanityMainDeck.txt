@@ -28,7 +28,7 @@
 	"In M. Night Shyamalan's new movie, Bruce Willis discovers that ______ had really been ______ all along."	PICK 2	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	"In the new Disney Channel Original Movie, Hannah Montana struggles with ______ for the first time."		v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
 	"Instead of coal, Santa now gives the bad children ______."		v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
-	It’s a pity that kids these days are all getting involved with ______.			v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
+	It's a pity that kids these days are all getting involved with ______.			v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	Life for American Indians was forever changed when the White Man introduced them to ______.				v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	"Lifetime® presents ""______: the Story of ______."""	PICK 2	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
 	Make a haiku.	"DRAW 2, PICK 3"	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
@@ -103,43 +103,43 @@
 	Now at the Smithsonian: an interactive exhibit on ______.											v1.7
 	The new Chevy Tahoe. With the power and space to take ______ everywhere you go.								v1.6		v1.6	v1.7
 	They said we were crazy. They said we couldn't put ______ inside of ______. They were wrong.	PICK 2							v1.6	v1.6	v1.6	v1.7
-	"Today on /Maury/: "Help! My son is ______!""								v1.6		v1.6	v1.7
+	"Today on /Maury/: ""Help! My son is ______!"""								v1.6		v1.6	v1.7
 	"Uh, hey guys, I know this was my idea, but I'm having serious doubts about ______."											v1.7
 	"Well if you'll excuse me, gentlemen, I have a date with ______."											v1.7
 	What don't you want to find in your Kung Pao chicken?						v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	What is George W. Bush thinking about right now?								v1.6		v1.6	v1.7
 	What made my first kiss so awkward?											v1.7
 	"________: Once you pop, the fun don't stop!"									v1.6		
-	________? Jim'll fix it!									v1.6		
+	________? Jim'll fix it!									v1.6		
 	________. That's why mums go to Iceland.									v1.6		
 	______? There's an app for that.		v1.0	v1.1	v1.2							
 	"After Hurricane Katrina, Sean Penn brought ______ to all the people of New Orleans."		v1.0	v1.1								
-	Airport security guidelines now prohibit ________ on airplanes.									v1.6		
-	And the BAFTA for ________ goes to ________. 									v1.6		
+	Airport security guidelines now prohibit ________ on airplanes.									v1.6		
+	And the BAFTA for ________ goes to ________. 									v1.6		
 	Anthropologists have recently discovered a primitive tribe that worships ______.		v1.0	v1.1	v1.2							
 	"Channel 4 presents ________, the story of ________."									v1.6		
 	Channel 5's new reality show features eight washed-up celebrities living with ________.									v1.6		
-	"Coming to the West End this year, ________: The Musical."									v1.6		
+	"Coming to the West End this year, ________: The Musical."									v1.6		
 	"Daddy, why is mummy crying?"									v1.6		
-	"Dear Agony Aunt, I'm having some trouble with ________ and I need your advice."									v1.6		
+	"Dear Agony Aunt, I'm having some trouble with ________ and I need your advice."									v1.6		
 	"Due to a PR fiasco, Walmart no longer offers ______."		v1.0	v1.1								
 	"During Picasso's often-overlooked Brown Period, he produced hundreds of paintings of ______."		v1.0	v1.1	v1.2							
 	I wish I hadn't lost the instruction manual for ______.		v1.0	v1.1								
 	"I'm sorry,Sir, but I couldn't complete my homework because of ________."									v1.6		
 	"In 1,000 years, when paper money is but a distant memory, ______ will be our currency."		v1.0	v1.1	v1.2							
 	"In an attempt to reach a wider audience, the Smithsonian Museum of Natural History has opened an interactive exhibit on ______."		v1.0	v1.1	v1.2							
-	"In her latest feature-length film, Tracy Beaker struggles with ________ for the first time."									v1.6		
+	"In her latest feature-length film, Tracy Beaker struggles with ________ for the first time."									v1.6		
 	"In his new summer comedy, Rob Schneider is ______ trapped in the body of ______."	PICK 2	v1.0	v1.1								
-	"In Wormwood Scrubs, word is you can trade 200 cigarettes for ________."									v1.6		
-	"Instead of coal, Father Christmas now gives bad children ________."									v1.6		
+	"In Wormwood Scrubs, word is you can trade 200 cigarettes for ________."									v1.6		
+	"Instead of coal, Father Christmas now gives bad children ________."									v1.6		
 	Life was difficult for cavemen before ______.		v1.0	v1.1								
-	Next on Sky Sports: The World Championship of ________.									v1.6		
+	Next on Sky Sports: The World Championship of ________.									v1.6		
 	"Nobody expects the Spanish Inquisition. Our chief weapons are fear, surprise, and ________."									v1.6		
 	"O Canada, we stand on guard for ______."										v1.6	
 	"Sorry everyone, I just ______."		v1.0									
-	The Natural History Museum has just opened an interactive exhibit on ________.									v1.6		
-	The school field trip was completely ruined by ________.									v1.6		
-	The TFL apologizes for the delay in train service due to ________. 									v1.6		
+	The Natural History Museum has just opened an interactive exhibit on ________.									v1.6		
+	The school field trip was completely ruined by ________.									v1.6		
+	The TFL apologizes for the delay in train service due to ________. 									v1.6		
 	"The theme for next year's Eurovision Song Contest is ""We are ________."""									v1.6		
 	The U.S. has begun airdropping ______ to the children of Afghanistan.		v1.0	v1.1								
 	"Today on The Jeremy Kyle Show: ""Help! My son is ________!"""									v1.6		
@@ -148,7 +148,7 @@
 	What kept Margaret Thatcher busy in her waning years?									v1.6		
 	What's the crustiest?		v1.0	v1.1	v1.2							
 	What's the next superhero?		v1.0									
-	"When I am Prime Minister of the United Kingdom, I will create the Ministry of ________."									v1.6		
+	"When I am Prime Minister of the United Kingdom, I will create the Ministry of ________."									v1.6		
 	"When I'm in prison, I'll have ______ smuggled in."		v1.0	v1.1								
 	Who stole the cookies from the cookie jar?		v1.0	v1.1								
 												

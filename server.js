@@ -31,28 +31,29 @@ function loadDeck(file, cards) {
     var buffer;
     var position = null;
 
-    var fd = fs.openSync(path ,'rs');
+    //we are not opening the file with the correct (ascii) encoding
+    //var fd = fs.openSync(path ,'rs');
 
-    fs.stat(path, function(err, stats) {	
-        buffer = new Buffer(stats.size);
-        fs.open(path, 'r', function(err, fd) {
+    //fs.stat(path, function(err, stats) {	
+        //buffer = new Buffer(stats.size);
+        //fs.open(path, 'r', function(err, fd) {
             console.log('File opened');
-            fs.read(fd, buffer, offset, buffer.length, position, function(err, bytesRead, buffer) {
+            var bytesRead = 0;
+            fs.readFile(file, 'ascii', function(err, buffer) {
+            //fs.read(fd, buffer, offset, buffer.length, position, function(err, bytesRead, buffer) {
                 console.log('Read ' + bytesRead + ' bytes from file');
-
+                
+                bytesRead = buffer.length;
+                
                 var bigString = buffer.toString();
                 arrayOfLines = bigString.match(/[^\r\n]+/g); //http://stackoverflow.com/questions/5034781/js-regex-to-split-by-line
                 var started = false;
                 for (var line in arrayOfLines) {
-                    //////console.log(arrayOfLines[line]);
-                    if (arrayOfLines[line].substr(0, 1) == 'x') continue;// an x as the first character ignore the line
-                    var splitLine = arrayOfLines[line].split('\t');//\s*[\s\t]\s*/);
+                    var splitLine = arrayOfLines[line].split('\t');
                     var columnCount = 0;
                     for (var col in splitLine) {
                         columnCount++;
                         if (columnCount == 2) {
-                            if (splitLine[col] == '#NAME?') continue
-                            //console.log('1: ' + splitLine[col]);
                             if (splitLine[col].trim().length == 0) continue; //ignore blank entries in column 2
 
                             var startTrigger = 'Cards Against Humanity:';							
@@ -70,7 +71,10 @@ function loadDeck(file, cards) {
                             } 
                             else {
                                 if (splitLine[col] === endTrigger) break;
-                                cards.deck.push(splitLine[col]);
+                                var pushCardText = splitLine[col] //opening with wrong encoding at the moment
+                                        .replace('™', '\u2122').replace('®', '\u00AE');
+                                        
+                                cards.deck.push(pushCardText);
                                 
                                 var countingTheBlanks = (splitLine[col].indexOf('_') > -1);
                                 var remainder = splitLine[col];
@@ -105,12 +109,12 @@ function loadDeck(file, cards) {
                 bigString = '';
                 arrayOfLines = 0;
             });	
-            fs.close(fd, function(err){
-                console.log('File closed');
-                console.log(file + 'Deck:' + cards.deck.length);				
-            });
-        });	
-    });	
+            //fs.close(fd, function(err){
+            //    console.log('File closed');
+            //    console.log(file + 'Deck:' + cards.deck.length);				
+            //});
+        //});	
+    //});	
 }
 
 //http://book.mixu.net/node/ch10.html
@@ -140,10 +144,10 @@ function getGame(reqObj) {
     catch(err) {
         console.log('errr... ' + err);                    
     }
-    return name;                
+    
+    return (typeof name == 'undefined') ? '' : name;
+
 };
-
-
 /*          _  ______ _                       
            | | | ___ \ |                      
   __ _  ___| |_| |_/ / | __ _ _   _  ___ _ __ 
@@ -162,7 +166,8 @@ function getPlayer(reqObj) {
     catch(err) {
         console.log('er....... ' + err);                    
     }
-    return player;
+    
+    return (typeof player == 'undefined') ? '' : player;
 };       
 
 
@@ -324,12 +329,14 @@ function cloneRound(games, gameInfo, pram) {
     var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); //clone
     cloneOfRound.heldCards = [];
 
-    var heldCards = games[gameInfo.index].heldCards;
-    var cards = heldCards.get(pram.playerName);
+    var heldCardsSource = games[gameInfo.index].heldCards;
+    var cards = heldCardsSource.get(pram.playerName);
 
+    var encodedCards = [];
     for (var cardIndex in cards) {
-        cloneOfRound.heldCards.push(whiteCardsMain.deck[cards[cardIndex]]);
+        encodedCards.push( encodeURIComponent( whiteCardsMain.deck[cards[cardIndex]] ) );
     }
+    cloneOfRound.heldCards = encodedCards;
     
     var playerIndex =  cloneOfRound.players.list.indexOf(pram.playerName);    
     
@@ -370,9 +377,9 @@ function handleRequest(req, res) {
     };
     console.log(' ---------------------------------> ' + reqObj.pathname);
     switch (reqObj.pathname) {
-        case '/card':
-            doCard(reqObj, res);
-            break;
+        // case '/card':
+            // doCard(reqObj, res);
+            // break;
 
         case '/': //Ui
             console.log('index');
@@ -561,7 +568,7 @@ function handleRequest(req, res) {
 
                      // accomodate the regular expression a little
                     const TheOneWeWant = '______';
-                    console.log('0 question:'+question);
+                    console.log('question:'+question);
                     roundObj.question = question; 
                     if (roundObj.question.substr(question.length-1, 1) == '_')
                         roundObj.question += ' ';
@@ -569,14 +576,26 @@ function handleRequest(req, res) {
                     if (roundObj.question.substr(0, 1) == '_')
                         roundObj.question = ' ' + roundObj.question
                     
-                    roundObj.question = roundObj.question.replace(/ _{7,12}\./g, ' '+TheOneWeWant+'.');
-                    roundObj.question = roundObj.question.replace(/ _{7,12}\?/g, ' '+TheOneWeWant+'?');
-                    roundObj.question = roundObj.question.replace(/ _{7,12}\!/g, ' '+TheOneWeWant+ '!');
-                    roundObj.question = roundObj.question.replace(/ _{7,12};/g, ' '+TheOneWeWant+';');
-                    roundObj.question = roundObj.question.replace(/ _{7,12}\:/g, ' '+TheOneWeWant+':');
-                    roundObj.question = roundObj.question.replace(/ _{7,12} /g, ' '+TheOneWeWant+' ');
-                    roundObj.question = roundObj.question.replace(/ _{7,12},/g, ' '+TheOneWeWant+',');
 
+                    roundObj.question = roundObj.question.replace(/ _{7,14}\./g, ' '+TheOneWeWant+'.');
+                    roundObj.question = roundObj.question.replace(/ _{7,14}\?/g, ' '+TheOneWeWant+'?');
+                    roundObj.question = roundObj.question.replace(/ _{7,14}\!/g, ' '+TheOneWeWant+ '!');
+                    roundObj.question = roundObj.question.replace(/ _{7,14};/g, ' '+TheOneWeWant+';');
+                    roundObj.question = roundObj.question.replace(/ _{7,14}\:/g, ' '+TheOneWeWant+':');
+                    roundObj.question = roundObj.question.replace(/ _{7,14} /g, ' '+TheOneWeWant+' ');
+                    roundObj.question = roundObj.question.replace(/ _{7,14},/g, ' '+TheOneWeWant+',');
+                    roundObj.question = roundObj.question.replace(/ _{7,14}"/g, ' '+TheOneWeWant+'"');
+
+                    roundObj.question = roundObj.question.replace(/"_{7,14}\./g, '"'+TheOneWeWant+'.');
+                    roundObj.question = roundObj.question.replace(/"_{7,14}\?/g, '"'+TheOneWeWant+'?');
+                    roundObj.question = roundObj.question.replace(/"_{7,14}\!/g, '"'+TheOneWeWant+ '!');
+                    roundObj.question = roundObj.question.replace(/"_{7,14};/g, '"'+TheOneWeWant+';');
+                    roundObj.question = roundObj.question.replace(/"_{7,14}\:/g, '"'+TheOneWeWant+':');
+                    roundObj.question = roundObj.question.replace(/"_{7,14} /g, '"'+TheOneWeWant+' ');
+                    roundObj.question = roundObj.question.replace(/"_{7,14},/g, '"'+TheOneWeWant+',');
+                    roundObj.question = roundObj.question.replace(/"_{7,14}"/g, '"'+TheOneWeWant+'"');
+                    
+                    
                     roundObj.question = roundObj.question.replace(/ _{1,5}\./g, ' '+TheOneWeWant+'.');
                     roundObj.question = roundObj.question.replace(/ _{1,5}\?/g, ' '+TheOneWeWant+'?');
                     roundObj.question = roundObj.question.replace(/ _{1,5}\!/g, ' '+TheOneWeWant+ '!');
@@ -584,7 +603,17 @@ function handleRequest(req, res) {
                     roundObj.question = roundObj.question.replace(/ _{1,5}\:/g, ' '+TheOneWeWant+':');
                     roundObj.question = roundObj.question.replace(/ _{1,5} /g, ' '+TheOneWeWant+' ');
                     roundObj.question = roundObj.question.replace(/ _{1,5},/g, ' '+TheOneWeWant+',');
+                    roundObj.question = roundObj.question.replace(/ _{1,5}"/g, ' '+TheOneWeWant+'"');
 
+                    roundObj.question = roundObj.question.replace(/"_{1,5}\./g, '"'+TheOneWeWant+'.');
+                    roundObj.question = roundObj.question.replace(/"_{1,5}\?/g, '"'+TheOneWeWant+'?');
+                    roundObj.question = roundObj.question.replace(/"_{1,5}\!/g, '"'+TheOneWeWant+ '!');
+                    roundObj.question = roundObj.question.replace(/"_{1,5};/g, '"'+TheOneWeWant+';');
+                    roundObj.question = roundObj.question.replace(/"_{1,5}\:/g, '"'+TheOneWeWant+':');
+                    roundObj.question = roundObj.question.replace(/"_{1,5} /g, '"'+TheOneWeWant+' ');
+                    roundObj.question = roundObj.question.replace(/"_{1,5},/g, '"'+TheOneWeWant+',');
+                    roundObj.question = roundObj.question.replace(/"_{1,5}"/g, '"'+TheOneWeWant+'"');
+                    
 
                     var count = (roundObj.question.match(/______/g) || []).length;
                     console.log('0 question:'+roundObj.question);
@@ -592,6 +621,7 @@ function handleRequest(req, res) {
                         count = 1;
                     }
 
+                    roundObj.question = encodeURIComponent( roundObj.question );
                     roundObj.questionBlankCount = count;
                     roundObj.players = { list:[], submitted:[], voted :[], };
                     roundObj.players.list = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
@@ -620,8 +650,8 @@ function handleRequest(req, res) {
                     var playerList = roundObj.players.list;
                     for (var playerIndex in playerList) {
                         var cardArray = [];
-                        const FIVECARDS = 5;
-                        for (var i = 0; i < FIVECARDS; i++) 
+                        const TENCARDS = 10;
+                        for (var i = 0; i < TENCARDS; i++) 
                             cardArray.push(getWhiteCard(games, gameInfo));
 
                         var player = playerList[playerIndex];
@@ -687,7 +717,7 @@ function handleRequest(req, res) {
             var b = doSubmitAnswerChecks(games, reqObj);
             if (!b.result) break;
             
-            //???OR IF ANYTHING IN SUBMITTED IS ALREADY SUBMITTED??? do we really need to match what was delt to them?
+
 
             if (!b.isAlreadySubmitted) {
                 var playerList = games[b.gameInfo.index].round.players.list;
@@ -772,7 +802,50 @@ function handleRequest(req, res) {
             res.write(JSON.stringify(cloneOfRound));
             res.end();
             break;
-            
+        
+        case '/DumpGames':
+            res.writeHeader(200, {"Content-Type": "text/plain"});
+            var gameName = getGame(reqObj);
+            if (gameName == '') {
+                for (var g in games) {
+                    res.write(JSON.stringify(games[g].game));
+                }
+            } else {
+                for (var g in games) {
+                    if (games[g].game == gameName) {
+                        res.write(JSON.stringify(games[g]));
+                        break;
+                    }
+                }
+            }
+            res.end();
+            break;
+
+        case '/DumpPlayers':
+            res.writeHeader(200, {"Content-Type": "text/plain"});
+            var playerName = getPlayer(reqObj);
+            if (playerName == '') {
+                console.log('players list:' + JSON.stringify(players.list));
+                res.write(JSON.stringify(players.list));
+            } else {
+               
+                for (var p in players.list) {
+                    if (players.list[p].name == playerName) {
+                        res.write(JSON.stringify(players.list[p]));
+                        var inGames = [];
+                        for (var g in games) {
+                            if (games[g].list.indexOf(playerName) > -1) {
+                                inGames.push(games[g].game);
+                            }
+                        }
+                        res.write(JSON.stringify(inGames));
+                        break;
+                    }
+                }
+            }
+            res.end();
+            break;
+
         default:
             try {
                 doPageFile('.' + reqObj.pathname, reqObj, res);
@@ -790,11 +863,11 @@ submit vote (formatted string)
 
 */
 
-function doCard(reqObj, res) {
-    console.log('card');
-    res.write('CARD');
-    res.end();
-}
+// function doCard(reqObj, res) {
+    // console.log('card');
+    // res.write('CARD');
+    // res.end();
+// }
 
 function doPageFile(file, reqObj, res) {
     //console.log(util.inspect(reqObj));
@@ -822,20 +895,33 @@ function doPageFile(file, reqObj, res) {
     }
 }
 
-function onClickDraw() {
-    var xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("POST", 'localhost:8080/card');
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4) {
-            if(xmlhttp.status == 400){
-                console.log('ok');
-            }else{
-                console.log('error')
-            }
+// function onClickDraw() {
+    // var xmlhttp=new XMLHttpRequest();
+    // xmlhttp.open("POST", 'localhost:8080/card');
+    // xmlhttp.onreadystatechange = function() {
+        // if (xmlhttp.readyState == 4) {
+            // if(xmlhttp.status == 400){
+                // console.log('ok');
+            // }else{
+                // console.log('error')
+            // }
+        // }
+    // }
+    // xmlhttp.send(data);
+// }
+
+
+var birdFile = function () {    
+    fs.readFile('./ChrisDotCom-hrr.txt', 'ascii', function (err, data){
+        console.log(data);
+        if (err != null) {
+            console.log(err);
         }
-    }
-    xmlhttp.send(data);
-}
+    });
+
+};
+
+
 
 // load cards
 loadDeck('./cards/CardsAgainstHumanityMainDeckQuestions.txt', blackCardsMain);
@@ -845,6 +931,10 @@ loadDeck('./cards/CardsAgainstHumanityCrabsQuestions.txt', blackCardsMain);
 loadDeck('./cards/CardsAgainstHumanityMainDeck.txt', whiteCardsMain);
 loadDeck('./cards/CardsAgainstHumanityExpansions.txt', whiteCardsMain);
 loadDeck('./cards/CardsAgainstHumanityCrabs.txt', whiteCardsMain);
+
+birdFile();
+console.log('http://www.chris.com/ascii/');
+    
 
 //Create a server
 var server = http.createServer(handleRequest);

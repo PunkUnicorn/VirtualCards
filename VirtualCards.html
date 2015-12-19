@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-    <head> <!--DUPLICATE CODE START-->
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <title>Virtual Cards against Cards</title>
@@ -32,7 +32,6 @@
             var cardApi = {};
             
             var cardSelection = [];
-            
             var innerO = {};
             var gameObj = {o:innerO};
 
@@ -70,55 +69,21 @@
                 console.log('drag effect func dragStart called');
                 console.log(ev.target);
             }
-        </script> <!--DUPLICATE CODE END-->
+        </script>
         <div id='wrapper' class='w3-padding-tiny start-invisible'>
             <div class='w3-card-8 card-area card-twisle'>
                 <header>
-                    <h1 class='w3-center'>Virtual Cards against Cards</h1>
+                    <h1 class='w3-center'>Virtual Cards Against Cards</h1>
+                    <h6 class='w3-center'>Virtual Cards Against Humanity</h6>
                 </header>
             </div>
             <div class='w3-row'>
-                <div class='w3-card-16 card-area w3-col w3-container m4 w3-animate-opacity'>
-                    <div class='card card-horizontal card-spin-delay1 w3-padding-small w3-tiny' 
-                        onclick='cardSelect(event, gameObj, passName, playerName)'
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)"
-                        id='card1' >1</div>
-                    <div class='card card-horizontal card-jump w3-padding-small w3-tiny' 
-                        onclick='cardSelect(event, gameObj, passName, playerName)' 
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)"
-                        id='card2' >2</div>
-                    <div class='card card-horizontal w3-padding-small w3-tiny' 
-                        onclick='cardSelect(event, gameObj, passName, playerName)' 
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)"
-                        id='card3' >3</div>
-                    <div class='card card-horizontal card-jump-delay2 w3-padding-small w3-tiny' 
-                        onclick='cardSelect(event, gameObj, passName, playerName)' 
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)"
-                        id='card4' >4</div>
-                    <div class='card card-horizontal card-spin-delay2 w3-padding-small w3-tiny' 
-                        onclick='cardSelect(event, gameObj, passName, playerName)' 
-                        ondrop="dragDrop.drop(event, dragStart)" 
-                        ondragover="dragDrop.allowDrop(event, dragStart)" 
-                        draggable="true" 
-                        ondragstart="dragDrop.drag(event, dragStart)"
-                        id='card5' >5</div>
-                    <div class='w3-center'>
+                <div id='cardHolder' class='w3-card-16 card-area w3-col w3-container m5 w3-animate-opacity'>
+                    <div id='buttonHolder' class='w3-center'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
                     </div>
                 </div>
-                <div class='w3-card-16 card-area w3-container w3-col m6 w3-black w3-animate-opacity'>
+                <div class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-animate-opacity'>
                     <h4>Questions and Answers</h4>
                     <div id='divQuestionArea'>
                         <div id ='txtQuestion' class ='w3-padding-small w3-large'></div>
@@ -285,8 +250,8 @@
             }
             
             function fillQuestion(gameObj, cardSelection) {
-                var filledInQuestion = gameObj.o.question;
-                var hasBlank = gameObj.o.question.match(/______/) != null;
+                var filledInQuestion = decodeURIComponent( gameObj.o.question );
+                var hasBlank = filledInQuestion.match(/______/) != null;
                 
                 for (var answer in cardSelection) {
                     var thisAnswer = '<span class="w3-small">' + cardSelection[answer] + '</span>';
@@ -310,6 +275,35 @@
                 } else {
                     $('#btnSubmitAnswer').hide();
                 }
+            }
+            
+            const effects = ['card-jump-delay2', 
+                '',
+                'card-spin-delay2', 
+                '',
+                'card-jump', 
+                '',
+                'card-spin-delay1', 
+                '',
+                'card-jump-delay1', 
+                ''];
+                
+            var effectIndex = 0;
+            function makeCardHtml(cardText, index) {
+
+                var cardHtml = '<div class="card card-horizontal '+ effects[effectIndex]+' w3-padding-small w3-tiny" ' +
+                        'onclick="cardSelect(event, gameObj, passName, playerName)" '+
+                        'ondrop="dragDrop.drop(event, dragStart)" ' +
+                        'ondragover="dragDrop.allowDrop(event, dragStart)" ' +
+                        'draggable="true" ' +
+                        'ondragstart="dragDrop.drag(event, dragStart)"' +
+                        'id="card'+ index +'" >' + cardText +  '</div>';
+                        
+                effectIndex++;
+                if (effectIndex == effects.length)
+                    effectIndex = 0;
+                    
+                return cardHtml;
             }
             
             function getRefreshed(cardSelection, gameObj, passName, playerName) {
@@ -348,16 +342,25 @@
                                 refreshQuestionText(gameObj, cardSelection);                        
                             
                             var cardIdSelectorTemplate = '#card';
+                            var existingCards = $('#cardHolder').children('.card').length > 0;
                             var index = 0;
                             for (var myCard in gameObj.o.heldCards) {
-                                index++;                                
-                                $(cardIdSelectorTemplate + index.toString()).text(gameObj.o.heldCards[myCard]);
+                                index++; 
+                                var cardText = decodeURIComponent( gameObj.o.heldCards[myCard] );
+                                
+                                var cardHtml = makeCardHtml(cardText, index);
+                                if (existingCards) {
+                                    $(cardIdSelectorTemplate + index.toString()).text(cardText);
+                                } else {
+                                    //$('#buttonHolder').insertBefore(cardHtml);
+                                    $('#cardHolder').prepend(cardHtml);
+                                }
+                                //$(cardIdSelectorTemplate + index.toString()).text(cardText);
                                 console.log(gameObj.o.heldCards[myCard]);
                             }
 
 
                             var getVotesFor = function(gameObj, playerIndex) {
-                                //var voted = gameObj.o.players.voted[playerIndex]; 
                                 var scoreCharm='';
                                 if (gameObj.o.haveScores) {
                                     var num = gameObj.o.scores[playerIndex];
