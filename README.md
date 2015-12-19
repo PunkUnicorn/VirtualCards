@@ -1,6 +1,10 @@
-# VirtualCards
-Virtual Cards Against Humanity
+# Virtual Cards Against Humanity
  Finally a playable game
+
+This uses the amazing HashMap by Flesler, please get the latest version from
+https://github.com/flesler/hashmap
+
+#https://github.com/flesler/hashmap
 
 -With cards unshuffled due to unfinishedness
 
