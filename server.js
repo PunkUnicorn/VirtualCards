@@ -842,7 +842,7 @@ loadDeck('./cards/CardsAgainstHumanityMainDeckQuestions.txt', blackCardsMain);
 loadDeck('./cards/CardsAgainstHumanityExpansionsQuestions.txt', blackCardsMain);
 loadDeck('./cards/CardsAgainstHumanityCrabsQuestions.txt', blackCardsMain);
 
-loadDeck('./cards/CardsAgainstHumanityMainDeckWhite.txt', whiteCardsMain);
+loadDeck('./cards/CardsAgainstHumanityMainDeck.txt', whiteCardsMain);
 loadDeck('./cards/CardsAgainstHumanityExpansions.txt', whiteCardsMain);
 loadDeck('./cards/CardsAgainstHumanityCrabs.txt', whiteCardsMain);
 
