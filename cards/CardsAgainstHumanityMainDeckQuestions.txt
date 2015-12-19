@@ -1,7 +1,3 @@
-	#NAME?											
-	http://cardsagainsthumanity.com/											
-												
-	Edition		US	US	US	US	US	US	US	UK	CA	US
 	Cards Against Humanity: Main Deck	Special	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	______ + ______ = ______.	"DRAW 2, PICK 3"	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	______ is a slippery slope that leads to ______.	PICK 2	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
@@ -107,7 +103,7 @@
 	Now at the Smithsonian: an interactive exhibit on ______.											v1.7
 	The new Chevy Tahoe. With the power and space to take ______ everywhere you go.								v1.6		v1.6	v1.7
 	They said we were crazy. They said we couldn't put ______ inside of ______. They were wrong.	PICK 2							v1.6	v1.6	v1.6	v1.7
-	"Today on /Maury/: ""Help! My son is ______!"""								v1.6		v1.6	v1.7
+	"Today on /Maury/: "Help! My son is ______!""								v1.6		v1.6	v1.7
 	"Uh, hey guys, I know this was my idea, but I'm having serious doubts about ______."											v1.7
 	"Well if you'll excuse me, gentlemen, I have a date with ______."											v1.7
 	What don't you want to find in your Kung Pao chicken?						v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
@@ -162,7 +158,6 @@
 												
 												
 												
-	TOTALS		88	88	90	90	90	90	90	90	90	90
 												
 												
 												

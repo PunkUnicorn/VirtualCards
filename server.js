@@ -11,8 +11,8 @@ var querystring = require("querystring");
 //Lets define a port we want to listen to
 const PORT=8080; 
 
-var whiteCards = {deck:[], notes:'answer cards'};
-var blackCards = {deck:[], notes:'questions'};
+var whiteCardsMain = {deck:[], deckTitle: '', blankTypes: new hashmap.HashMap(), notes:'answer cards'};
+var blackCardsMain = {deck:[], deckTitle: '', blankTypes: new hashmap.HashMap(), notes:'questions'};
 
 //http://stackoverflow.com/questions/11286979/how-to-search-in-an-array-in-node-js-in-a-non-blocking-way
 
@@ -44,21 +44,60 @@ function loadDeck(file, cards) {
                 arrayOfLines = bigString.match(/[^\r\n]+/g); //http://stackoverflow.com/questions/5034781/js-regex-to-split-by-line
                 var started = false;
                 for (var line in arrayOfLines) {
+                    //////console.log(arrayOfLines[line]);
+                    if (arrayOfLines[line].substr(0, 1) == 'x') continue;// an x as the first character ignore the line
                     var splitLine = arrayOfLines[line].split('\t');//\s*[\s\t]\s*/);
                     var columnCount = 0;
                     for (var col in splitLine) {
                         columnCount++;
                         if (columnCount == 2) {
+                            if (splitLine[col] == '#NAME?') continue
+                            //console.log('1: ' + splitLine[col]);
                             if (splitLine[col].trim().length == 0) continue; //ignore blank entries in column 2
 
                             var startTrigger = 'Cards Against Humanity:';							
                             var endTrigger='TOTALS';
                             
-                            if (started == false) {
-                                started = (splitLine[col].substr(0,startTrigger.length).toString() === startTrigger.toString());
-                            } else {
+                            if (splitLine[col].substr(0,startTrigger.length).toString() === startTrigger.toString()) {
+                                deckTitle = splitLine[col]
+                                    .substr(startTrigger.length)
+                                    .trim();
+                                    
+                                console.log('deckTitle: ' + deckTitle);
+                                cards.deckTitle += ', ' + deckTitle;
+                                
+                                started = true;
+                            } 
+                            else {
                                 if (splitLine[col] === endTrigger) break;
                                 cards.deck.push(splitLine[col]);
+                                
+                                var countingTheBlanks = (splitLine[col].indexOf('_') > -1);
+                                var remainder = splitLine[col];
+                                while (countingTheBlanks) {
+                                    var lineLength = remainder.length;
+                                    var chari = remainder.indexOf('_');
+                                    remainder = remainder.substr(chari);
+                                    for (chari = 0;;chari++) {
+                                        if ( chari == lineLength) break;
+                                        if (remainder[chari] != '_') break;
+                                    }
+                                    
+                                    var key = remainder
+                                        .substr(0, chari)
+                                        .trim();
+                                        
+                                    if (!cards.blankTypes.has(key)) {
+                                        //console.log('key = ' + key + ', (' + cards.blankTypes.keys().length + ')');
+                                        cards.blankTypes.set(key, key);
+                                    }
+
+                                    if (chari == lineLength) break;
+                                    remainder = remainder.substr(chari);
+                                    countingTheBlanks = (remainder.indexOf('_') > -1);
+                                }
+                                
+                                
                             }
                         }
                     }
@@ -99,7 +138,7 @@ function getGame(reqObj) {
         console.log('@' + name);
     }
     catch(err) {
-        console.log('er... ' + err);                    
+        console.log('errr... ' + err);                    
     }
     return name;                
 };
@@ -121,7 +160,7 @@ function getPlayer(reqObj) {
         console.log('@' + player);
     }
     catch(err) {
-        console.log('er... ' + err);                    
+        console.log('er....... ' + err);                    
     }
     return player;
 };       
@@ -130,11 +169,11 @@ function getPlayer(reqObj) {
 function getCards(reqObj) {
     var cards = [];
     try {
-        cards = JSON.parse( reqObj.query.Cards );
-        console.log('@' + JSON.stringify(cards));
+        cards = JSON.parse( decodeURIComponent(reqObj.query.Cards) );
+        console.log('@' + JSON.stringify(decodeURIComponent(cards)));
     }
     catch(err) {
-        console.log('er... ' + err);       
+        console.log('erererr... ' + err);       
     }
     return cards;
 };
@@ -146,7 +185,7 @@ function getVote(reqObj) {
         console.log('@' + JSON.stringify(vote));
     }
     catch(err) {
-        console.log('er... ' + err);       
+        console.log('eeeeer...... ' + err);       
     }
     return vote;
 }
@@ -245,7 +284,7 @@ function replaceCards(games, gameInfo, pram, cards) {
     
     var removeIndexes = [];
     for (var cardIndex in heldCardsIndexes) {
-        var cardDesc = whiteCards.deck[heldCardsIndexes[cardIndex]];
+        var cardDesc = whiteCardsMain.deck[heldCardsIndexes[cardIndex]];
         var removeIndex = cards.indexOf(cardDesc);
         if (removeIndex > -1) removeIndexes.push( heldCardsIndexes[cardIndex] );                    
     }
@@ -289,7 +328,7 @@ function cloneRound(games, gameInfo, pram) {
     var cards = heldCards.get(pram.playerName);
 
     for (var cardIndex in cards) {
-        cloneOfRound.heldCards.push(whiteCards.deck[cards[cardIndex]]);
+        cloneOfRound.heldCards.push(whiteCardsMain.deck[cards[cardIndex]]);
     }
     
     var playerIndex =  cloneOfRound.players.list.indexOf(pram.playerName);    
@@ -465,20 +504,43 @@ function handleRequest(req, res) {
                     if (retObj.initGame) { 
 
                         var dealCards = function(games, gameInfo) {
+
+                            var shuffle = function (array) { //http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+                                var currentIndex = array.length, temporaryValue, randomIndex ;
+
+                                // While there remain elements to shuffle...
+                                while (0 !== currentIndex) {
+
+                                    // Pick a remaining element...
+                                    randomIndex = Math.floor(Math.random() * currentIndex);
+                                    currentIndex -= 1;
+
+                                    // And swap it with the current element.
+                                    temporaryValue = array[currentIndex];
+                                    array[currentIndex] = array[randomIndex];
+                                    array[randomIndex] = temporaryValue;
+                                }
+
+                                return array;
+                            }
+                            
                             console.log('initialising game');
                             
                             // ??SHUFFLE THE CARDS??
                             games[gameInfo.index].blackCards = [];
                             games[gameInfo.index].blackCardIndex = 0;
-                            for (var cardIndex in blackCards.deck) {
+                            for (var cardIndex in blackCardsMain.deck) {
                                 games[gameInfo.index].blackCards.push(cardIndex);
                             }
 
                             games[gameInfo.index].whiteCards = [];
                             games[gameInfo.index].whiteCardIndex = 0;
-                            for (var cardIndex in whiteCards.deck) {
+                            for (var cardIndex in whiteCardsMain.deck) {
                                 games[gameInfo.index].whiteCards.push(cardIndex);
                             }
+                            
+                            games[gameInfo.index].blackCards = shuffle(games[gameInfo.index].blackCards);
+                            games[gameInfo.index].whiteCards = shuffle(games[gameInfo.index].whiteCards);
                         };
                         
                         dealCards(games, gameInfo);
@@ -494,10 +556,41 @@ function handleRequest(req, res) {
                     console.log('allocating round info');
                     var roundObj = {};              
                     var useIndex = getBlackCard(games, gameInfo);
+                    var question = blackCardsMain.deck[useIndex];
 
-                    roundObj.question = blackCards.deck[useIndex].replace(/________/g, '______');;            
-                    var count = (roundObj.question .match(/______/g) || []).length;
-                    if (count == 0) count = 1;                        
+
+                     // accomodate the regular expression a little
+                    const TheOneWeWant = '______';
+                    console.log('0 question:'+question);
+                    roundObj.question = question; 
+                    if (roundObj.question.substr(question.length-1, 1) == '_')
+                        roundObj.question += ' ';
+                    
+                    if (roundObj.question.substr(0, 1) == '_')
+                        roundObj.question = ' ' + roundObj.question
+                    
+                    roundObj.question = roundObj.question.replace(/ _{7,12}\./g, ' '+TheOneWeWant+'.');
+                    roundObj.question = roundObj.question.replace(/ _{7,12}\?/g, ' '+TheOneWeWant+'?');
+                    roundObj.question = roundObj.question.replace(/ _{7,12}\!/g, ' '+TheOneWeWant+ '!');
+                    roundObj.question = roundObj.question.replace(/ _{7,12};/g, ' '+TheOneWeWant+';');
+                    roundObj.question = roundObj.question.replace(/ _{7,12}\:/g, ' '+TheOneWeWant+':');
+                    roundObj.question = roundObj.question.replace(/ _{7,12} /g, ' '+TheOneWeWant+' ');
+                    roundObj.question = roundObj.question.replace(/ _{7,12},/g, ' '+TheOneWeWant+',');
+
+                    roundObj.question = roundObj.question.replace(/ _{1,5}\./g, ' '+TheOneWeWant+'.');
+                    roundObj.question = roundObj.question.replace(/ _{1,5}\?/g, ' '+TheOneWeWant+'?');
+                    roundObj.question = roundObj.question.replace(/ _{1,5}\!/g, ' '+TheOneWeWant+ '!');
+                    roundObj.question = roundObj.question.replace(/ _{1,5};/g, ' '+TheOneWeWant+';');
+                    roundObj.question = roundObj.question.replace(/ _{1,5}\:/g, ' '+TheOneWeWant+':');
+                    roundObj.question = roundObj.question.replace(/ _{1,5} /g, ' '+TheOneWeWant+' ');
+                    roundObj.question = roundObj.question.replace(/ _{1,5},/g, ' '+TheOneWeWant+',');
+
+
+                    var count = (roundObj.question.match(/______/g) || []).length;
+                    console.log('0 question:'+roundObj.question);
+                    if (count == 0) {
+                        count = 1;
+                    }
 
                     roundObj.questionBlankCount = count;
                     roundObj.players = { list:[], submitted:[], voted :[], };
@@ -639,16 +732,6 @@ function handleRequest(req, res) {
             var myIndex = playerList.indexOf(b.pram.playerName);
             if (myIndex == -1) break;
             
-            // var haveVoted = false;
-            // var votedFor = -1;
-            // try {
-                // haveVoted = games[b.gameInfo.index].round.players.voted[myIndex];
-                // votedFor = games[b.gameInfo.index].votes[myIndex];
-            // } catch (err) {
-                // haveVoted = false;
-            // }
-            // games[b.gameInfo.index].round.haveVoted = true;
-            // games[b.gameInfo.index].round.votedFor = b.vote; //games[b.gameInfo.index].votes[myIndex]
             
             var haveVoted = false;
             try {
@@ -656,7 +739,7 @@ function handleRequest(req, res) {
             } catch (err) {}
             
             if (!haveVoted) games[b.gameInfo.index].voteCount++;
-            games[b.gameInfo.index].round.players.voted[myIndex] = true;            
+            games[b.gameInfo.index].round.players.voted[myIndex] = true;
             games[b.gameInfo.index].votes[myIndex] = b.vote;
 
             var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);            
@@ -672,16 +755,6 @@ function handleRequest(req, res) {
             if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
 
             var cloneOfRound = cloneRound(games, gameInfo, pram);
-
-            // try {
-                // console.log(JSON.stringify(games[gameInfo.index].list));
-                // console.log('############################');
-                // console.log(' WIP ');
-                // console.log('games[gameInfo.index].voteCount:' + games[gameInfo.index].voteCount);
-                // console.log('games[gameInfo.index].players.list.length:' + games[gameInfo.index].list.length);
-            // } catch (err) {
-                // console.log(err.message);
-            // };
 
             if (games[gameInfo.index].voteCount >= games[gameInfo.index].list.length) {
                 var allVotes = games[gameInfo.index].votes;
@@ -729,8 +802,8 @@ function doPageFile(file, reqObj, res) {
     try {//reqObj.pathname
         var isHtml = file.toLowerCase().substr(-4) == 'html';
         var isCSS = file.toLowerCase().substr(-3) == 'css';
-        console.log('isHtml:' + isHtml);
-        console.log('isCSS' + isCSS);
+        //console.log('isHtml:' + isHtml);
+        //console.log('isCSS' + isCSS);
         console.log(file);
         setTimeout( function() {
             fs.readFile(file, function (err, data){
@@ -765,8 +838,13 @@ function onClickDraw() {
 }
 
 // load cards
-loadDeck('./cards/CardsAgainstHumanityMainDeckQuestions.txt', blackCards);
-loadDeck('./cards/CardsAgainstHumanityMainDeckWhite.txt', whiteCards);
+loadDeck('./cards/CardsAgainstHumanityMainDeckQuestions.txt', blackCardsMain);
+loadDeck('./cards/CardsAgainstHumanityExpansionsQuestions.txt', blackCardsMain);
+loadDeck('./cards/CardsAgainstHumanityCrabsQuestions.txt', blackCardsMain);
+
+loadDeck('./cards/CardsAgainstHumanityMainDeckWhite.txt', whiteCardsMain);
+loadDeck('./cards/CardsAgainstHumanityExpansions.txt', whiteCardsMain);
+loadDeck('./cards/CardsAgainstHumanityCrabs.txt', whiteCardsMain);
 
 //Create a server
 var server = http.createServer(handleRequest);

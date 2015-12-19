@@ -281,7 +281,7 @@
                 };
 
                 cardApi.sendSomething(cardSelection, '/SubmitAnswer?Game=' + passName + '&Player=' + playerName + '&Cards=' 
-                    + JSON.stringify(cardSelection), beforeSend, onSuccess, gameObj, passName, playerName);            
+                    + encodeURIComponent(JSON.stringify(cardSelection)), beforeSend, onSuccess, gameObj, passName, playerName);            
             }
             
             function fillQuestion(gameObj, cardSelection) {
