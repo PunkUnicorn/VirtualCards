@@ -9,7 +9,7 @@ var hashmap = require('./hashmap-2.0.4/hashmap');
 var querystring = require("querystring");
 
 //Lets define a port we want to listen to
-const PORT=8080; 
+//const PORT=8080; 
 
 var whiteCardsMain = {deck:[], deckTitle: '', blankTypes: new hashmap.HashMap(), notes:'answer cards'};
 var blackCardsMain = {deck:[], deckTitle: '', blankTypes: new hashmap.HashMap(), notes:'questions'};
