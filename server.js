@@ -9,7 +9,7 @@ var hashmap = require('./hashmap-2.0.4/hashmap');
 var querystring = require("querystring");
 
 //Lets define a port we want to listen to
-const PORT=8080; 
+//const PORT=8080; 
 
 var whiteCardsMain = {deck:[], deckTitle: '', blankTypes: new hashmap.HashMap(), notes:'answer cards'};
 var blackCardsMain = {deck:[], deckTitle: '', blankTypes: new hashmap.HashMap(), notes:'questions'};
@@ -849,8 +849,11 @@ loadDeck('./cards/CardsAgainstHumanityCrabs.txt', whiteCardsMain);
 //Create a server
 var server = http.createServer(handleRequest);
 
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+
 //Lets start our server
-server.listen(PORT, function(){
+server.listen(server_port, server_ip_address, function(){ //PORT
     //Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening on: http://localhost:%s", PORT);
+    console.log('Server listening on: http://'+ server_ip_address+':%s', server_port); //PORT localhost
 });
