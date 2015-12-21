@@ -9,12 +9,12 @@ cardApi = {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     },
 
-    joinOrCreateThing: function(xmlhttp, slocation, gameObj, passName, playerName, successFunc, joinOnly) {
+    joinOrCreateThing: function(xmlhttp, slocation, userVal, passName, playerName, successFunc, joinOnly) {
         var requestIt = function () {
             if (xmlhttp.readyState == 4) {
                 $('.wait-for-load').hide();
                 if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                    successFunc(xmlhttp, gameObj, passName, playerName, joinOnly);
+                    successFunc(xmlhttp.responseText, userVal, passName, playerName, joinOnly);
                 }
                 else {
                     console.log('unsuccessful request');
@@ -38,7 +38,7 @@ cardApi = {
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
                 if (xmlhttp.status == 400 || xmlhttp.status == 200) {
-                    onSuccess(takeMeWithYouSuccessILoveYou, gameObj, passName, playerName);
+                    onSuccess(takeMeWithYouSuccessILoveYou, gameObj, passName, playerName, xmlhttp);
                 }
             }
             

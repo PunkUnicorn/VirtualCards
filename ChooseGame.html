@@ -1,6 +1,6 @@
 <!doctype html>
-<html> //https://www.youtube.com/watch?v=j-rwdRE1p50#
-    <head> <!--DUPLICATE CODE START-->
+<html>
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <title>Virtual Cards against Cards</title>
@@ -53,7 +53,7 @@
                     <div class='w3-card-8 card-area card-twisle'>
                         <header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.2</h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.3</h6>
                         </header>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                                 <p><button 
                                     onclick='onClickStart()'
                                     class='start-game w3-btn w3-grey'>Start game <span
-                                        class='wait-for-game fa fa-cube w3-small w3-spin' />										
+                                        class='wait-for-game fa fa-cube w3-small w3-spin' />
                                 </button></p>
                             </div>
                         </div>                        
@@ -127,7 +127,7 @@
                 var playerName = $('#txtPlayerName').html();
 
                 var startGameLocation = window.document.referrer + 'CreateRound?Game=' + passName + '&Player=' + playerName;
-                var startSuccessFunc = function (xmlhttp, NA, passName, playerName, joinOnly) {
+                var startSuccessFunc = function (responseText, NA, passName, playerName, joinOnly) {
                     playRound(passName, playerName);
                 }
 
@@ -142,11 +142,11 @@
                 var playerName = $('#txtPlayerName').html();
 
                 var joinGameLocation = window.document.referrer + 'JoinGame?Game=' + passName + '&Player=' + playerName;
-                var joinSuccessFunc = function (xmlhttp, NA, passName, playerName, joinOnly) {
+                var joinSuccessFunc = function (responseText, xmlhttp, passName, playerName, joinOnly) {
 
-                    console.log(joinOnly + ': ' + xmlhttp.responseText);
+                    console.log(joinOnly + ': ' + responseText);
 
-                    var responseObj = JSON.parse(xmlhttp.responseText);
+                    var responseObj = JSON.parse(responseText);
                     console.log(responseObj);
 
                     if (responseObj.game == passName) {
@@ -169,8 +169,7 @@
                             $('.wait-for-game-info4').html(playerListStr);
 
                             if (responseObj.creator == playerName) {
-                                $('.wait-for-game-info2').html('<b class="w3-red w3-animate-opacity w3-middle">YOU CREATED THIS GAME. CLICK START TO START.</b>');
-                            
+                                $('.wait-for-game-info2').html('<b class="w3-red w3-animate-opacity w3-middle">YOU CREATED THIS GAME. CLICK START TO START.</b>');                            
                                 $('.start-game').show();
                             }
                         };
@@ -183,18 +182,18 @@
                         }
                     } else {
                         var createGameLocation = window.location.protocol + '//' + window.location.host + '/CreateGame?Game=' + passName + '&Player=' + playerName;
-                        var createSuccessFunc = function (xmlhttp, NA, passName, playerName, joinOnly) {
-                            cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, NA, passName, playerName, joinSuccessFunc, true);
+                        var createSuccessFunc = function (responseText, xmlhttp, passName, playerName, joinOnly) {
+                            cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, xmlhttp, passName, playerName, joinSuccessFunc, true);
                         }
 
                         if (!joinOnly) {
-                            const NOTAPPLICABLE = -1;
-                            cardApi.joinOrCreateThing(xmlhttp, createGameLocation, NOTAPPLICABLE, passName, playerName, createSuccessFunc, false);
+                            //const NOTAPPLICABLE = -1;
+                            cardApi.joinOrCreateThing(xmlhttp, createGameLocation, xmlhttp, passName, playerName, createSuccessFunc, false);
                         }
                     }
                 }
                 const NOTAPPLICABLE = -1;
-                cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, NOTAPPLICABLE, passName, playerName, joinSuccessFunc, false);
+                cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, xmlhttp, passName, playerName, joinSuccessFunc, false);
             }
         </script>
     </body>

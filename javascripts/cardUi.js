@@ -41,15 +41,11 @@ cardUi = {
 
         var selected = function (cardi, isSelected) {
             if (cardi.length == 0) return cardi;
-            // outWithTheOldSelected(cardi, isSelected)
-                // .ready(inWithTheNewSelected(cardi, isSelected));
             outWithTheOldSelected(cardi, isSelected);
             inWithTheNewSelected(cardi, isSelected);
             return cardi;
         };
 
-        // notSelected(card, isSelected)
-        // .ready(selected(card, isSelected));
         notSelected(card, isSelected);
         selected(card, isSelected);        
     },
@@ -94,9 +90,6 @@ cardUi = {
             return;
         }
         
-        // target.toggleClass('card-selected', isNowSelected)
-            // .ready(this.setCardSelectionEffects(target, isNowSelected))
-                // .ready(cardUi.fireEffect(target));
         target.toggleClass('card-selected', isNowSelected);
         
         window.setTimeout( function(target, isNowSelected) {
