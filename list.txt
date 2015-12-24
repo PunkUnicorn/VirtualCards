@@ -1,0 +1,1033 @@
+
+C:\Users\Matthew\Documents\GitHub\VirtualCards>node server.js 
+loadDeckSimple: ./cards/CaHExpansionsWhite.txt white
+bytes read: 30549
+855
+deck: Box Expansion (white)
+deck end: Box Expansion (white) {"startIndex":0,"endIndex":0}
+deck: 90s Expansion Pack (white)
+deck end: 90s Expansion Pack (white) {"startIndex":2,"endIndex":0}
+deck: Pax 2012 / "Oops" kit (white)
+deck end: Pax 2012 / "Oops" kit (white) {"startIndex":24,"endIndex":0}
+deck: Pax East 2013 Promo Pack A (white)
+deck end: Pax East 2013 Promo Pack A (white) {"startIndex":46,"endIndex":0}
+deck: Pax East 2013 Promo Pack B (white)
+deck end: Pax East 2013 Promo Pack B (white) {"startIndex":56,"endIndex":0}
+deck: Pax East 2013 Promo Pack C (white)
+deck end: Pax East 2013 Promo Pack C (white) {"startIndex":64,"endIndex":0}
+deck: Pax Prime 2013 (white)
+deck end: Pax Prime 2013 (white) {"startIndex":72,"endIndex":0}
+deck: Pax East 2014 (white)
+deck end: Pax East 2014 (white) {"startIndex":80,"endIndex":0}
+deck: Pax East 2014 - Panel Cards (white)
+deck end: Pax East 2014 - Panel Cards (white) {"startIndex":117,"endIndex":0}
+deck: Pax Prime 2014 - Panel Cards (white)
+deck end: Pax Prime 2014 - Panel Cards (white) {"startIndex":139,"endIndex":0}
+deck: Reject Pack (white)
+deck end: Reject Pack (white) {"startIndex":147,"endIndex":0}
+deck: Canadian Conversion Kit (white)
+deck end: Canadian Conversion Kit (white) {"startIndex":153,"endIndex":0}
+deck: House of Cards Expansion (white)
+deck end: House of Cards Expansion (white) {"startIndex":170,"endIndex":0}
+deck: First Expansion (white)
+deck end: First Expansion (white) {"startIndex":200,"endIndex":0}
+deck: Second Expansion (white)
+deck end: Second Expansion (white) {"startIndex":216,"endIndex":0}
+deck: Third Expansion (white)
+deck end: Third Expansion (white) {"startIndex":323,"endIndex":0}
+deck: Fourth Expansion (white)
+deck end: Fourth Expansion (white) {"startIndex":404,"endIndex":0}
+deck: Fifth Expansion (white)
+deck end: Fifth Expansion (white) {"startIndex":480,"endIndex":0}
+deck: Tabletop Expansion (white)
+deck end: Tabletop Expansion (white) {"startIndex":550,"endIndex":0}
+deck: Retail Mini Set (white)
+deck end: Retail Mini Set (white) {"startIndex":625,"endIndex":0}
+deck: Science Pack (white)
+deck end: Science Pack (white) {"startIndex":637,"endIndex":0}
+deck: Sixth Expansion (white)
+deck end: Sixth Expansion (white) {"startIndex":641,"endIndex":0}
+deck: Reject Pack 2 (white)
+deck end: Reject Pack 2 (white) {"startIndex":665,"endIndex":0}
+deck: Design Pack (white)
+deck end: Design Pack (white) {"startIndex":742,"endIndex":0}
+deck: Pax Prime 2015 Food Pack A (Mango) (white)
+deck end: Pax Prime 2015 Food Pack A (Mango) (white) {"startIndex":767,"endIndex":0}
+deck: Pax Prime 2015 Food Pack B (Coconut) (white)
+deck end: Pax Prime 2015 Food Pack B (Coconut) (white) {"startIndex":798,"endIndex":0}
+deck: Pax Prime 2015 Food Pack C (Cherry) (white)
+deck end: Pax Prime 2015 Food Pack C (Cherry) (white) {"startIndex":808,"endIndex":0}
+Deck count: 27
+Box Expansion (white)
+{"startIndex":0,"endIndex":1}
+#NAME?
+http://cardsagainsthumanity.com/
+
+90s Expansion Pack (white)
+{"startIndex":2,"endIndex":23}
+The box these comes in says "Instructions for use: 1. Do not."   There is also nutrition information printed on the spacers. The biggest, blackest dick card has foil printing and is hidden under the lining of the lid.
+A box of biscuits, a box of mixed biscuits, and a biscuit mixer.
+A box that is conscious and wishes it weren't a box.
+A box within a box.
+A box without hinges, key, or lid, yet golden treasure inside is hid.
+A box-shaped man.
+A box.
+A boxing match with a giant box.
+A falcon with a box on its head.
+A man-shaped box.
+A world without boxes.
+An alternate universe in which boxes store things inside of people.
+An outbreak of smallbox.
+Being a motherfucking box.
+Boxing up my feelings.
+Former President George W. Box.
+Pandora's vagina.
+Something that looks like a box but turns out to be a crate.
+The biggest, blackest dick.
+The Boxcar Children
+The J15 Patriot Assault Box.
+Two midgets shitting into a box.
+
+Pax 2012 / "Oops" kit (white)
+{"startIndex":24,"endIndex":45}
+A bus that will explode if it goes under 50 miles per hour.
+A mulatto, an albino, a mosquito, and my libido.
+Angels interfering in an otherwise fair baseball game.
+Cool 90s up-in-the-front hair.
+Deregulating the mortgage market.
+Freeing Willy.
+Getting caught up in the CROSSFIRE™.
+Jerking off to a 10-second RealMedia clip.
+Kurt Cobain's death.
+Liking big butts and not being able to lie about it.
+Log™.
+Pamela Anderson's boobs running in slow motion.
+Patti Mayonnaise.
+Pizza in the morning, pizza in the evening, pizza at supper time.
+Pure Moods, Vol. 1.
+Stabbing the shit out of a Capri Sun.
+Sucking the president's dick.
+Sunny D! Alright!
+The Great Cornholio.
+The Y2K bug.
+Wearing Nicolas Cage's face.
+Yelling "girl power!" and doing a high kick.
+
+Pax East 2013 Promo Pack A (white)
+{"startIndex":46,"endIndex":55}
+This pack was given to fix misprints of v1.2 at PAX 2012. The cards are also found in v1.3.
+A Bitch Slap.
+One trillion dollars.
+Chunks of dead prostitute.
+The entire Mormon Tabernacle Chior.
+The female orgasm.
+Extremely tight pants.
+Stormtroopers.
+The Boy Scouts of America.
+Throwing a virgin into a volcano.
+
+Pax East 2013 Promo Pack B (white)
+{"startIndex":56,"endIndex":63}
+An immediately regrettable $9 hot dog from the Boston Convention Center.
+Running out of stamina.
+Casting Magic Missile at a bully.
+Getting bitch slapped by Dhalsim.
+Firefly: Season 2.
+Rotating shapes in mid-air so that they fit into other shapes when they fall.
+Jiggle physics.
+Paying the iron price.
+
+Pax East 2013 Promo Pack C (white)
+{"startIndex":64,"endIndex":71}
+Getting inside the Horadric Cube with a hot babe and pressing the transmute button.
+Loading from a previous save.
+Punching a tree to gather wood.
+Sharpening a foam broadsword on a foam whetstone.
+Spending the year's insulin budget on Warhammer 40k figurines.
+The depression that ensues after catching 'em all.
+The rocket launcher.
+Violating the First Law of Robotics.
+
+Pax Prime 2013 (white)
+{"startIndex":72,"endIndex":79}
+Achieving 500 actions per minute.
+Charging up all the way.
+Forgetting to eat, and consequently dying.
+Judging elves by the color of their skin and not by the content of their character.
+Smashing all the pottery in a Pottery Barn in search of rupees.
+The Klobb.
+Vespene gas.
+Wil Wheaton crashing an actual spaceship.
+
+Pax East 2014 (white)
+{"startIndex":80,"endIndex":116}
+Full HD.
+The gravity gun.
+Reading the comments.
+70,000 gamers sweating and farting inside an airtight steel dome.
+Allowing nacho cheese to curdle in your beard while you creep in League of Legends.
+Achieving the manual dexterity and tactical brilliance of a 12-year-old Korean boy.
+Rolling a D20 to save a failing marriage.
+The collective wail of every Magic player suddenly realizing that they've spent hundreds of dollars on pieces of cardboard.
+Being an attractive elf trapped in an unattractive human's body.
+Temporary invincibility.
+The Sarlacc.
+Filling every pouch of a UtiliKilt™ with pizza.
+Bowser's aching heart.
+Mario Kart rage.
+Nude-modding Super Mario World.
+An angry stone head that stomps on the floor every three seconds.
+Yoshi's huge egg-laying cloaca.
+The Cock Ring of Alacrity.
+Offering sexual favors for an ore and a sheep.
+A homemade, cum-stained Star Trek uniform.
+Unlocking a new sex position.
+The boner hatch in the Iron Man suit.
+Never watching, discussing, or thinking about My Little Pony.
+Turn-of-the-century sky racists.
+The decade of legal inquests following a single hour of Grand Theft Auto.
+A fully-dressed female videogame character.
+Buying virtual clothes for a Sim family instead of real clothes for a real family.
+Google Glass + e-cigarette: Ultimate Combo!
+Tapping Serra Angel.
+Charles Barkley Shut Up and Jam!
+Legendary Creature - Robert Khoo.
+Winning the approval of Cooking Mama that you never got from actual mama.
+Eating a pizza that's lying in the street to gain health.
+Getting into a situation with an owlbear.
+Grand Theft Auto: Fort Lauderdale.
+A madman who lives in a policebox and kidnaps women.
+SNES cartridge cleaning fluid.
+
+Pax East 2014 - Panel Cards (white)
+{"startIndex":117,"endIndex":138}
+Collecting all seven power crystals.
+Whatever Final Fantasy bullshit happened this year.
+Endless ninjas.
+Demons and shit.
+The imagination of Peter Jackson.
+Futuristic death sports.
+KHAAAAAAAAAN!
+The Star Wars universe.
+Taking 2d6 emotional damage.
+A grumpy old Harrison Ford who'd rather be doing anything else.
+All of the good times and premium gaming entertainment available to you in the Kickstarter room.
+Attacking from Kamchatka.
+Separate drinking fountains for dark elves.
+Lagging out.
+Getting bitten by a radioactive spider and then battling leukemia for 30 years.
+Mistakenly hitting on a League of Legends statue.
+Ser Jorah Mormonts cerulean-blue balls.
+The old gods.
+Stuffing my balls into a Sega Genesis and pressing the power button.
+The pure, Zen-like state that exists between micro and macro.
+A giant mechanical bird with a tragic backstory.
+Xena, Warrior Princess.
+
+Pax Prime 2014 - Panel Cards (white)
+{"startIndex":139,"endIndex":146}
+Stepping on a god damn friggin' LEGO.
+Rubbing chocolate pudding all over Bill Cosby's nipples.
+What The Rock was really cooking.
+Hodor.
+A floor that is literally made of lava.
+All this liquid in my mouth.
+Giving a dolphin a handjob for science.
+Exciting content!
+
+Reject Pack (white)
+{"startIndex":147,"endIndex":152}
+A neck beard that is 10% cheese.
+Pelvic sorcery.
+Pooping as quietly as possible.
+The beautiful sport of Turkish oil wrestling.
+No survivors.
+Go Fuck Yourself.
+
+Canadian Conversion Kit (white)
+{"startIndex":153,"endIndex":169}
+These cards were picked by each founding member of CAH and features a line drawing of the member who chose that card.
+A giant squid in a wedding gown.
+A heart that is two sizes too small and that therefore cannot pump an adequate amount of blood.
+A sexy naked interactive theater thing.
+Asshole pomegranates that are hard to eat.
+Becoming so rich that you shed your body and turn to vapor.
+Carribbean Jesus.
+Corn.
+Crawling into a vagina.
+Dividing by zero.
+Ejaculating a pound of tinsel.
+Faking a jellyfish sting so someone will pee on you.
+Ladles.
+My dick in your mouth.
+Playing an ocarina to summon Ultra-Congress from the sea.
+Super yoga.
+The John D. and Catherine T. MacArthur Foundation.
+
+House of Cards Expansion (white)
+{"startIndex":170,"endIndex":199}
+"As of v1.6(1.5?) there is now a complete boxed Canadian edition with US cards swapped out for CA ones, see the Main Deck sheets.
+No Longer Available for purchase / Cards Against Humanity
+Canadian Conversion Kit
+Dear Canadian,
+Thanks for buying or stealing this copy of Cards Against Humanity!
+Some of the cards in our game were written for fat, stupid Americans. To ensure that your game is as funny as possible we've gone to the bare minimum of effort to write a few replacement cards.
+On the next card, you'll find a list of cards that you might want to replace. Once you've customized your game to your liking, feel free to burn these instructions for warmth.
+- Cards Against Humanity"
+A Molson muscle.
+A Tim Hortons franchise.
+An icy handjob from an Edmonton hooker.
+Being Canadian.
+Burning down the White House.
+Canada: America's hat.
+Don Cherrys wardrobe.
+Heritage minutes.
+Homo milk.
+Mr. Dressup.
+Naked News.
+Newfies.
+Poutine.
+Schmirler the Curler.
+Snotsicles.
+Stephen Harper.
+Syrupy sex with a maple tree.
+Terry Fox's prosthetic leg.
+The Famous Five.
+The FLQ
+The Official Languages Act. La Loi sur les langues officielles.
+The Royal Canadian Mounted Police.
+
+First Expansion (white)
+{"startIndex":200,"endIndex":215}
+25 shitty jokes about House of Cards.
+A childless marriage.
+A homoerotic subplot.
+A much younger woman.
+An older man.
+An origami swan that's some kind of symbol?
+Carbon monoxide poisoning.
+Discharging a firearm in a residential area.
+Forcing a handjob on a dying man.
+Getting eaten out while on the phone with Dad.
+Making it look like a suicide.
+My constituents.
+Punching a congressman in the face.
+Ribs so good they transcend race and class.
+Strangling a dog to make a point to the audience.
+The sensitive European photographer who's fucking my wife.
+
+Second Expansion (white)
+{"startIndex":216,"endIndex":322}
+24-hour media coverage
+A beached whale.
+A big black dick.
+A bloody pacifier.
+A crappy little hand.
+A fat bald man from the internet.
+A low standard of living.
+A nuanced critique.
+A panty raid.
+A passionate Latino lover.
+A plunger to the face.
+A rival dojo.
+A smiling black man, a latina businesswoman, a cool Asian, and some whites.
+A web of lies.
+A woman scorned.
+An atomic wedgie.
+An Etsy steampunk strap-on.
+An evil man in evil clothes.
+André the Giant's enormous, leathery scrotum.
+Apologizing.
+Appreciative snapping.
+Ashton Kutcher.
+Beating your wives.
+Being a busy adult with many important things to do.
+Being a dinosaur.
+Blaxploitation.
+Bosnian chicken farmers.
+Breaking nip slip news.
+Carnies.
+Clams.
+Clenched butt cheeks.
+Coughing into a vagina.
+Cutting.
+Dancing with a broom.
+Deflowering a princess.
+Deflowering the princess.
+Dorito breath.
+Eating an albino.
+Enormous Scandinavian women.
+Fabricating statistics.
+Finding a skeleton.
+Gandalf.
+Genetically engineered super-soldiers.
+George Clooney's musk.
+Getting abducted by Peter Pan.
+Getting in her pants, politely.
+Gladiatorial combat.
+Good grammar.
+Having a penis.
+Hipsters.
+Historical revisionism.
+Insatiable bloodlust.
+Jafar.
+Jean-Claude Van Damme in slow motion.
+Jean-Claude Van Damme.
+Just the tip.
+Leveling up.
+Literally eating shit.
+Mad hacky-sack skills.
+Making the penises kiss.
+Media coverage.
+Medieval Times® Dinner & Tournament.
+Mom.
+Moral ambiguity.
+My machete.
+Neil Patrick Harris.
+NOOOOOOOOO!!!
+Nubile slave boys.
+Ominous background music.
+One thousand Slim Jims.
+Overpowering your father.
+Panty raids.
+Pistol-whipping a hostage.
+Quiche.
+Quivering jowls.
+Revenge fucking.
+Ripping into a man's chest and pulling out his still-beating heart.
+Ryan Gosling riding in on a white horse.
+Salvia.
+Sanding off a man's nose.
+Santa Claus.
+Savagely beating a mascot
+Scrotum tickling.
+Sexual humiliation.
+Sexy Siamese twins.
+Shaft.
+Slow motion.
+Space muffins.
+Statistically validated stereotypes.
+Stockholm Syndrome
+Sudden Poop Explosion Disease.
+Suicidal thoughts.
+Syphilitic insanity
+The boners of the elderly.
+The economy.
+The Fanta® girls.
+The four arms of Vishnu.
+The Gulags.
+The harsh light of day.
+The hiccups.
+The ooze.
+The shambling corpse of Larry King.
+This guy!
+Tripping balls.
+Walking in on Dad peeing into Mom's mouth.
+Words, words, words.
+Zeus's sexual appetites.
+
+Third Expansion (white)
+{"startIndex":323,"endIndex":403}
+A 55-gallon drum of lube.
+A bigger, blacker dick.
+A Burmese tiger pit.
+A dollop of sour cream.
+A fortuitous turnip harvest.
+A magic hippie love cloud.
+A man in yoga pants with a ponytail and feather earrings.
+A piñata full of scorpions
+A sad fat dragon with no friends.
+A slightly shittier parallel universe.
+A sofa that says “I have style, but I like to be comfortable.”
+A soulful rendition of "Ol' Man River."
+A squadron of moles wearing aviator goggles.
+A sweaty, panting leather daddy.
+A sweet spaceship.
+All of this blood.
+An army of skeletons.
+An ether-soaked rag.
+An unhinged ferris wheel rolling toward the sea.
+Another shot of morphine.
+Basic human decency.
+Beefin' over turf.
+Being awesome at sex.
+Boris the Soviet Love Hammer.
+Bullshit.
+Catastrophic urethral trauma.
+Crushing Mr. Peanut's brittle body.
+Daddy's belt
+Death by Steven Seagal.
+Dennis the Menace.
+Dining with cardboard cutouts of the cast of "Friends."
+Double penetration.
+Existing.
+Fetal alcohol syndrome.
+Finding Waldo.
+Fuck Mountain.
+Getting hilariously gang-banged by the Blue Man Group.
+Grandpa's ashes.
+Graphic violence, adult language, and some sexual content.
+Hillary Clinton's death stare.
+Intimacy problems.
+Jeff Goldblum.
+Living in a trashcan.
+Loki, the trickster god.
+Making a friend.
+Maximal insertion.
+Me.
+Mild autism.
+Mooing.
+My first kill.
+Nunchuck moves.
+Oncoming traffic.
+One Ring to rule them all.
+Power
+Pretty Pretty Princess Dress-Up Board Game®.
+Pumping out a baby every nine months.
+Rising from the grave.
+Scrotal frostbite.
+Some really fucked-up shit.
+Special musical guest, Cher.
+Spring break!
+Subduing a grizzly bear and making her your wife.
+Survivor's guilt.
+Swiftly achieving orgasm.
+Taking a man's eyes and balls out and putting his eyes where his balls go and then his balls in the eye holes.
+The black Power Ranger
+The corporations.
+The day the birds attacked.
+The Google.
+The grey nutrient broth that sustains Mitt Romney.
+The human body.
+The mere concept of Applebee's®.
+The mixing of the races.
+The new Radiohead album.
+Tiny nipples.
+Tongue.
+Upgrading homeless people to mobile hotspots.
+Weapons-grade plutonium.
+Wearing an octopus for a hat.
+Whining like a little bitch.
+Whipping a disobedient slave.
+
+Fourth Expansion (white)
+{"startIndex":404,"endIndex":479}
+A black male in his early 20s, last seen wearing a hoodie.
+A boo-boo.
+A botched circumcision.
+A cat video so cute that your eyes roll back and your spine slides out of your anus.
+A cop who is also a dog.
+A greased-up Matthew McConaughey.
+A lamprey swimming up the toilet and latching onto your taint.
+A pile of squirming bodies.
+A PowerPoint presentation.
+A spontaneous conga line.
+A surprising amount of hair.
+A vagina that leads to another dimension.
+Actually getting shot, for real.
+All my friends dying.
+An all-midget production of Shakespeare’s Richard III.
+An ass disaster.
+An unstoppable wave of fire ants.
+Bill Clinton, naked on a bearskin rug with a saxophone.
+Blood farts.
+Blowing some dudes in an alley.
+Buying the right pants to be cool.
+Chugging a lava lamp.
+Cock.
+Crying into the pages of Sylvia Plath.
+Demonic possession.
+Disco fever.
+Drinking ten 5-hour ENERGYs® to get fifty continuous hours of energy.
+Dying alone and in pain.
+Eating Tom Selleck’s mustache to gain his powers.
+Filling every orifice with butterscotch pudding.
+Fisting.
+Flying robots that kill people.
+Gay aliens.
+Getting your dick stuck in a Chinese finger trap with another dick.
+Girls that always be textin’.
+Going around punching people.
+Having sex on top of a pizza.
+Having shotguns for legs.
+Indescribable loneliness.
+Jumping out at people.
+Letting everyone down.
+Mufasa’s death scene.
+My manservant, Claude.
+Not contributing to society in any meaningful way.
+Not having sex.
+Nothing.
+Putting an entire peanut buter and jelly sandwich into the VCR.
+Racial profiling.
+Reverse cowgirl.
+Roland the Farter, flatulist to the king.
+Running naked through a mall, pissing and shitting everywhere.
+Samuel L. Jackson.
+Screaming like a maniac.
+Self-flagellation.
+Shutting the fuck up.
+Slapping a racist old lady.
+Sneezing, farting, and coming at the same time.
+Some douche with an acoustic guitar.
+Some kind of bird-man.
+Spending lots of money.
+That ass.
+The entire Internet.
+The Harlem Globetrotters.
+The Land of Chocolate.
+The moist, demanding chasm of his mouth.
+The primal, ball-slapping sex your parents are having right now.
+The Quesadilla Explosion Salad™ from Chili’s.®
+The systematic destruction of an entire people and their way of life.
+The thin veneer of situational causality that underlies porn.
+The way white people is.
+Three months in the hole.
+Unlimited soup, salad, and breadsticks.
+Velcro™.
+Vietnam flashbacks.
+Vomiting mid-blowjob.
+Warm, velvety muppet sex.
+
+Fifth Expansion (white)
+{"startIndex":480,"endIndex":549}
+10 Incredible Facts About the Anus.
+A bunch of idiots playing a card game instead of interacting like normal humans.
+A dance move that's just sex.
+A fart.
+A for-real lizard that spits blood from its eyes.
+A gender identity that can only be conveyed through slam poetry.
+A hopeless amount of spiders.
+A horse with no legs.
+A kiss on the lips.
+A manhole.
+A Native American who solves crimes by going into the spirit world.
+A sex comet from Neptune that plunges the Earth into eternal sexiness.
+A sex goblin with a carnival penis.
+A shiny rock that proves I love you.
+A Ugandan warlord.
+Actual mutants with medical conditions and no superpowers.
+Africa.
+All the single ladies.
+Almost giving money to a homeless person.
+Ambiguous sarcasm.
+An interracial handshake.
+Angelheaded hipsters burning for the ancient heavenly connection to the starry dynamo in the machinery of night.
+Ass to mouth.
+Blackula.
+Bouncing up and down.
+Calculating every mannerism so as not to suggest homosexuality.
+Child Protective Services.
+Crazy opium eyes.
+Dem titties.
+Depression.
+Doo-doo.
+Drinking responsibly.
+Exploding pigeons.
+Falling into the toilet.
+Finally finishing off the Indians.
+Fucking a corpse back to life.
+Grammar nazis who are also regular Nazis.
+How awesome I am.
+Injecting speed into one arm and horse tranquilizer into the other.
+Interspecies marriage.
+Jizz.
+Khakis.
+Lots and lots of abortions.
+Moderate-to-severe joint pain.
+My dad's dumb fucking face.
+My sex dungeon.
+My worthless son.
+Neil Diamond's Greatest Hits.
+No clothes on, penis in vagina.
+Party Mexicans.
+Prince Ali, fabulous he, Ali Ababwa.
+Sharks with legs.
+Smoking crack, for instance.
+Snorting coke off a clown's boner.
+Some sort of Asian.
+Sports.
+Stuffing a child's face with Fun Dip® until he starts having fun.
+Sugar madness.
+The complex geopolitical quagmire that is the Middle East.
+The euphoric rush of strangling a drifter.
+The peaceful and nonthreatening rise of China.
+The safe word.
+The secret formula for ultimate female satisfaction.
+The size of my penis.
+The tiniest shred of evidence that God is real.
+Three consecutive seconds of happiness.
+Unquestioning obedience.
+What Jesus would do.
+Whatever a McRib® is made of.
+Whispering all sexy.
+
+Tabletop Expansion (white)
+{"startIndex":550,"endIndex":624}
+40 acres and a mule.
+A crazy little thing called love.
+A disappointing salad.
+A face full of horse cum.
+A giant powdery manbaby.
+A mouthful of potato salad.
+A one-way ticket to Gary, Indiana.
+A powered exoskeleton.
+A reason not to commit suicide.
+A team of lawyers.
+A whole new kind of porn.
+A zero-risk way to make $2,000 from home.
+AIDS monkeys.
+All these decorative pillows.
+An unforgettable quinceañera.
+An uninterrupted history of imperialism and exploitation.
+Anal fissures like you wouldn't believe.
+Ancient Athenian boy-fucking.
+Backwards knees.
+Being nine years old.
+Being paralyzed from the neck down.
+Being worshiped as the one true God.
+Blackface.
+Blowjobs for everyone.
+Boring Vaginal sex.
+Butt stuff.
+Changing a person's mind with logic and facts.
+Child support payments.
+Free ice cream, yo.
+Daddy's credit card.
+Deez nuts.
+Denzel.
+Doing the right stuff to her nipples.
+Ejaculating live bees and the bees are angry.
+Ennui.
+Figuring out how to have sex with a dolphin.
+Free ice cream, yo.
+Genghis Khan's DNA.
+Getting caught by the police and going to jail.
+Getting drive-by shot.
+Getting eaten alive by Guy Fieri.
+Giant sperm from outer space.
+Going to a high school reunion on ketamine.
+Having been dead a while.
+Mom's new boyfriend.
+My boyfriends stupid penis.
+My dead son's baseball glove.
+My first period.
+Not believing in giraffes.
+Oil!
+Out-of-this-world bazongas.
+P.F. Chang himself.
+Russian super-tuberculosis.
+Seeing my village burned and my family slaughtered before my eyes.
+Seeing things from Hitler's perspective.
+September 11th, 2001.
+Slowly easing down onto a cucumber.
+Social justice warriors with flamethrowers of compassion.
+Some shit-hot guitar licks.
+The Abercrombie & Fitch lifestyle.
+The basic suffering that pervades all of existence.
+The black half of Barack Obama.
+The eight gay warlocks who dictate the rules of fashion.
+The ghost of Marlon Brando.
+The inability to form meaningful relationships.
+The passage of time.
+The swim team, all at once.
+The tiger that killed my father.
+The unbelievable world of mushrooms.
+The white half of Barack Obama.
+Too much cocaine.
+Unrelenting genital punishment.
+Vegetarian options.
+Wearing glasses and sounding smart.
+Western standards of beauty.
+
+Retail Mini Set (white)
+{"startIndex":625,"endIndex":636}
+A disappointing season of Tabletop that's just about tables.
+A German-style board game where you invade Poland.
+A marriage-destroying game of The Resistance.
+A Wesley Crusher blow-up doll.
+A zombie with a tragic backstory.
+An owlbear.
+Condensing centuries of economic exploitation into 90 minutes of gaming fun.
+SIX GOD DAMN HOURS OF FUCKING DIPLOMACY.
+The pooping position.
+The porn set that Tabletop is filmed on.
+Victory points.
+Spending 8 years in the Himalayas becoming a master of dice-rolling and resource allocation.
+
+Science Pack (white)
+{"startIndex":637,"endIndex":640}
+This 5 card mini pack comes with the CAH main set when purchased through a retail outlet (in a store...)
+A teenage boy gunning for a handjob.
+Feeding a man a pie made of his own children.
+Ironically buying a trucker hat and then ironically being a trucker for 38 years.
+
+Sixth Expansion (white)
+{"startIndex":641,"endIndex":664}
+The Science Pack is a pack about the hit system of knowledge known worldwide as “science.”
+3.7 billion years of evolution.
+A 0.7 waist-to-hip ratio.
+A supermassive black hole.
+Achieving reproductive success.
+Being knowledgeable in a narrow domain that nobody understands or cares about.
+David Attenborough watching us mate.
+Developing secondary sex characteristics.
+Driving into a tornado to learn about tornadoes.
+Electroejaculating a capuchin monkey.
+Evolving a labyrinthine vagina.
+Explosive decompression.
+Failing the Turing test.
+Fun and interesting facts about rocks.
+Getting really worred about global warming for a few seconds.
+Infinity.
+Insufficient serotonin.
+Oxytocin release via manual stimulation of the nipples.
+Photosynthesis.
+Reconciling quantum theory with general relativity.
+Slowly evaporating.
+The quiet majesty of the sea turtle.
+The Sun engulfing the Earth.
+Uranus.
+
+Reject Pack 2 (white)
+{"startIndex":665,"endIndex":741}
+A bass drop so huge it tears the starry vault asunder to reveal the face of God.
+A bowl of gourds.
+A buttload of candy.
+A constant need for validation.
+A man who is so cool that he rides on a motorcycle.
+A peyote-fuled vision quest.
+A pizza guy who fucked up.
+A possible Muslim.
+A self-microwaving burrito.
+A turd.
+A whole lotta woman.
+An oppressed people with a vibrant culture.
+An overwhelming variety of cheeses.
+Bathing in moonsblood and dancing around the ancient oak.
+Being a terrible mother.
+Being John Malkovich.
+Being popular and good at sports.
+Breastfeeding a ten year old.
+Bullets.
+Cancer.
+Cool, releatable cancer teens.
+Crippling social anxiety.
+Crying and shitting and eating spaghetti.
+Cute boys.
+Eating together like a god damn family for once.
+Ejaculating inside another man's wife.
+Every ounce of charisma left in Mick Jagger's tired body.
+Filling a man's anus with concrete.
+Forgetting grandma's first name.
+Generally having no idea of what's going on.
+Getting all offended.
+Getting shot out of a cannon
+Growing up chained to a radiator in perpetual darkness.
+Gwyneth Paltrow's opinions.
+Immortality cream.
+Important news about Taylor Swift.
+Kale.
+Like a million aligators.
+Meaningless sex.
+Morpheus.
+Never having sex again.
+No longer finding any Cards Against Humanity card funny.
+One unforgettable night of passion.
+Our new Buffalo Chicken Dippers®!
+Owls, the perfect predator.
+Peeing into a girl's butt to make a baby.
+Pussy.
+Rabies.
+Reading the entire End-User License Agreement.
+Ripping a dog in half.
+Robots who just want to party.
+Setting my balls on fire and cartwheeling to Ohio.
+Shapes and colors.
+Shitting all over the floor like a bad, bad girl.
+Such a big boy.
+Sucking all the milk out of a yak.
+Sudden penis loss.
+Teaching a girl how to handjob the penis.
+Texas.
+The all-new Nissan Pathfinder with 0.9% APR financing!
+The amount of gay I am.
+The color "puce"
+The dentist.
+The eighth graders.
+The haunting stare of an Iraqi child.
+The male gaze.
+The power of the Dark Side.
+The sweet song of sword against and the braying of mighty war beasts.
+Throwing stones at a man until he dies.
+Treausres beyond your wildest dreams.
+Turning the rivers red with the blood of infidels.
+Two whales fucking the shit out of each other.
+Unsheathing my massive horse cock.
+Walking into a glass door.
+Whatever you wish, mother.
+Beloved television star Bill Cosby
+Total fucking chaos
+
+Design Pack (white)
+{"startIndex":742,"endIndex":766}
+Given out in the "swag bag" during July 2015's "Concert Against Humanity."
+A dick so big and so black that not even light can escape its pull.
+A double murder suicide barbeque.
+A primordial soup and salad bar.
+A stack of bunnies in a trenchcoat.
+At least three ducks.
+Becoming engorged with social justice jelly and secreting a thinkpiece.
+Being the absolute worst.
+Disco Mussolini.
+Greg Kinnear's terrible lightning breath.
+Mitt Romney's eight sons Kip, Sam, Trot, Fergis, Toolshed, Grisham, Hawkeye, and Thorp.
+Mr. and Mrs. Tambourine Man's jingle-jangle morning sex.
+Mushy tushy.
+Ringo Starr & His All-Starr Band.
+Sandwich.
+Saving the Rainforest Cafe.
+Sir Thomas More's Fruitopia™.
+Sweating it out on the streets of a runaway American Dream.
+That one leftover screw.
+That thing politicians do with their thumbs when they talk.
+The spooky skeleton under my skin.
+The token lesbian.
+These dolphins.
+Three hairs from the silver-golden head of Galadriel.
+Water so cold it turned into a rock.
+
+Pax Prime 2015 Food Pack A (Mango) (white)
+{"startIndex":767,"endIndex":797}
+A new kind of pack, fully-illustrated by world-class graphic designers. Inspired by George Carlin's "The Seven Words You Can Never Say on Television."
+Type of picture
+formatted like 2 of hearts playing card
+clay figures having sex on a couch
+a woman peeing on man in public several centuries ago as her friend laughs
+light brown word on brown background
+letters/numbers printed in white rows on red background
+blue words on cartoon of chicken giving man blowjob
+word handwritten in cursive underneath picture of q-tip covered in red substance
+word labeled on what looks like a middle eastern candy label design, featuring a chicken enjoying a lollipop
+white word on pink background with white curlique designs behind it
+colored letters on white background in square formation
+In word bubble yelled by a leg wearing green tights in pink/red face with white background
+dripping colorful letters on black background with the letters at different heights
+pink letters on white background
+Fancy black curlique script on white background
+Colored letters on black background
+words around black and white bearded man drawing
+Letters arranged in square around yellowish gradient
+cursive word in brown on yellow background with the two 's's being eyes for a smiley face
+white word on yellow backdrop with white droplet outline around it
+18-in-1 Hemp PEPPERMINT', George Carlin quote
+word on top of 'The Crystal Goblet, of Printing Should be Invisible' by Beatrice Warde (1930)
+word on sign sticking out from cartoon skull
+formatted as a Tweet
+word on picture of space featuring the death star (?)
+Word printed above very old picture of nude woman covering herself
+formatted sort of like half nude queen of hearts playing card
+drawing of sagging boobs with the nipples forming the word's 'T's)
+word above typed printed out of: (@) (@)
+Penis having sex with ankle (inside is word)
+
+Pax Prime 2015 Food Pack B (Coconut) (white)
+{"startIndex":798,"endIndex":807}
+"Food Pack initially available at PAX Prime 2015 in 3 parts from a food truck selling popsicles with each part corresponding to a different popsicle flavor.
+""MANGO FUCK YOURSELF"""
+A sobering quantity of chili cheese fries.
+Going vegetarian and feeling so great all the time.
+Kale farts.
+Licking the cake batter off of grandma’s fingers.
+Real cheese flavor.
+Swishing the wine around and sniffing it like a big fancy man.
+The Dial-A-Slice Apple Divider from Williams-Sonoma.
+What to do with all of this chocolate on my penis.
+
+Pax Prime 2015 Food Pack C (Cherry) (white)
+{"startIndex":818,"endIndex":827}
+"Food Pack initially available at PAX Prime 2015 in 3 parts from a food truck selling popsicles with each part corresponding to a different popsicle flavor.
+""IT'S TOO LATE TO STOP CLIMATE CHANGE CHERRY"""
+A Mexican child trapped inside of a burrito.
+Clamping down on a gazelle’s jugular and tasting its warm life waters.
+Committing suicide at the Old Country Buffet.
+Father’s forbidden chocolates.
+Jizz Twinkies.
+The Hellman’s Mayonnaise Corporation.
+The hot dog I put in my vagina ten days ago.
+The inaudible screams of carrots.
+
+http://www.chris.com/ascii/
+
+ah _ hello __  ___ ! _____ ? _______ yes ________ no _________<-ACTUAL
+ah ______ hello ______  ______ ! ______ ? ______ yes ______ no ______<-RESULT
+ah ______ hello ______  ______ ! ______ ? ______ yes ______ no ______<-EXPECTED
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+maybe __________ word ___________ up ____________ cmon _____________ yee _____________<-ACTUAL
+maybe ______ word ______ up ______ cmon ______ yee ______<-RESULT
+maybe ______ word ______ up ______ cmon ______ yee ______<-EXPECTED
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+"_ the "__" quick "___!" brown"_____: Dance moves that are just sex"_______;<-ACTUAL
+"______ the "______" quick "______!" brown"______: Dance moves that are just sex"______;<-RESULT
+"______ the "______" quick "______!" brown"______: Dance moves that are just sex"______;<-EXPECTED
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+jumped "________. over "_________, the "__________? lazy "___________ MORTAL COMBAT!!!.<-ACTUAL
+jumped "______. over "______, the "______? lazy "______ MORTAL COMBAT!!!.<-RESULT
+jumped "______. over "______, the "______? lazy "______ MORTAL COMBAT!!!.<-EXPECTED
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server listening on: http://127.0.0.1:8080
+((
+\\``.
+\_`.``-. 
+( `.`.` `._  
+ `._`-.    `._ 
+   \`--.   ,' `. 
+    `--._  `.  .`. 
+     `--.--- `. ` `. 
+         `.--  `;  .`._ 
+           :-   :   ;. `.__,.,__ __ 
+            `\  :       ,-(     ';o`>.
+              `-.`:   ,'   `._ .:  (,-`,
+                 \    ;      ;.  ,: 
+             ,"`-._>-:        ;,'  `---.,---.
+             `>'"  "-`       ,'   "":::::".. `-.
+              `;"'_,  (\`\ _ `:::::::::::'"     `---.
+      -hrr-    `-(_,' -'),)\`.       _      .::::"'  `----._,-"")
+                   \_,': `.-' `-----' `--;-.   `.   ``.`--.____/ 
+                     `-^--'                \(-.  `.``-.`-=:-.__)
+                                            `  `.`.`._`.-._`--.)
+                                                 `-^---^--.`--
+                                                    
+                                                    
+                                   http://www.chris.com/ascii/
+                                   
+The console bird swoops in and greets you!
+
+
+
+ _    _        _                              
+| |  | |      | |                             
+| |  | |  ___ | |  ___  ___   _ __ ___    ___ 
+| |/\| | / _ \| | / __|/ _ \ | '_ ` _ \  / _ \
+\  /\  /|  __/| || (__| (_) || | | | | ||  __/
+ \/  \/  \___||_| \___|\___/ |_| |_| |_| \___|
+                                              
+                                              
+For diagnostic use
+http://<host>/DumpPlayers[?Player='<player name>']
+http://<host>/DumpGames[?Game='<game name>']
+
+Terminate batch job (Y/N)? 
+
+C:\Users\Matthew\Documents\GitHub\VirtualCards>
