@@ -78,7 +78,7 @@
             <div class='w3-card-8 card-area card-twisle w3-padding-tiny'>
                 <header>
                     <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.4</h6>
+                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.4b</h6>
                 </header>
             </div>
             <div class='w3-row'>
@@ -87,6 +87,11 @@
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
                     </div>
                 </div>
+				<div class='w3-center'>
+					<button 
+						class='w3-btn w3-blue' 
+						onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
+				</div>
                 <div class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-animate-opacity'>
                     <h4>Questions and Answers</h4>
                     <div id='divQuestionArea'>
