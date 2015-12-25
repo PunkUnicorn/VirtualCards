@@ -1,4 +1,4 @@
-﻿.card { /* ratio of playing cards 64mm × 89mm */
+.card { /* ratio of playing cards 64mm × 89mm */
 }
 
 div.card 
@@ -10,10 +10,10 @@ div.card
   background: #F3F3F3;
   /*width:73.6px;*/
   /*height: 102.35px;*/
-  /*width:97.888px;*/
-  /*height: 136.1255px;*/
-  width:117.76px;
-  height: 163.76px;
+  width:97.888px;
+  height: 136.1255px;
+  /*width:117.76px;*/
+  /*height: 163.76px;*/
   
   margin: 8px;
   
