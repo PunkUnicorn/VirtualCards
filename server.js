@@ -987,6 +987,7 @@ function handleRequest(req, res) {
                 res.write( JSON.stringify(cloneRound(games, retObjPhaseOne.gameInfo, retObjPhaseOne.pram)) );
             } else {
                 console.log('why are you doing that dave');
+				//res.redirect("./");
                 res.write('why are you doing that dave');
             }
             res.end();
@@ -1005,7 +1006,12 @@ function handleRequest(req, res) {
                 ok = true;
                 break;
             }            
-            if (!ok) res.end();
+            if (!ok) {
+				//console.log('redirect');
+				//res.redirect("./");
+				res.end();
+			} 
+			
             break;
             
         case '/SubmitAnswer': //just '/Answer'
@@ -1195,12 +1201,12 @@ function handleRequest(req, res) {
 			retObj.activity = [];
 			retObj.list = [];
 			retObj.game = pram.game;
-			console.log(JSON.stringify(gameObj));
+			//console.log(JSON.stringify(gameObj));
 			for (var player in gameObj.list) {
 				var name = gameObj.list[player];
 				
 				var playerName = gameObj.list[player];
-				console.log(JSON.stringify(playerName));
+				//console.log(JSON.stringify(playerName));
 				//var lastActivity = games[gameInfo.index].playerActivity.get[name];
 				var hasThem = gameObj.playerActivity.has(playerName);
 				var playerActivity = null;
@@ -1239,7 +1245,7 @@ function handleRequest(req, res) {
             res.writeHeader(200, {"Content-Type": "text/plain"});
             var playerName = getPlayer(reqObj);
             if (playerName == '') {
-                console.log('players list:' + JSON.stringify(players.list));
+                //console.log('players list:' + JSON.stringify(players.list));
                 res.write(JSON.stringify(players.list));
             } else {
                
