@@ -644,26 +644,38 @@ function purgeOldGames(games, now) {
     // delete games that haven't had activity for pfffft... 3 hours (give them time to have  second breakfast and watch an episode of Game of Thrones)
 }
 
+function updateScore(gameObj) {
+	//var game = games[gameInfo.indxed];
+	//var playerScores = [];	
+	
+	//for ( var countish in gameObj.list) playerScores[player] = 0;
+	
+	for (var player in gameObj.list) {
+		var otherPlayerName = gameObj.list[player];
+
+		if (gameObj.votes.has( otherPlayerName )) {
+            var votedFor = gameObj.votes.get( otherPlayerName );
+			updatePlayerScore(gameObj, gameObj.list[player], 1);
+            //playerScores[ votedFor ] += 1;
+		}
+	}
+}
+
+function updatePlayerScore(gameObj, playerName, score){
+	playerActivity = gameObj.playerActivity.get(playerName);
+    playerActivity.score += score;    
+}
+
 function updateActivity(gameObj, playerName, lastActivity){
-    //var hasTest = gameObj.playerActivity;
-    //var hasThem = (typeof gameObj.playerActivity != 'undefined') && (gameObj.playerActivity != null);
-    var hasThem = hasThem && gameObj.playerActivity.has(playerName);
+    var hasThem = gameObj.playerActivity.has(playerName);
     if (hasThem) {
         playerActivity = gameObj.playerActivity.get(playerName);
-        //delete playerActivity.lastActivityOn;
-        
     } else {
         playerActivity = {};
+		playerActivity.score = 0;
     }
-    
-    //if (typeof playerActivity.lastActivityOn != 'undefined' && playerActivity.lastActivityOn != null) {
-    //    delete playerActivity.lastActivityOn;
-    //}
-    //playerActivity.lastActivityOn = new Date();
-    //playerActivity.lastActivity = lastActivity;
     playerActivity.lastActivityOn = Date.now();
-    playerActivity.lastActivity = lastActivity;
-    
+    playerActivity.lastActivity = lastActivity;    
     if (!hasThem) gameObj.playerActivity.set(playerName, playerActivity);
 }
 
@@ -750,7 +762,7 @@ function handleRequest(req, res) {
                     send.roundCount = games[gameInfo.index].roundCount;
                     
                     res.write(JSON.stringify(send));
-                    updateActivity(games[gameInfo.index], pram.playerName, 'JoinGame');
+                    updateActivity(games[gameInfo.index], pram.playerName, 'Joined');
                 } else {
                     var gameObj = {};
                     gameObj.game = 'WTF!!!1';
@@ -875,21 +887,39 @@ function handleRequest(req, res) {
                 var retObjPhaseTwo = phaseTwoDealWithTheDeck(games, retObjPhaseOne.gameInfo, pram, initGame);
                 if (!retObjPhaseTwo.result) return false;
 
-                var phaseThreeRoundWeGoAgain = function(games, gameInfo) {
+                var phaseThreeRoundWeGoAgain = function(games, gameInfo, initGame) {
                     console.log('allocating round info');
                     var roundObj = {};              
                     var useIndex = getBlackCard(games, gameInfo);
                     var question = allCards[BLACK].deck[useIndex];                    
-
-
+					
                     roundObj.question = makeUnderscoresTheSame(question);
                     var count = (roundObj.question.match(/______/g) || []).length;
                     //console.log('the after question :'+roundObj.question);
                     if (count == 0) {
-                        count = 1;
+						if (roundObj.question[roundObj.question.length-1] == '?') { //allow any number of cards if no blanks and no question mark
+							var inYourHand = roundObj.question.indexOf('in your hand');
+							if (inYourHand > -1) {
+								var checkBeforeForAmount = roundObj.question.substr(0, inYourHand); //'in your hand' specifies the number of cards as written quantity
+								const amounts = ['any', 'one', 'two', 'three', 'four'];
+								for (var i=0; i < amounts.length; i++) {
+									var foundAmount = checkBeforeForAmount.indexOf(amounts[i]);
+									if (foundAmount > -1) {
+										count = amounts.indexOf(foundAmount);
+										if (count == 0)
+											count = -1; //any
+										
+										break;
+									}
+								}
+							} else {
+								count = 1;	
+							}							
+						} else { 
+							count = -1
+						}
                     }
 
-                    
                     roundObj.question = encodeURIComponent( roundObj.question );
                     roundObj.questionBlankCount = count;
                     roundObj.players = { list:[], submitted:[], voted :[], readyForNextRound: [] };
@@ -899,13 +929,13 @@ function handleRequest(req, res) {
 
                     roundObj.roundCount = ( ++games[gameInfo.index].roundCount );
                     
-                    //delete games[gameInfo.index].votes;
-                    games[gameInfo.index].votes.clear();// = new hashmap.HashMap(); 
-                    //delete games[gameInfo.index].readyForNextRound;
-                    games[gameInfo.index].readyForNextRound.clear();// = new hashmap.HashMap();
+					//update scores from previous round
+					if (!initGame) updateScore(games[gameInfo.index]);
+					
+                    games[gameInfo.index].votes.clear(); 
+                    games[gameInfo.index].readyForNextRound.clear();
                     
                     if (typeof games[gameInfo.index].round != 'undefined'  && games[gameInfo.index].round != null) {
-                        delete games[gameInfo.index].createdOn;
                         delete games[gameInfo.index].round;
                     }
                     games[gameInfo.index].round = roundObj;
@@ -921,7 +951,7 @@ function handleRequest(req, res) {
                 // Any tom, dick or harry can make subsiquent rounds as long as the round hasn't been created already
                 if (retObjPhaseOne.Current != games[retObjPhaseOne.gameInfo.index].roundCount) return true;
                 
-                var roundObj = phaseThreeRoundWeGoAgain(games, retObjPhaseOne.gameInfo);
+                var roundObj = phaseThreeRoundWeGoAgain(games, retObjPhaseOne.gameInfo, initGame);
 
 
                 var phaseFourTheCardsYoureDelt = function(games, gameInfo, roundObj) {
@@ -993,8 +1023,10 @@ function handleRequest(req, res) {
                     if (!b.gameInfo.gameExists || !b.gameInfo.playerInGame) 
                         return b;
                                                             
-                    b.cardsSubmitted = getCards(reqObj);            
-                    if (b.cardsSubmitted.length != games[b.gameInfo.index].round.questionBlankCount) 
+                    b.cardsSubmitted = getCards(reqObj);
+					var rightCardsSubmitted = (b.cardsSubmitted.length != games[b.gameInfo.index].round.questionBlankCount);
+					var anyCardsAllowed = (games[b.gameInfo.index].round.questionBlankCount == -1 && b.cardsSubmitted.length > 0);
+                    if (rightCardsSubmitted || anyCardsAllowed) 
                         return b;
 
                     b.isInList = false;
@@ -1005,7 +1037,7 @@ function handleRequest(req, res) {
                         if (b.isInList) return b;
                     }
                     
-                    updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Submit');
+                    updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Submitted');
                     
                     b.result = true;
                     return b;
@@ -1068,7 +1100,7 @@ function handleRequest(req, res) {
                 games[b.gameInfo.index].votes.set(playerList[myIndex].toString(), b.vote);                
                 var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);
                 
-                updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Vote');
+                updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Voted');
 
                 res.write('{ yes: "You voted", boomshanka:"well done" }');
                 ok = true;
@@ -1119,12 +1151,12 @@ function handleRequest(req, res) {
             }
             
             var cloneOfRound = cloneRound(games, gameInfo, pram);
-            updateActivity(games[gameInfo.index], pram.playerName, 'NextRound');                
+            updateActivity(games[gameInfo.index], pram.playerName, 'Next');                
             res.write(JSON.stringify( cloneOfRound ) );
             res.end();
             break;
             
-        case '/GetGames':
+        case '/Games':
             res.writeHeader(200, {"Content-Type": "application/json"});
             var gamesNames = [];
             for (var game in games) {
@@ -1135,6 +1167,55 @@ function handleRequest(req, res) {
             res.write(JSON.stringify(giveThem));
             res.end();
             break;
+			
+		case '/Players':
+			var pram = preamble(reqObj);
+            if (pram.game == '') {
+				res.end();
+				break;
+			}
+			
+            res.writeHeader(200, {"Content-Type": "application/json"});
+			var playerNames = [];
+
+			var gameObj = null;
+			for (var index = 0; index < games.length; index++) {
+				if (games[index].game == pram.game) {
+					gameObj = games[index];
+					break;
+				}
+			}
+			if (gameObj == null){
+				res.end();
+				break;
+			} 
+			
+			//var gameInfo = getGameIndex(games, pram);
+			var retObj = {};
+			retObj.activity = [];
+			retObj.list = [];
+			retObj.game = pram.game;
+			console.log(JSON.stringify(gameObj));
+			for (var player in gameObj.list) {
+				var name = gameObj.list[player];
+				
+				var playerName = gameObj.list[player];
+				console.log(JSON.stringify(playerName));
+				//var lastActivity = games[gameInfo.index].playerActivity.get[name];
+				var hasThem = gameObj.playerActivity.has(playerName);
+				var playerActivity = null;
+				if (hasThem) {
+					playerActivity = gameObj.playerActivity.get(playerName);
+				} else {
+					continue;
+				}
+				console.log('pusheed');
+				retObj.activity.push(playerActivity);
+				retObj.list.push(playerName);
+			}
+			res.write(JSON.stringify(retObj));
+			res.end();
+			break;
             
         case '/DumpGames':
             res.writeHeader(200, {"Content-Type": "text/plain"});  //application/json

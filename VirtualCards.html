@@ -21,6 +21,8 @@
             .wait-for-vote {}
             .wait-for-next-round {}
             .gavelbtn-selected {}
+			.wait-for-kick {}
+			.blame-selected { font-weight: bolder; }
         </style>	
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
@@ -43,7 +45,7 @@
         <script type="text/javascript">
             function hideEverything () {
                 $('#btnNextRound').hide();
-                $('#txtBlame').hide();
+                $('#txtNextRoundBlame').hide();
                 $('#divAnswersArea').hide();
                 $('#divQuestionArea').hide();
                 $('#btnSubmitAnswer').hide();
@@ -52,6 +54,7 @@
                 $('.wait-for-submit').hide();
                 $('.wait-for-vote').hide();                
                 $('.wait-for-next-round').hide();                
+                $('.wait-for-kick').hide();                
             }
             var passName = ''
             var playerName = ''
@@ -74,16 +77,21 @@
                 console.log(ev.target);
             }
         </script>
+		<div class='w3-card-8 card-area card-twisle w3-padding-tiny'>
+			<header>
+				<h1 class='w3-center'>Virtual Cards Against Cards</h1>
+				<h6 class='w3-center'>Virtual Cards Against Humanity 0.4b</h6>
+			</header>
+		</div>
+		<div class='card-fixed-top'>  <!--  https://dribbble.com/shots/779807-Freecns-1-1-Printed-Version -->
+			<a class='w3-left card-left-down0' href='#CardHolder' > <img src="234PagesView4.PNG" alt="Your white cards" border="0"> </img> </a>
+			<a class='w3-left card-left-down1' href='#QuestionsAndAnswers'> <img src="231PagesView.PNG" alt="Questions and answers" border="0"> </img> </a>
+			<a class='w3-left card-left-down2' href='#Blame' > <span class='fa fa-users'/> </a>
+		</div>
         <div id='wrapper' class='w3-padding-tiny start-invisible'>
-            <div class='w3-card-8 card-area card-twisle w3-padding-tiny'>
-                <header>
-                    <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.4b</h6>
-                </header>
-            </div>
             <div class='w3-row'>
-                <div id='cardHolder' class='w3-card-16 card-area w3-col w3-container m5 w3-animate-opacity'>
-                    <div id='buttonHolder' class='w3-center'>
+                <div id='CardHolder' class='w3-card-16 card-area w3-col w3-container m6 w3-animate-opacity w3-slim'>
+					<div id='buttonHolder' class='w3-center'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
                     </div>
                 </div>
@@ -91,23 +99,29 @@
 					<button 
 						class='w3-btn w3-blue' 
 						onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
-				</div>
-                <div class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-animate-opacity'>
+				</div>				
+                <div id='QuestionsAndAnswers' class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-animate-opacity'>
                     <h4>Questions and Answers</h4>
                     <div id='divQuestionArea'>
                         <div id ='txtQuestion' class ='w3-padding-small w3-large'></div>
                         <button id ='btnSubmitAnswer' class='w3-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event, gameObj, passName, playerName)'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
                     </div>
                     <div id='divAnswersArea'>                    
-                        <div id='txtAnswers' class ='w3-padding-small w3-large'><div>Please click refresh like crazy</div></div>
+                        <div id='txtAnswers' class ='w3-padding-small w3-medium'><div>Please click refresh like crazy</div></div>
                         <br />
                         <button id ='btnSubmitVote' class='w3-btn w3-animate-opacity w3-right w3-deep-purple' onclick='onSubmitVote(event, gameObj, passName, playerName)'>Vote <span class='fa fa-gavel'> <span class='wait-for-vote fa fa-bell w3-small w3-spin'> </span></button>
                     </div>
-                    <button id ='btnNextRound' class='w3-btn w3-animate-opacity w3-black w3-border w3-center' onclick='onNextRound(event, gameObj, passName, playerName)'>Next Round <span id="txtNextRound"> </span> <span class='wait-for-next-round fa fa-bell w3-small w3-spin'> </span></button>
-                    <span class="card-horizontal w3-right w3-tiny" id="txtBlame"> </span>
+                    <button id ='btnNextRound' class='w3-btn w3-animate-opacity w3-black w3-border w3-center w3-padding-small' onclick='onNextRound(event, gameObj, passName, playerName)'>Next Round <span id="txtNextRound"> </span> <span class='wait-for-next-round fa fa-bell w3-small w3-spin'> </span></button>
+                    <span class="card-horizontal w3-right w3-tiny w3-slim" id="txtNextRoundBlame"> </span>
                 </div>
-            </div>
-            
+            </div>            
+			<div id='Blame' class = 'w3-center w3-tiny'>
+<!-- 				<button class='w3-btn w3-round-xxlarge w3-red' onclick'$("#divBlameScreen").toggle( ($("#divBlameScreen").is(":visible")) ? false : true)'>Blame</button>
+ -->				<div id = 'divBlameScreen' class='w3-card-16 card-area w3-container w3-col m5 w3-animate-opacity w3-padding-tiny'>
+					<div id ='txtBlame'></div>
+<!-- 					<button id ='btnKick' class='w3-btn w3-purple w3-animate-opacity w3-right' onclick='onKick(event, gameObj, passName, playerName)'>Vote to kick <span class='fa fa-kill'> </span><span class='wait-for-kick fa fa-bell w3-small w3-spin'/></button>
+				 --></div>
+			</div>
             <div class='w3-center'>
                 <button 
                     class='w3-btn w3-blue' 
@@ -146,9 +160,9 @@
                         var questionBlankCount = 1;
                         try { questionBlankCount = gameObj.o.questionBlankCount; } 
                         catch (err) { return false;/*questionBlankCount = 1;*/ }
-                        
+						
                         // simply refuse more than the alowed cards
-                        if (cardSelection.length >= questionBlankCount) {
+                        if (questionBlankCount != -1 && cardSelection.length >= questionBlankCount) {
                             return false; // im sorry dave you can't do that
                         } else {
                             cardSelection.push(target.text());                            
@@ -179,7 +193,40 @@
                 
                 refreshQuestionText(gameObj, cardSelection);
             }
-            
+			
+            function getScoreCharmHtml() {
+				return '<span class="fa fa-star card-twisle"> </span> ';
+			}
+			
+			function onBlameClick(event, gameObj, passName, playerName) {
+				var unselect = $(event.target).parent().hasClass('blame-selected') ? true : false;
+				$('.blame-selected').removeClass('blame-selected');
+				
+				if (!unselect) $(event.target).parent().addClass('blame-selected');
+			}
+			
+			function allocateBlame(gameObj, passName, playerName) {
+				var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
+					var retObj = JSON.parse(xmlhttp.responseText);
+					var activityStr = '<table class="w3-table w3-bordered w3-striped w3-hoverable"><thead><tr><th>Player</th><th>Last</th><th>When</th><th>'+getScoreCharmHtml()+'</th></tr></thead>';
+
+					var now = new Date();
+					var activityDate = new Date();
+					for (var player in retObj.list) {
+						var activity = retObj.activity[player];
+						activityDate.setTime(now.getTime() - retObj.activity[player].lastActivityOn);
+						activityStr += '<tr onclick="onBlameClick(event, gameObj, passName, playerName)"><td>' + retObj.list[player] + '</td>';
+						activityStr += '<td>' + retObj.activity[player].lastActivity + '</td>';
+						activityStr += '<td>' + activityDate.getMinutes() + 'm '+activityDate.getSeconds() + 's </td>';
+						activityStr += '<td>' + retObj.activity[player].score +'</td>';
+					}
+					activityStr += '</table>';
+					$('#txtBlame').html(activityStr);					
+				};
+				cardApi.sendSomething(cardSelection, '/Players?Game=' 
+                                        + passName, function() {}, onSuccess, gameObj, passName, playerName);
+			}
+			
             function onClickRefresh(event, gameObj, passName, playerName) {                
                 getRefreshed(cardSelection, gameObj, passName, playerName);
             }
@@ -209,7 +256,9 @@
                         
                         }                            
                     }
-                    
+
+                    window.setTimeout( function () { allocateBlame(gameObj, passName, playerName); }, 0);
+					
                     window.setTimeout( function (gameObj, playerName, isVoteSelectedOnUi, currentVoteSelection) {
                     
                         $('#txtRoundNumber').text('Round ' + gameObj.o.roundCount);
@@ -223,7 +272,7 @@
                         }
                         
                         var cardIdSelectorTemplate = '#card';
-                        var existingCards = $('#cardHolder').children('.card').length > 0;
+                        var existingCards = $('#CardHolder').children('.card').length > 0;
                         var index = 0;
                         for (var myCard in gameObj.o.heldCards) {
                             index++; 
@@ -233,7 +282,7 @@
                             if (existingCards) {
                                 $(cardIdSelectorTemplate + index.toString()).text(cardText);
                             } else {
-                                $('#cardHolder').prepend(cardHtml);
+                                $('#CardHolder').prepend(cardHtml);
                             }
                             //console.log(gameObj.o.heldCards[myCard]);
                         }
@@ -244,7 +293,7 @@
                             if (gameObj.o.haveScores) {
                                 var num = gameObj.o.scores[playerIndex];
                                 for (var scorei = 0; scorei < num; scorei++) {
-                                    scoreCharm += '<span class="fa fa-star card-twisle"> </span> ';
+                                    scoreCharm += getScoreCharmHtml();
                                 }
                             }
                             return scoreCharm;
@@ -329,8 +378,8 @@
                 var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
                     var cantMoveOnSoQuicklyAllocateBlame = function () {
                         var list = setBlameList(gameObj);
-                        $('#txtBlame').text('.. waiting for ' + list.length + ' players, click again'); //+ list.join(', ') +
-                        $('#txtBlame').show();
+                        $('#txtNextRoundBlame').text('.. waiting for ' + list.length + ' players, click again'); //+ list.join(', ') +
+                        $('#txtNextRoundBlame').show();
                         $('.wait-for-next-round').hide();          
                     };
                     
@@ -339,7 +388,7 @@
                         hideEverything();
                         $('#txtAnswers').html('');
                         $('#txtQuestion').html('');
-                        $('#txtBlame').text('');
+                        $('#txtNextRoundBlame').text('');
                     }
                     
                     var itsOnLetsGo = function (cardSelection, gameObj, passName, playerName) {
@@ -457,11 +506,13 @@
                 var filledInQuestion = fillQuestion(gameObj, cardSelection);
                 $('#txtQuestion').html(filledInQuestion, cardSelection);
 
-                if (cardSelection.length > 0 && cardSelection.length == gameObj.o.questionBlankCount) {
+				var isAlowedAnyCount = (gameObj.o.questionBlankCount == -1 && cardSelection.length > 0);
+                var isSelectedCorrectAmount = (cardSelection.length > 0 && cardSelection.length == gameObj.o.questionBlankCount);
+				if (isAlowedAnyCount || isSelectedCorrectAmount) {
                     if (!gameObj.o.haveSubmitted && !gameObj.o.haveVoted) {
                         $('#btnSubmitAnswer').show();
                     }
-                } else {
+                } else if (!isAlowedAnyCount && !isSelectedCorrectAmount) {
                     $('#btnSubmitAnswer').hide();
                 }
             }

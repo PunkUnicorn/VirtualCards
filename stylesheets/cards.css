@@ -6,18 +6,19 @@ div.card
   border-radius: 4px;
   border: 1px solid #734242;
   
+  word-wrap: break-word;
   
   background: #F3F3F3;
   /*width:73.6px;*/
   /*height: 102.35px;*/
   width:84px;
-  height: 123px;
+  height: 127px;
   /*width:117.76px;*/
   /*height: 163.76px;*/
   
-  margin: 8px;
+  margin: 4px;
   
-  padding: 8px;
+  padding: 4px;
 }
 
 .card-horizontal 
@@ -33,9 +34,9 @@ div.card-selected
   
   background: #F0F0F0;
   
-  margin: 8px;
+  /*margin: 4px;*/
   
-  padding: 8px;
+  /*padding: 4px;*/
 }
 
 div.card-area {
@@ -45,22 +46,55 @@ div.card-area {
     background: #E9E9E9;
     
     height: 100%; 
-    width: 92%;
+    width: 97%;
     
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 1%;
+    padding-right: 1%;
     
     margin-top: 1.5%;
     margin-bottom: 1.5%;    
-    margin-left: 4%;
-    margin-right: 4%;    
+    margin-left: 2%;
+    margin-right: 2%;    
 }
 
-div.card-ltr {
-    direction: ltr;  /* Right to Left */
-    float: left;
+a.card-left-down0 {	
+    -ms-transform: translate(0px,64px); /* IE 9 */
+    -webkit-transform: translate(0px,64px); /* Safari */
+    transform: translate(0px,64px);
+}
+
+a.card-left-down1 {	
+    -ms-transform: translate(-16px,128px); /* IE 9 */
+    -webkit-transform: translate(-16px,128px); /* Safari */
+    transform: translate(-16px,128px);
+}
+
+a.card-left-down2 {	
+    -ms-transform: translate(-32px,192px); /* IE 9 */
+    -webkit-transform: translate(-32px,192px); /* Safari */
+    transform: translate(-32px,192px);
 }
 
 
+a.card-side-right {	
+	-ms-transform: translate(25px,30px) rotate(270deg) rotate(180deg); /* IE 9 */
+    -webkit-transform: translate(25px,30px) rotate(270deg) rotate(180deg); /* Safari */
+	transform: translate(25px,30px) rotate(270deg) rotate(180deg);
+}
+
+a.card-side-left {	
+    -ms-transform: translate(-13px,18px) rotate(90deg); /* IE 9 */
+    -webkit-transform: translate(-13px,18px) rotate(90deg); /* Safari */
+    transform: translate(-13px,18px) rotate(90deg);
+}
+
+/*http://stackoverflow.com/questions/1216114/how-can-i-make-a-div-stick-to-the-top-of-the-screen-once-its-been-scrolled-to*/
+div.card-fixed-top {
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:100;
+	height:20px;
+}

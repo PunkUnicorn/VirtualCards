@@ -30,7 +30,7 @@
 	"Instead of coal, Santa now gives the bad children ______."		v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
 	It's a pity that kids these days are all getting involved with ______.			v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	Life for American Indians was forever changed when the White Man introduced them to ______.				v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
-	"Lifetime® presents ""______: the Story of ______."""	PICK 2	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
+	"Lifetime® presents '______: the Story of ______."""	PICK 2	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
 	Make a haiku.	"DRAW 2, PICK 3"	v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	Maybe she's born with it. Maybe it's ______.				v1.2	v1.3	v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
 	MTV's new reality show features eight washed-up celebrities living with ______.		v1.0	v1.1	v1.2	v1.3	v1.4	v1.5	v1.6		v1.6	v1.7
@@ -103,7 +103,7 @@
 	Now at the Smithsonian: an interactive exhibit on ______.											v1.7
 	The new Chevy Tahoe. With the power and space to take ______ everywhere you go.								v1.6		v1.6	v1.7
 	They said we were crazy. They said we couldn't put ______ inside of ______. They were wrong.	PICK 2							v1.6	v1.6	v1.6	v1.7
-	"Today on /Maury/: ""Help! My son is ______!"""								v1.6		v1.6	v1.7
+	"Today on /Maury/: 'Help! My son is ______!"""								v1.6		v1.6	v1.7
 	"Uh, hey guys, I know this was my idea, but I'm having serious doubts about ______."											v1.7
 	"Well if you'll excuse me, gentlemen, I have a date with ______."											v1.7
 	What don't you want to find in your Kung Pao chicken?						v1.4	v1.5	v1.6	v1.6	v1.6	v1.7
@@ -140,9 +140,9 @@
 	The Natural History Museum has just opened an interactive exhibit on ________.									v1.6		
 	The school field trip was completely ruined by ________.									v1.6		
 	The TFL apologizes for the delay in train service due to ________. 									v1.6		
-	"The theme for next year's Eurovision Song Contest is ""We are ________."""									v1.6		
+	"The theme for next year's Eurovision Song Contest is 'We are ________."""									v1.6		
 	The U.S. has begun airdropping ______ to the children of Afghanistan.		v1.0	v1.1								
-	"Today on The Jeremy Kyle Show: ""Help! My son is ________!"""									v1.6		
+	"Today on The Jeremy Kyle Show: 'Help! My son is ________!"""									v1.6		
 	What are school administrators using to curb rampant teenage pregnancy?									v1.6		
 	What did I bring back from Amsterdam?									v1.6		
 	What kept Margaret Thatcher busy in her waning years?									v1.6		
