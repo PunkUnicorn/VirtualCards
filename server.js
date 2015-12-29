@@ -914,6 +914,7 @@ function handleRequest(req, res) {
                     if (initGame) {
                         var dealCards = function(games, gameInfo) {
 
+			// or http://stackoverflow.com/questions/16801687/javascript-random-ordering-with-seed
                             var shuffle = function (array) { //http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
                                 var currentIndex = array.length, temporaryValue, randomIndex ;
 

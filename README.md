@@ -1,5 +1,9 @@
 # Virtual Cards Against Humanity
- Finally a playable game
+Implementation of Cards Against Humanity to practice my JavaScript.
+It's a play project, so please excuse me while I loath the code and re-write it using underscore and Knockout 
+
+Cards collated by the magnificent Pileot from boardgamegeek.com
+#https://boardgamegeek.com/user/Pileot
 
 This uses the amazing HashMap by Flesler, please get the latest version from
 https://github.com/flesler/hashmap
