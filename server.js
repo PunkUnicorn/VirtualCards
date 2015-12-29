@@ -362,7 +362,6 @@ function getPlayer(reqObj) {
     catch(err) {
         console.log('er....... ' + err);                    
     }
-    
     return (typeof player == 'undefined') ? '' : player;
 };       
 
@@ -605,7 +604,7 @@ function cloneRound(games, gameInfo, pram) {
 
     var encodedCards = [];
     for (var cardIndex in cards) {
-        encodedCards.push( encodeURIComponent( allCards[WHITE].deck[cards[cardIndex]] ) );
+        encodedCards.push( /*encodeURIComponent( */allCards[WHITE].deck[cards[cardIndex]] /*)*/ );
     }
     cloneOfRound.heldCards = encodedCards;
     
@@ -640,10 +639,11 @@ function cloneRound(games, gameInfo, pram) {
 
     var playerCount = 0;
     
+    //var encodedList = [];
     cloneOfRound.isActive = isPlayerActive(games[gameInfo.index], playerName);
     for (var player in cloneOfRound.players.list) {
         var otherPlayerName = cloneOfRound.players.list[player];
-
+        //encodedList.push(encodeURIComponent( cloneOfRound.players.list[player]) );
         if (games[gameInfo.index].votes.has( otherPlayerName )) {
             var votedFor = games[gameInfo.index].votes.get( otherPlayerName );
             cloneOfRound.players.voted[player] = true;
@@ -685,6 +685,8 @@ function cloneRound(games, gameInfo, pram) {
             cloneOfRound.readyForNextRound = true;
         }        
     }
+        
+    //cloneOfRound.list = encodedList;    
     return cloneOfRound;
 };
 
@@ -785,7 +787,8 @@ function handleRequest(req, res) {
 
                 if (isOk) {
                     players.list.push( { name: playerName, ip: req.ip } );
-                    res.write(playerName);
+                    res.writeHeader(200, {"Content-Type": "application/text"});
+                    res.write( playerName );
                 } else {
                     res.write('WTF');
                 }
@@ -829,17 +832,20 @@ function handleRequest(req, res) {
                     send.list = games[gameInfo.index].list;
                     send.roundCount = games[gameInfo.index].roundCount;
                     
+                    res.writeHeader(200, {"Content-Type": "text/plain"});
                     res.write(JSON.stringify(send));
                     updateActivity(games[gameInfo.index], pram.playerName, 'Joined');
                 } else {
                     var gameObj = {};
                     gameObj.game = 'WTF!!!1';
+                    res.writeHeader(200, {"Content-Type": "text/plain"});
                     res.write(JSON.stringify(gameObj));
                 }
                 return true;
             };
             
             if (!doJoinGame(games, reqObj, res, pram, gameObj)) {
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 res.write("I'm sorry Dave I can't let you do that");
                 res.error = 405;
             }
@@ -877,6 +883,7 @@ function handleRequest(req, res) {
                 gameObj.game = 'WTF!!';
             }
 
+            res.writeHeader(200, {"Content-Type": "text/plain"});
             res.write(JSON.stringify(gameObj));
             res.end();
             break;
@@ -945,6 +952,7 @@ function handleRequest(req, res) {
                         };
                         
                         dealCards(games, gameInfo);
+                        console.log('delt cards');
                     }
                     retObj.result = true;
                     return retObj;
@@ -952,6 +960,7 @@ function handleRequest(req, res) {
                 
                 var initGame = (games[retObjPhaseOne.gameInfo.index].roundCount == 0);
                 var retObjPhaseTwo = phaseTwoDealWithTheDeck(games, retObjPhaseOne.gameInfo, pram, initGame);
+                console.log('end phase two', retObjPhaseTwo.result);
                 if (!retObjPhaseTwo.result) return false;
 
                 var phaseThreeRoundWeGoAgain = function(games, gameInfo, initGame) {
@@ -985,8 +994,9 @@ function handleRequest(req, res) {
 							count = -1
 						}
                     }
+                    console.log('mid phase three');
 
-                    roundObj.question = encodeURIComponent( roundObj.question );
+                    roundObj.question = roundObj.question;//encodeURIComponent( roundObj.question );
                     roundObj.questionBlankCount = count;
                     roundObj.players = { list:[], submitted:[], voted :[], readyForNextRound: [] };
                     roundObj.players.list = JSON.parse( JSON.stringify(games[gameInfo.index].list) ); //clone
@@ -1036,6 +1046,7 @@ function handleRequest(req, res) {
                     }                    
                 };
                 
+                console.log('phase four?', initGame);
                 if (initGame) 
                     phaseFourTheCardsYoureDelt(games, retObjPhaseOne.gameInfo, roundObj);
               
@@ -1046,12 +1057,18 @@ function handleRequest(req, res) {
             var gameObj = games[retObjPhaseOne.gameInfo.index];
             
             var check = canDoNextRoundCheck(gameObj, gameObj.roundCount);
-                 
+            
+            console.log('retObjPhaseOne.result ',retObjPhaseOne.result );
+            console.log('!check.waitForPriorRound',!check.waitForPriorRound);
+            
+            
             if (retObjPhaseOne.result && !check.waitForPriorRound && doCreateRound(games, reqObj, retObjPhaseOne.pram, gameObj, retObjPhaseOne)) {                
                 //var gameIndex = retObjPhaseOne.gameInfo.index;
                 var clone = cloneRound(games, retObjPhaseOne.gameInfo, retObjPhaseOne.pram);
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 res.write( JSON.stringify(clone) );
             } else {
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 console.log('why are you doing that dave');
 				//res.redirect("./");
                 res.write('why are you doing that dave');
@@ -1131,6 +1148,7 @@ function handleRequest(req, res) {
                 }
             
                 var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 res.write(JSON.stringify(cloneOfRound));
                 
                 ok = true;
@@ -1170,10 +1188,11 @@ function handleRequest(req, res) {
                 if (myIndex == -1) break;
                 
                 games[b.gameInfo.index].votes.set(playerList[myIndex].toString(), b.vote);                
-                var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);
+                //var cloneOfRound = cloneRound(games, b.gameInfo, b.pram);
                 
                 updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Voted');
 
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 res.write('{ yes: "You voted", boomshanka:"well done" }');
                 ok = true;
                 break;
@@ -1186,11 +1205,13 @@ function handleRequest(req, res) {
             while (true) {
                 var pram = preamble(reqObj);
                 if (!pram.isOk) break;
-                var gameInfo = getGameIndex(games, pram);			
+                var gameInfo = getGameIndex(games, pram);	
+                console.log('!gameInfo.gameExists', !gameInfo.gameExists , '!gameInfo.playerInGame',!gameInfo.playerInGame );
                 if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
 
                 var cloneOfRound = cloneRound(games, gameInfo, pram);
 
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 res.write(JSON.stringify(cloneOfRound));
                 ok = true;
                 break;
@@ -1224,12 +1245,13 @@ function handleRequest(req, res) {
             
             var cloneOfRound = cloneRound(games, gameInfo, pram);
             updateActivity(games[gameInfo.index], pram.playerName, 'Next');                
+            res.writeHeader(200, {"Content-Type": "text/plain"});
             res.write(JSON.stringify( cloneOfRound ) );
             res.end();
             break;
             
         case '/Games':
-            res.writeHeader(200, {"Content-Type": "application/json"});
+            res.writeHeader(200, {"Content-Type": "text/plain"});
             var gamesNames = [];
             for (var game in games) {
                 gamesNames.push(games[game].game);
@@ -1247,7 +1269,7 @@ function handleRequest(req, res) {
 				break;
 			}
 			
-            res.writeHeader(200, {"Content-Type": "application/json"});
+            res.writeHeader(200, {"Content-Type": "text/plain"});
 			var playerNames = [];
 
 			var gameObj = null;
@@ -1286,7 +1308,7 @@ function handleRequest(req, res) {
 			break;
             
         case '/Active':
-            var doPause = function(games, reqObj) {
+            var doPause = function(res, games, reqObj) {
                 var pram = preamble(reqObj);
                 if (!pram.isOk) return false;
                 
@@ -1298,13 +1320,13 @@ function handleRequest(req, res) {
                 if (!setPlayerActive(games[gameInfo.index], pram.playerName, active))
                     return false;
                 
-                updateActivity(games[gameInfo.index], pram.playerName, active ? 'Unpaused' : 'Paused');
+                updateActivity(games[gameInfo.index], pram.playerName, active ? 'Back' : 'Away');
                 
+                res.writeHeader(200, {"Content-Type": "text/plain"});
                 res.write(JSON.stringify(cloneRound(games, gameInfo, pram)));
                 return true;
             };
-            res.writeHeader(200, {"Content-Type": "text/plain"});  //application/json
-            doPause(games, reqObj);
+            doPause(res, games, reqObj);
             res.end();                 
             break;
             

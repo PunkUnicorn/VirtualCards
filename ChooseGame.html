@@ -23,7 +23,7 @@
 
             var dragDrop = {}; 
             
-            var cardApi = {};F
+            var cardApi = {};
 
         </script>
         <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
@@ -65,10 +65,10 @@
                         <label for='txtGameName' class='w3-large'>Name</label>
                         <input id='txtGameName' oninput="cleanUi()" class='w3-input w3-blue-grey'/> 
                         <div class='w3-center'>
-                            <div class='card card-horizontal wait-for-game-info1 w3-padding-tiny w3-tiny'></div>
-                            <div class='card card-horizontal wait-for-game-info2 w3-padding-tiny w3-tiny'></div>
-                            <div class='card card-horizontal wait-for-game-info3 w3-padding-tiny w3-tiny'></div>
-                            <div class='card card-horizontal wait-for-game-info4 w3-padding-tiny w3-tiny'></div>
+                            <div class='card-horizontal wait-for-game-info1 w3-padding-tiny w3-tiny'></div>
+                            <div class='card-horizontal wait-for-game-info2 w3-padding-tiny w3-tiny'></div>
+                            <div class='card-horizontal wait-for-game-info3 w3-padding-tiny w3-tiny'></div>
+                            <div class='card-horizontal wait-for-game-info4 w3-padding-tiny w3-tiny'></div>
                             <div class='card card-horizontal wait-for-game-info5 w3-padding-tiny w3-tiny'>
                                 <p><button 
                                     onclick='onClickJoinCreate()'
@@ -109,24 +109,28 @@
                 cleanUi();
 
                 var player = cardApi.getParameterByName('Player');
-                $('#txtPlayerName').html(player);
+                console.log("112", game);
+                $('#txtPlayerName').text(player);
 
                 var game = cardApi.getParameterByName('Game');
+                console.log("115", game);
                 $('#txtGameName').val(game).focus();
             };
 
             function playRound(passName, playerName) {
-                var playRoundLocation = window.document.referrer + 'PlayRoundUi?Game=' + passName + '&Player=' + playerName;
+                var playRoundLocation = window.document.referrer + 'PlayRoundUi?Game=' + encodeURIComponent( passName )+ '&Player=' + encodeURIComponent( playerName );
+                console.log("122", playRoundLocation);
                 window.document.location = playRoundLocation;
             };
             
             function onClickStart(event) {
                 var xmlhttp = new XMLHttpRequest();
 
-                var passName = $('#txtGameName').val();
-                var playerName = $('#txtPlayerName').html();
+                var passName =  $('#txtGameName').val();
+                var playerName =  $('#txtPlayerName').text();
 
                 var startGameLocation = window.document.referrer + 'CreateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
+                console.log("133", startGameLocation);
                 var startSuccessFunc = function (responseText, NA, passName, playerName, joinOnly) {
                     playRound(passName, playerName);
                 }
@@ -139,9 +143,10 @@
                 var xmlhttp = new XMLHttpRequest();
 
                 var passName = $('#txtGameName').val();
-                var playerName = $('#txtPlayerName').html();
+                var playerName =  $('#txtPlayerName').text();
 
-                var joinGameLocation = window.document.referrer + 'JoinGame?Game=' + passName + '&Player=' + playerName;
+                var joinGameLocation = window.document.referrer + 'JoinGame?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
+                console.log("149", joinGameLocation);
                 var joinSuccessFunc = function (responseText, xmlhttp, passName, playerName, joinOnly) {
 
                     console.log(joinOnly + ': ' + responseText);

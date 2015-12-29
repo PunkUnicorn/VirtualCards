@@ -81,7 +81,7 @@
 				var xmlhttp = new XMLHttpRequest();
 
 
-				var locationUrl = window.document.URL + 'CreatePlayer?Player=' + $('#txtPlayerName').val();
+				var locationUrl = window.document.URL + 'CreatePlayer?Player=' + encodeURIComponent( $('#txtPlayerName').val() );
 
 
 				xmlhttp.open("GET", locationUrl);
@@ -96,7 +96,7 @@
 
 							if (xmlhttp.responseText == passName) {
 
-								var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + passName;
+								var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + encodeURIComponent( passName );
 								window.location = locationUrl;
 
 
