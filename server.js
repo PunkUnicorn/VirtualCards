@@ -297,6 +297,10 @@ function loadAllDecks() {
         else
             return (incrementItToo) ? startWhiteCardNo++ : startWhiteCardNo;
     };
+    //loadDeckSimple(getIndexVar,'./cards/testQuestions.txt', 'black', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    //loadDeckSimple(getIndexVar, './cards/testAnswers.txt', 'white', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
+
+
     loadDeckSimple(getIndexVar,'./cards/CaHMainBlack.txt', 'black', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple(getIndexVar, './cards/CaHMainWhite.txt', 'white', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple(getIndexVar,'./cards/CaHUkMainBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
@@ -366,8 +370,11 @@ function getPlayer(reqObj) {
 function getCards(reqObj) {
     var cards = [];
     try {
-        cards = JSON.parse( decodeURIComponent(reqObj.query.Cards) );
-        console.log('@' + JSON.stringify(decodeURIComponent(cards)));
+        console.log('CARDS:', reqObj.query.Cards);
+        console.log(', ', reqObj.query.Cards);//decodeURIComponent();
+        
+        cards = JSON.parse( reqObj.query.Cards);//decodeURIComponent();
+        console.log('@' + JSON.stringify(cards));
     }
     catch(err) {
         console.log('erererr... ' + err);       
@@ -397,6 +404,18 @@ function getCurrent(reqObj) {
         console.log('rrrrreeeeer...... ' + err);       
     }
     return current;
+}
+
+function getActive(reqObj) {
+    var active = false;
+    try {
+        active = JSON.parse( reqObj.query.Active );
+        console.log('@' + JSON.stringify(active));
+    }
+    catch(err) {
+        console.log('rrffreeer...... ' + err);       
+    }
+    return active;
 }
 
                                 // _     _      
@@ -527,35 +546,58 @@ function hasCardsBeenDelt(game, gameInfo, pram) {
     return retval;
 };
 
-function canDoNextRound(games, gameInfo) {
-    var waitForPriorRound = false;
+function canDoNextRoundCheck(gameObj, roundCount) {
+    retObj = {};    
+    retObj.waitForPriorRound = false;
 
-    var checkPriorGame = (games[gameInfo.index].roundCount > 0);
-    if (checkPriorGame) {
-        var playerCount = games[gameInfo.index].list.length;
-        
-        var votes = games[gameInfo.index].votes.values();
-        var readyForNextRound = games[gameInfo.index].readyForNextRound.values(); //.indexOf(null) > -1) return false;
+    var activeCount = 0;
+    var voteCount = 0;
+    var readyCount = 0;
 
-        waitForPriorRound = (votes.length != playerCount); //not everyone has yet voted                
-        waitForPriorRound = waitForPriorRound || (readyForNextRound.length != playerCount);
-        waitForPriorRound = waitForPriorRound || (readyForNextRound.indexOf(false) > -1);
+    retObj.playerNames = [];
+    retObj.isActive = [];
+    retObj.votes = [];
+    retObj.readyForNextRound = [];
+    
+    retObj.checkPriorGame = (roundCount > 0);
+    if (retObj.checkPriorGame) {
+        for (var player in gameObj.list) {
+            var playerName = gameObj.list[player];
+            retObj.playerNames.push(playerName);
+            
+            var isActive = isPlayerActive(gameObj, playerName);            
+            retObj.isActive.push(isActive);
+            if (isActive) {
+                activeCount++;
+                var voted = (gameObj.votes.has(playerName)) ? true : false;
+                if (voted) voteCount++;
+                retObj.votes.push(voted);
+                var ready = ( (gameObj.readyForNextRound.has(playerName)) ? gameObj.readyForNextRound.get(playerName) : false );
+                if (ready) readyCount++;
+                retObj.readyForNextRound.push( ready );
+            } else {
+                retObj.votes.push( true );
+                retObj.readyForNextRound.push( true );
+            }
+        }
 
+        retObj.allVoted = (voteCount == activeCount);
+        retObj.waitForPriorRound = !retObj.allVoted; //not everyone has yet voted                
+
+        var readyCountOk = (readyCount == activeCount);
+        retObj.waitForPriorRound = retObj.waitForPriorRound || !readyCountOk;
+
+        retObj.allReady = (retObj.readyForNextRound.indexOf(false) == -1) ;
+        retObj.waitForPriorRound = retObj.waitForPriorRound || !retObj.allReady;
     }
-    return waitForPriorRound;
+    
+    return retObj;
 };
 
 function cloneRound(games, gameInfo, pram) {
-
-    // //clones, take all at the same time
-    // var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); 
-    // var gameVotes = JSON.parse( JSON.stringify(games[gameInfo.index].votes) );
-    // var gameNextRound = JSON.parse( JSON.stringify(games[gameInfo.index].readyForNextRound) );
-
-    //clones, take all at the same time
     var cloneOfRound = JSON.parse( JSON.stringify(games[gameInfo.index].round) ); 
+    var check = canDoNextRoundCheck(games[gameInfo.index], games[gameInfo.index].roundCount);
     
-    //var gameNextRound = JSON.parse( JSON.stringify(games[gameInfo.index].readyForNextRound) );
     cloneOfRound.heldCards = [];
 
     var heldCardsSource = games[gameInfo.index].heldCards;
@@ -567,6 +609,7 @@ function cloneRound(games, gameInfo, pram) {
     }
     cloneOfRound.heldCards = encodedCards;
     
+
     var playerIndex =  cloneOfRound.players.list.indexOf(pram.playerName);    
     var playerName = games[gameInfo.index].list[playerIndex];
     
@@ -594,8 +637,10 @@ function cloneRound(games, gameInfo, pram) {
 
     var playerScores = [];
     for (var player in cloneOfRound.players.list) { playerScores.push(0); }
+
+    var playerCount = 0;
     
-    var readyForNextRoundCount = 0;
+    cloneOfRound.isActive = isPlayerActive(games[gameInfo.index], playerName);
     for (var player in cloneOfRound.players.list) {
         var otherPlayerName = cloneOfRound.players.list[player];
 
@@ -608,19 +653,27 @@ function cloneRound(games, gameInfo, pram) {
             cloneOfRound.players.voted[player] = false;
         }
         
-        if (games[gameInfo.index].readyForNextRound.has( otherPlayerName )) {
-            cloneOfRound.players.readyForNextRound[player] = games[gameInfo.index].readyForNextRound.get( otherPlayerName );
-            if (cloneOfRound.players.readyForNextRound[player])
-                readyForNextRoundCount++;
+        if (isPlayerActive(games[gameInfo.index], cloneOfRound.players.list[player])) {
+            playerCount++;
+            if (games[gameInfo.index].readyForNextRound.has( otherPlayerName )) {
+                cloneOfRound.players.readyForNextRound[player] = games[gameInfo.index].readyForNextRound.get( otherPlayerName );
+            } else {            
+                cloneOfRound.players.readyForNextRound[player] = false;
+            }
         } else {
-            cloneOfRound.players.readyForNextRound[player] = false;
+            cloneOfRound.players.readyForNextRound[player] = true; //they're "ready" because they're not playing (i.e. don't wait for them)            
         }
-        
-    }    
+    }
+    
+    var readyForNextRoundCount = 0;
+    for (var ready in cloneOfRound.players.readyForNextRound) {
+        if (cloneOfRound.players.readyForNextRound[ready]) {
+            readyForNextRoundCount++;
+        }
+    }
     cloneOfRound.haveScores = false;
     
-    var playerCount = cloneOfRound.players.list.length;
-    if (cloneOfRound.haveVoted && voteCount == playerCount) {
+    if (check.allVoted) {
         cloneOfRound.scores = playerScores;        
         cloneOfRound.haveScores = true;
     } else {
@@ -630,13 +683,8 @@ function cloneRound(games, gameInfo, pram) {
     if (cloneOfRound.haveScores) {
         if (cloneOfRound.players.readyForNextRound.indexOf(false) == -1) {
             cloneOfRound.readyForNextRound = true;
-        }
-        
+        }        
     }
-    
-    cloneOfRound.readyForNextRound = (readyForNextRoundCount == playerCount);
-
-    //console.log('cloneOfRound: %s', JSON.stringify(cloneOfRound) );
     return cloneOfRound;
 };
 
@@ -645,20 +693,21 @@ function purgeOldGames(games, now) {
 }
 
 function updateScore(gameObj) {
-	//var game = games[gameInfo.indxed];
-	//var playerScores = [];	
-	
-	//for ( var countish in gameObj.list) playerScores[player] = 0;
-	
+    var playerScores = [];
+    for (var player in gameObj.list) { playerScores.push(0); }
+    
 	for (var player in gameObj.list) {
 		var otherPlayerName = gameObj.list[player];
-
-		if (gameObj.votes.has( otherPlayerName )) {
+        
+        if (gameObj.votes.has( otherPlayerName )) {
             var votedFor = gameObj.votes.get( otherPlayerName );
-			updatePlayerScore(gameObj, gameObj.list[player], 1);
-            //playerScores[ votedFor ] += 1;
-		}
+            playerScores[ votedFor ] += 1;
+        }
 	}
+    
+    for (var i in playerScores) {
+        updatePlayerScore(gameObj, gameObj.list[i], playerScores[i]);
+    }
 }
 
 function updatePlayerScore(gameObj, playerName, score){
@@ -673,10 +722,29 @@ function updateActivity(gameObj, playerName, lastActivity){
     } else {
         playerActivity = {};
 		playerActivity.score = 0;
+        playerActivity.isActive = true;
     }
     playerActivity.lastActivityOn = Date.now();
     playerActivity.lastActivity = lastActivity;    
     if (!hasThem) gameObj.playerActivity.set(playerName, playerActivity);
+}
+
+function isPlayerActive(gameObj, playerName) {
+    var hasThem = gameObj.playerActivity.has(playerName);
+    if (hasThem) {
+        return gameObj.playerActivity.get(playerName).isActive;
+    } else {
+        return false;
+    }
+}
+
+function setPlayerActive(gameObj, playerName, active) {
+    var hasThem = gameObj.playerActivity.has(playerName);
+    if (hasThem) {
+        gameObj.playerActivity.get(playerName).isActive = active;
+        return true;
+    }
+    return false;
 }
 
 /* 
@@ -831,7 +899,6 @@ function handleRequest(req, res) {
             };
 
             var doCreateRound = function(games, reqObj, pram, gameObj, retObjPhaseOne) {
-                                           
                 var phaseTwoDealWithTheDeck = function(games, gameInfo, pram, initGame) {
                     var retObj = {};
                     retObj.result = false;                    
@@ -895,7 +962,6 @@ function handleRequest(req, res) {
 					
                     roundObj.question = makeUnderscoresTheSame(question);
                     var count = (roundObj.question.match(/______/g) || []).length;
-                    //console.log('the after question :'+roundObj.question);
                     if (count == 0) {
 						if (roundObj.question[roundObj.question.length-1] == '?') { //allow any number of cards if no blanks and no question mark
 							var inYourHand = roundObj.question.indexOf('in your hand');
@@ -939,8 +1005,6 @@ function handleRequest(req, res) {
                         delete games[gameInfo.index].round;
                     }
                     games[gameInfo.index].round = roundObj;
-                    
-                    //console.log(JSON.stringify(roundObj));
 
                     return roundObj;
                 };
@@ -979,12 +1043,14 @@ function handleRequest(req, res) {
             };
             
             var retObjPhaseOne = phaseOneAuthenticate(games, reqObj);
-
-            var waitForPriorRound = canDoNextRound(games, retObjPhaseOne.gameInfo);
+            var gameObj = games[retObjPhaseOne.gameInfo.index];
+            
+            var check = canDoNextRoundCheck(gameObj, gameObj.roundCount);
                  
-            if (retObjPhaseOne.result && !waitForPriorRound && doCreateRound(games, reqObj, retObjPhaseOne.pram, gameObj, retObjPhaseOne)) {                
-                var gameIndex = retObjPhaseOne.gameInfo.index;
-                res.write( JSON.stringify(cloneRound(games, retObjPhaseOne.gameInfo, retObjPhaseOne.pram)) );
+            if (retObjPhaseOne.result && !check.waitForPriorRound && doCreateRound(games, reqObj, retObjPhaseOne.pram, gameObj, retObjPhaseOne)) {                
+                //var gameIndex = retObjPhaseOne.gameInfo.index;
+                var clone = cloneRound(games, retObjPhaseOne.gameInfo, retObjPhaseOne.pram);
+                res.write( JSON.stringify(clone) );
             } else {
                 console.log('why are you doing that dave');
 				//res.redirect("./");
@@ -1030,9 +1096,9 @@ function handleRequest(req, res) {
                         return b;
                                                             
                     b.cardsSubmitted = getCards(reqObj);
-					var rightCardsSubmitted = (b.cardsSubmitted.length != games[b.gameInfo.index].round.questionBlankCount);
+					var rightCardsSubmitted = (b.cardsSubmitted.length == games[b.gameInfo.index].round.questionBlankCount);
 					var anyCardsAllowed = (games[b.gameInfo.index].round.questionBlankCount == -1 && b.cardsSubmitted.length > 0);
-                    if (rightCardsSubmitted || anyCardsAllowed) 
+                    if (!rightCardsSubmitted && !anyCardsAllowed) 
                         return b;
 
                     b.isInList = false;
@@ -1201,13 +1267,10 @@ function handleRequest(req, res) {
 			retObj.activity = [];
 			retObj.list = [];
 			retObj.game = pram.game;
-			//console.log(JSON.stringify(gameObj));
 			for (var player in gameObj.list) {
 				var name = gameObj.list[player];
 				
 				var playerName = gameObj.list[player];
-				//console.log(JSON.stringify(playerName));
-				//var lastActivity = games[gameInfo.index].playerActivity.get[name];
 				var hasThem = gameObj.playerActivity.has(playerName);
 				var playerActivity = null;
 				if (hasThem) {
@@ -1215,13 +1278,35 @@ function handleRequest(req, res) {
 				} else {
 					continue;
 				}
-				console.log('pusheed');
 				retObj.activity.push(playerActivity);
 				retObj.list.push(playerName);
 			}
 			res.write(JSON.stringify(retObj));
 			res.end();
 			break;
+            
+        case '/Active':
+            var doPause = function(games, reqObj) {
+                var pram = preamble(reqObj);
+                if (!pram.isOk) return false;
+                
+                var gameInfo = getGameIndex(games, pram);			
+                if (!gameInfo.gameExists || !gameInfo.playerInGame) return false;
+                
+                var active = getActive(reqObj);
+                
+                if (!setPlayerActive(games[gameInfo.index], pram.playerName, active))
+                    return false;
+                
+                updateActivity(games[gameInfo.index], pram.playerName, active ? 'Unpaused' : 'Paused');
+                
+                res.write(JSON.stringify(cloneRound(games, gameInfo, pram)));
+                return true;
+            };
+            res.writeHeader(200, {"Content-Type": "text/plain"});  //application/json
+            doPause(games, reqObj);
+            res.end();                 
+            break;
             
         case '/DumpGames':
             res.writeHeader(200, {"Content-Type": "text/plain"});  //application/json
@@ -1245,7 +1330,6 @@ function handleRequest(req, res) {
             res.writeHeader(200, {"Content-Type": "text/plain"});
             var playerName = getPlayer(reqObj);
             if (playerName == '') {
-                //console.log('players list:' + JSON.stringify(players.list));
                 res.write(JSON.stringify(players.list));
             } else {
                

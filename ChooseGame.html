@@ -53,7 +53,7 @@
                     <div class='w3-card-8 card-area card-twisle'>
                         <header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.4c</h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5</h6>
                         </header>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                 var passName = $('#txtGameName').val();
                 var playerName = $('#txtPlayerName').html();
 
-                var startGameLocation = window.document.referrer + 'CreateRound?Game=' + passName + '&Player=' + playerName;
+                var startGameLocation = window.document.referrer + 'CreateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
                 var startSuccessFunc = function (responseText, NA, passName, playerName, joinOnly) {
                     playRound(passName, playerName);
                 }
@@ -181,7 +181,7 @@
                             playRound(passName, playerName);
                         }
                     } else {
-                        var createGameLocation = window.location.protocol + '//' + window.location.host + '/CreateGame?Game=' + passName + '&Player=' + playerName;
+                        var createGameLocation = window.location.protocol + '//' + window.location.host + '/CreateGame?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
                         var createSuccessFunc = function (responseText, xmlhttp, passName, playerName, joinOnly) {
                             cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, xmlhttp, passName, playerName, joinSuccessFunc, true);
                         }

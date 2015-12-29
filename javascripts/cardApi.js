@@ -35,6 +35,7 @@ cardApi = {
         var submitThingLocation = url + thingParams
         
         xmlhttp.open("GET", submitThingLocation);
+        xmlhttp.onsubmit = function() { return false; };
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4) {
                 if (xmlhttp.status == 400 || xmlhttp.status == 200) {
