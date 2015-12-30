@@ -49,6 +49,45 @@
         <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
         <script type="text/javascript">
+            var autoOn = true;
+            var autoUpdateSource = null;
+            function onMessage(e) {
+                if (autoOn) {
+                    console.log(e.data);
+                    if (e.data.player != playerName) {
+                        getRefreshed(cardSelection, gameObj, passName, playerName, true);
+                    }
+                } else {
+                    // ignore
+                }
+            }
+            
+            function initAutoRefreshPush(passName, playerName) {
+                setTimeout( function(passName, playerName) {
+                    if (autoUpdateSource == null) {
+                        autoUpdateSource = new EventSource('/Auto?Game=' 
+                                + encodeURIComponent( passName )
+                                + '&Player=' 
+                                + encodeURIComponent( playerName ) 
+                                + '&Active=' + JSON.stringify(true) );
+
+                        autoUpdateSource.addEventListener('message', onMessage, false);
+                    }
+                }, 0, passName, playerName);
+            }
+            
+            //function destroyAutoRefreshPush(passName, playerName) {
+            //    var endLoc = '/Auto?Game=' 
+            //                + encodeURIComponent( passName )
+            //                + '&Player=' 
+            //                + encodeURIComponent( playerName ) 
+            //                + '&Active=' + JSON.stringify(false);
+            //                
+            //    cardApi.sendSomething(cardSelection, endLoc,  function() {}, function() {}, gameObj, passName, playerName);
+            //    autoUpdateSource.removeEventListener('message', onMessage);
+            //    autoUpdateSource = null;
+            //}
+            
             function hideEverything () {
                 $('#pauseConfirm').hide();
                 $('#notPlayingConfirm').hide();
@@ -60,6 +99,10 @@
                 //$('#divAnswersArea').hide();
                 //$('#divQuestionArea').hide();
                 $('.submit-answer-btn').hide();
+            
+                $('#autoOn').toggle(autoOn);
+                $('#autoOff').toggle(!autoOn);
+            
                 $('#btnResetSelection').hide();
                 $('.submit-vote-btn').hide();
                 $('.wait-for-submit').hide();
@@ -83,6 +126,10 @@
                     
                 const pleaseWAITrendering = 100;
                 setTimeout( function() { document.getElementById("wrapper").style.visibility = "visible"; }, pleaseWAITrendering);
+                
+                if (autoOn) {
+                    initAutoRefreshPush(passName, playerName);
+                }                
             }
         </script>
         <script type="text/javascript">
@@ -98,14 +145,14 @@
 			<a id='jumpBlack' class='w3-left card-left-down2 w3-animate-opacity' href='#QuestionsAndAnswers'> <img src="231PagesView.PNG" alt="Questions and answers" border="0"> </img> </a>
 			<a id='jumpBlame' class='w3-left card-left-down3 w3-animate-opacity' href='#Blame' > <span class='fa fa-users'/> </a>
             <a id='jumpActivity' style='text-decoration: none !important;' href='' class='fa fa-hourglass-o activity-btn w3-left card-left-down4 w3-animate-opacity' onclick='event.preventDefault(); onActivityHotClick(event, gameObj, passName, playerName);'></a>
-            <a id='pauseConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();'>Click again to confirm AFK <span class='fa fa-times' onclick='$("#pauseConfirm").hide();'> </span> </a>
-            <a id='notPlayingConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();onActivityHotClick(event, gameObj, passName, playerName);'>Click to return to game <span class='fa fa-play' onclick='onActivityHotClick(event, gameObj, passName, playerName);'></span></a>
+            <a id='pauseConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();'>Press again to confirm AFK <span class='fa fa-times' onclick='$("#pauseConfirm").hide();'> </span> </a>
+            <a id='notPlayingConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();onActivityHotClick(event, gameObj, passName, playerName);'>Press to return to game <span class='fa fa-play' onclick='onActivityHotClick(event, gameObj, passName, playerName);'></span></a>
 		</div>
 		<div class='w3-padding-tiny card-area-main'> 
 			<div class='w3-card-8 card-area card-twisle'>
 				<header>
 					<h1 class='w3-center'>Virtual Cards Against Cards</h1>
-					<h6 class='w3-center'>Virtual Cards Against Humanity 0.5</h6>
+					<h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>J</b></</span></h6>
 				</header>
 			</div>
 		</div>
@@ -119,7 +166,6 @@
                 </div>
                 <div id='QuestionsAndAnswers' class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-padding-medium w3-animate-opacity'>
                     <div id='QuestionsAndAnswersTop'></div>
-                    <!-- <h4>Questions and Answers</h4> -->
                     <div id='divQuestionArea' class='w3-padding-16'>
                         <div id ='txtQuestion' class ='w3-large'></div>
                         <br />
@@ -128,14 +174,17 @@
                     <div id='divAnswersArea' class='w3-padding-16'>                    
                         <div id='txtAnswers' class ='w3-medium'><div>Please click refresh like crazy</div></div>
                         <br />
+                    </div>
+                    <div id='QuestionsAndAnswersBottom'></div>
+                    <div class='w3-padding-tiny'>
+                        <button id='btnAutoRefresh' class='w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-left' onclick='onClickAutoRefresh(event, gameObj, passName, playerName)'><span id='autoOff' class='fa fa-toggle-off'> <span class='w3-tiny fa fa-cog'></span></span> <span id='autoOn' class='fa fa-toggle-on'> <span class='w3-tiny fa fa-cog w3-spin'></span> </span></button>
+                        <button id ='btnNextRound' class='w3-btn w3-right w3-animate-opacity w3-black w3-border' onclick='onNextRound(event, gameObj, passName, playerName)'>Next Round <span id="txtNextRound"> </span> <span class='wait-for-next-round fa fa-bell w3-small w3-spin'> </span></button>
+                        <span class="card-horizontal w3-right w3-tiny w3-slim" id="txtNextRoundBlame"> </span>
                         <button id='MainVoteBtn' class='w3-btn submit-vote-btn w3-animate-opacity w3-right w3-deep-purple' onclick='onSubmitVote(event, gameObj, passName, playerName)'>Vote <span class='fa fa-gavel'> <span class='wait-for-vote fa fa-bell w3-small w3-spin'> </span></button>
                         <button id='btnRefreshVote'
                             class='w3-btn w3-blue w3-right w3-animate-opacity' 
                             onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
                     </div>
-                    <div id='QuestionsAndAnswersBottom'></div>
-                    <button id ='btnNextRound' class='w3-btn w3-animate-opacity w3-black w3-border' onclick='onNextRound(event, gameObj, passName, playerName)'>Next Round <span id="txtNextRound"> </span> <span class='wait-for-next-round fa fa-bell w3-small w3-spin'> </span></button>
-                    <span class="card-horizontal w3-right w3-tiny w3-slim" id="txtNextRoundBlame"> </span>
                 </div>
                 <div id='divBlameScreen' class = 'w3-center w3-tiny'>
                     <div id = 'Blame' class='w3-card-16 card-area w3-container m5 w3-col w3-slim w3-animate-opacity'>
@@ -159,7 +208,6 @@
         </div>
      </div>   
     <script>
-
         function elementInViewport(el) { //http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
             var top = el.offsetTop;
             var left = el.offsetLeft;
@@ -192,6 +240,15 @@
             window.document.location.hash = '#QuestionsAndAnswersTop';
         }
         
+        function onClickAutoRefresh(event, gameObj, passName, playerName) {
+            //autoOn = $('#autoOn').is(':visible');
+            autoOn = !autoOn;
+            $('#autoOn').toggle(autoOn);
+            $('#autoOff').toggle(!autoOn);
+            
+            showOrHideAnswerRefreshButton(gameObj);
+        }
+
         var freezeSelect = false;
         function cardSelect(ev, gameObj, passName, playerName) {
             if (freezeSelect) return;
@@ -248,7 +305,7 @@
             //window.document.location.reload();
             getRefreshed(cardSelection, gameObj, passName, playerName, true);
         }
-        
+                
         function onBooOutDouchebag(event, gameObj, passName, playerName) {
             var blameNameArea = $('.blame-selected');
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
@@ -495,24 +552,24 @@
                         putQuestoinsInView(); //subsiquent rounds have the next question as the main focus
                         
                     if (gameObj.o.haveScores) {
-                        //$('.submit-vote-btn').hide();
                         $('#btnNextRound').show();
                         putQuestoinsInView('btnNextRound');
                     }
                     
                     const stopFLICKERwars = 200;
                     setTimeout( function (gameObj) { 
-                        if ((gameObj.o.haveSubmitted || gameObj.o.haveVoted) && !gameObj.o.haveScores) {
-                            // show refresh button while awaiting others votes
-                            $('#btnRefreshVote').show();
-                        } else {
-                            $('#btnRefreshVote').hide();
-                        }
+                        showOrHideAnswerRefreshButton(gameObj);
+                        
                     }, stopFLICKERwars, gameObj);
                 }, 0, gameObj, playerName, isVoteSelectedOnUi, currentVoteSelection);
             }
         };
 
+        function showOrHideAnswerRefreshButton(gameObj) {
+            var on = (!autoOn) && (gameObj.o.haveSubmitted || gameObj.o.haveVoted) && (!gameObj.o.haveScores);
+            $('#btnRefreshVote').toggle(on);
+        }
+        
         var isVoteSelectedOnUi = false;
         var currentVoteSelection = '';
         function resetUiAfterNext(keepVote) {
@@ -556,7 +613,7 @@
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
                 var cantMoveOnSoQuicklyAllocateBlame = function () {
                     var list = setBlameCount(gameObj);
-                    $('#txtNextRoundBlame').text('.. waiting for ' + list.length + ' players, click again'); //+ list.join(', ') +
+                    $('#txtNextRoundBlame').text('.. waiting for ' + list.length + ' players, press again'); //+ list.join(', ') +
                     $('#txtNextRoundBlame').show();
                     $('.wait-for-next-round').hide();
                     
@@ -603,7 +660,7 @@
             if (gameObj.o.haveVoted) return;
             
             var dontSelect = $(event.target).hasClass('fa-gavel');
-            $('.gavelbtn-selected').removeClass('fa-gavel').text(' click to select ').hide();
+            $('.gavelbtn-selected').removeClass('fa-gavel').text(' press to select ').hide();
             
             
             if (!dontSelect) {
@@ -651,13 +708,6 @@
                                     + '&Vote=' + vote, beforeSend, onSuccess, gameObj, passName, playerName);
         };
 
-        function getRoot(referrer) {
-            var len = referrer.lastIndexOf('/');
-            if (len == -1) len = referrer.length;
-            var url = referrer.substr(0, len);
-            return url;
-        }
-
         function onSubmitAnswer(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
             
@@ -674,7 +724,7 @@
                 + encodeURIComponent( JSON.stringify(cardSelection)), beforeSend, onSuccess, gameObj, passName, playerName);
                 
             $('#txtQuestion').html('');
-            //$('#txtAnswers').html('');
+            $('#txtAnswers').html('');
         }
         
         function fillQuestion(gameObj, cardSelection) {
@@ -739,7 +789,7 @@
         function getRefreshed(cardSelection, gameObj, passName, playerName, keepVote) {
             freezeSelect = false
             var xmlhttp = new XMLHttpRequest();
-            var url = getRoot(window.document.referrer);
+            var url = cardApi.getRoot(window.document.referrer);
             
             var updateRoundLocation = url + '/UpdateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName ) ;
 

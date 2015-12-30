@@ -16,6 +16,12 @@
 		<meta property="og:title" content="Virtual Cards against Cards" />
 	</head>
 	<body>
+        <script>
+        
+            var cardApi = {};
+            
+        </script>
+        <script src="javascripts/cardApi.js"></script> <!-- cardApi global is set up as functional object here -->
 		<style>
 			.save-enabled {}
 			.wait-for-load {}
@@ -26,7 +32,7 @@
 					<div class='w3-card-8 card-area card-twisle'>
 						<header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5</h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>J</b></span></h6>
 						</header>
 					</div>
 				</div>
@@ -71,18 +77,23 @@
 			}
 		</script> <!--DUPLICATE CODE END-->        
 		<script>
+            var game = '';
 			window.onload = function (event) {
-			    $('.save-enabled').toggle($('.save-enabled').val().length > 2);
 			    $('.wait-for-load').hide();
-			    $('#txtPlayerName').val('').focus();
+                
+                var player = cardApi.getParameterByName('Player');
+                $('#txtPlayerName').text(player).focus();
+
+                game = cardApi.getParameterByName('Game');
+                
+			    $('.save-enabled').toggle($('#txtPlayerName').val().length > 2 ? true : false);
 			};
 
 			function onClick(event) {
 				var xmlhttp = new XMLHttpRequest();
 
-
-				var locationUrl = window.document.URL + 'CreatePlayer?Player=' + encodeURIComponent( $('#txtPlayerName').val() );
-
+                var gameStr = (game.length == 0) ? '' : '&Game=' + encodeURIComponent(game);
+				var locationUrl = cardApi.getRoot(window.document.referrer) + '/CreatePlayer?Player=' + encodeURIComponent( $('#txtPlayerName').val() ) + gameStr;
 
 				xmlhttp.open("GET", locationUrl);
 				xmlhttp.onreadystatechange = function () {
@@ -96,7 +107,8 @@
 
 							if (xmlhttp.responseText == passName) {
 
-								var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + encodeURIComponent( passName );
+								//var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + encodeURIComponent( passName );
+								var locationUrl = cardApi.getRoot(window.document.referrer)+ '/ChooseGameUi?Player=' + encodeURIComponent( passName ) + gameStr;
 								window.location = locationUrl;
 
 

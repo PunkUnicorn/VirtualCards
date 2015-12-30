@@ -101,6 +101,19 @@
    animation-iteration-count: 2;
 }
 
+.card-fade, .card-fade-delay1, .card-fade-delay2, .card-fade-delay4 {
+   -webkit-animation:card-fade 2s ease-out;
+   -moz-animation:card-fade 2s ease-out;
+   -o-animation:card-fade 2s ease-out;
+   -ms-animation:card-fade 2s ease-out;
+   animation: card-fade 2s ease-out;
+   -webkit-animation-iteration-count: 1;
+   -moz-animation-iteration-count: 1;
+   -o-animation-iteration-count: 1;
+   -ms-animation-iteration-count: 1;
+   animation-iteration-count: 1;
+}
+
 
 /* http://stackoverflow.com/questions/1065435/can-a-css-class-inherit-one-or-more-other-classes */
 .card-flash-delay1 {
@@ -160,6 +173,23 @@
    -o-animation-delay:1s;
    -ms-animation-delay:1s;
 }
+.card-spin-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-spin-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
+
 .card-jump-delay1
 {
    animation-delay:1s;   
@@ -235,6 +265,30 @@
    -ms-animation-delay:4s;
 }
 
+.card-fade-delay1
+{
+   animation-delay:1s;   
+   -webkit-animation-delay: 1s; 
+   -moz-animation-delay:1s;
+   -o-animation-delay:1s;
+   -ms-animation-delay:1s;
+}
+.card-fade-delay2
+{
+   animation-delay:2s;   
+   -webkit-animation-delay: 2s; 
+   -moz-animation-delay:2s;
+   -o-animation-delay:2s;
+   -ms-animation-delay:2s;
+}
+.card-fade-delay4
+{
+   animation-delay:4s;   
+   -webkit-animation-delay: 4s; 
+   -moz-animation-delay:4s;
+   -o-animation-delay:4s;
+   -ms-animation-delay:4s;
+}
 
 @keyframes card-jump
 {
@@ -295,6 +349,7 @@
    100% {transform: rotateZ(0deg);}
 }
 
+
 @keyframes card-spin {
   to { transform: rotateY(360deg); }
 }
@@ -302,7 +357,37 @@
    to { transform: rotateY(360deg); }
 }
 @-webkit-keyframes card-spin {
-   to { transform: rotateY(1360deg); }
+   to { transform: rotateY(360deg); }
+}
+
+@keyframes card-grow {
+   from { transform: scale(0,0); }
+   to { transform: scale(1,1); }
+}
+@-moz-keyframes card-grow
+{
+   from { transform: scale(0,0); }
+   to { transform: scale(1,1); }
+}
+@-webkit-keyframes card-grow
+{
+   from { transform: scale(0,0); }
+   to { transform: scale(1,1); }
+}
+
+@keyframes card-fade {
+   from { transform: opacity(1); }
+   to { transform: opacity(1); }
+}
+@-moz-keyframes card-fade
+{
+   from { transform: opacity(1); }
+   to { transform: opacity(1); }
+}
+@-webkit-keyframes card-fade
+{
+   from { transform: opacity(1); }
+   to { transform: opacity(1); }
 }
 
 @keyframes card-scale {

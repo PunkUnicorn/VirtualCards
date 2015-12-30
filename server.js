@@ -7,7 +7,7 @@ var url = require('url');
 var util = require('util');
 var hashmap = require('./hashmap-2.0.4/hashmap');
 var querystring = require("querystring");
-
+var os = require('os');
 
 
 //Lets define a port we want to listen to
@@ -55,7 +55,7 @@ function TEST_makeUnderscoresTheSame() {
     // const expected2 = '______\' ______" ______! ______: ______. ______, ______? ______ ';
     // if (!tryIt(test2, expected2)) console.log('second failed xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 
-    const test2a = '"_ the "__" quick "___!" brown"_____: Dance moves that are just sex"_______;';
+    const test2a = '"_ _- the "__" quick "___!" brown"_____: Dance moves that are just sex"_______;';
     const test2b = 'jumped "________. over "_________, the "__________? lazy "___________ MORTAL COMBAT!!!.';
     
     const expected2a = '"______ the "______" quick "______!" brown"______: Dance moves that are just sex"______;';
@@ -68,13 +68,12 @@ function TEST_makeUnderscoresTheSame() {
 function makeUnderscoresTheSame(question) {
     
     // WIP
-    const punctuation = [' ','"','!','?',':',';','#','.',',','-'];
-    const expressionForPunctuation = [' ','"','\!','\?','\:',';','#','\.',',','-'];
+    const punctuation = [' ','"','“','”','!','?',':',';','#','.',',','-'];
+    const expressionForPunctuation = [' ','"','“','”','\!','\?','\:',';','#','\.',',','-'];
     //var regexp = new RegExp("/[A-Z|a-z]_{7,14}\./g");
     //delete regexp;
     // WIP
-    
-    //var question = questionP;
+
     
      // accomodate the regular expression a little
     //question = question;
@@ -82,7 +81,10 @@ function makeUnderscoresTheSame(question) {
         question += ' ';
     
     if (question.substr(0, 1) == '_')
-        question = ' ' + question;
+        question = ' ' + question
+    
+    question = question.replace('“', '"');
+    question = question.replace('”', '"');    
 
     question = question.replace(/ _{7,14}\./g, ' '+TheOneWeWant+'.');
     question = question.replace(/ _{7,14}\?/g, ' '+TheOneWeWant+'?');
@@ -92,6 +94,8 @@ function makeUnderscoresTheSame(question) {
     question = question.replace(/ _{7,14} /g, ' '+TheOneWeWant+' ');
     question = question.replace(/ _{7,14},/g, ' '+TheOneWeWant+',');
     question = question.replace(/ _{7,14}"/g, ' '+TheOneWeWant+'"');
+    
+    question = question.replace(/ _{7,14}-/g, ' '+TheOneWeWant+'"');
 
     question = question.replace(/"_{7,14}\./g, '"'+TheOneWeWant+'.');
     question = question.replace(/"_{7,14}\?/g, '"'+TheOneWeWant+'?');
@@ -101,7 +105,7 @@ function makeUnderscoresTheSame(question) {
     question = question.replace(/"_{7,14} /g, '"'+TheOneWeWant+' ');
     question = question.replace(/"_{7,14},/g, '"'+TheOneWeWant+',');
     question = question.replace(/"_{7,14}"/g, '"'+TheOneWeWant+'"');
-    
+    question = question.replace(/"_{7,14}-/g, '"'+TheOneWeWant+'"');
     
     question = question.replace(/ _{1,5}\./g, ' '+TheOneWeWant+'.');
     question = question.replace(/ _{1,5}\?/g, ' '+TheOneWeWant+'?');
@@ -111,6 +115,7 @@ function makeUnderscoresTheSame(question) {
     question = question.replace(/ _{1,5} /g, ' '+TheOneWeWant+' ');
     question = question.replace(/ _{1,5},/g, ' '+TheOneWeWant+',');
     question = question.replace(/ _{1,5}"/g, ' '+TheOneWeWant+'"');
+    question = question.replace(/ _{1,5}-/g, ' '+TheOneWeWant+'"');
 
     question = question.replace(/"_{1,5}\./g, '"'+TheOneWeWant+'.');
     question = question.replace(/"_{1,5}\?/g, '"'+TheOneWeWant+'?');
@@ -120,6 +125,7 @@ function makeUnderscoresTheSame(question) {
     question = question.replace(/"_{1,5} /g, '"'+TheOneWeWant+' ');
     question = question.replace(/"_{1,5},/g, '"'+TheOneWeWant+',');
     question = question.replace(/"_{1,5}"/g, '"'+TheOneWeWant+'"');
+    question = question.replace(/"_{1,5}-/g, '"'+TheOneWeWant+'"');
     
     return question.trim();
 };
@@ -405,11 +411,13 @@ function getCurrent(reqObj) {
     return current;
 }
 
-function getActive(reqObj) {
-    var active = false;
+function getActive(reqObj, defaultValue) {
+    var active = defaultValue;
     try {
         active = JSON.parse( reqObj.query.Active );
         console.log('@' + JSON.stringify(active));
+        if (active === 1) active = true;
+        if (active === 0) active = false;
     }
     catch(err) {
         console.log('rrffreeer...... ' + err);       
@@ -729,6 +737,7 @@ function updateActivity(gameObj, playerName, lastActivity){
     playerActivity.lastActivityOn = Date.now();
     playerActivity.lastActivity = lastActivity;    
     if (!hasThem) gameObj.playerActivity.set(playerName, playerActivity);
+    broadcastChange(playerActivity);
 }
 
 function isPlayerActive(gameObj, playerName) {
@@ -763,6 +772,7 @@ function setPlayerActive(gameObj, playerName, active) {
 //We need a function which handles requests and send response
 function handleRequest(req, res) {
     var reqObj = url.parse(req.url, true);
+    reqObj.req = req;
 
     var listProperties = function(req) {
         console.log(util.inspect(req));
@@ -852,6 +862,26 @@ function handleRequest(req, res) {
             res.end();
             break;
 
+        case '/Auto':
+            var doAuto = function(games, reqObj, res, pram, gameObj) {
+                var auto = getActive(reqObj, false);
+                var playerName = getPlayer(reqObj);
+                if (playerName.length == 0) { return; }
+                
+                if (auto) {
+                    console.log('adding', auto);
+                    addClientConnection(playerName, res, reqObj.req);
+                } else {
+                    console.log('taking', auto);
+                    takeClientConnection(res, reqObj.req);
+                }
+            };
+            
+            if (!doAuto(games, reqObj, res, pram, gameObj)) {
+                
+            }
+            break;
+            
         case '/CreateGame':
             var doCreateGame = function(games, reqObj, pram, gameObj) {               
                 var pram = preamble(reqObj);
@@ -1127,7 +1157,7 @@ function handleRequest(req, res) {
                         if (b.isInList) return b;
                     }
                     
-                    updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Submitted');
+                    updateActivity(games[b.gameInfo.index], b.pram.playerName, 'Answered');
                     
                     b.result = true;
                     return b;
@@ -1316,7 +1346,7 @@ function handleRequest(req, res) {
                 var gameInfo = getGameIndex(games, pram);			
                 if (!gameInfo.gameExists || !gameInfo.playerInGame) return false;
                 
-                var active = getActive(reqObj);
+                var active = getActive(reqObj, false);
                 
                 if (!setPlayerActive(games[gameInfo.index], pram.playerName, active))
                     return false;
@@ -1449,6 +1479,65 @@ function afterLoadDumpDecks(diag) {
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 var isHosted = (server_port != 8080);
+
+/////////////////////////////////
+//http://www.smartjava.org/content/html5-server-sent-events-angularjs-nodejs-and-expressjs
+var openConnections = new hashmap.HashMap();
+ 
+ function removeResFromConnections(playerName, res) {
+    var toRemove;
+    if (openConnections.has(playerName)) {
+        openConnections.remove(playerName);        
+    }
+    console.log(openConnections.keys().length);
+}
+
+// simple route to register the clients
+function addClientConnection(playerName, res, req) {
+    //console.log('one');
+    
+    // set timeout as high as possible
+    req.socket.setTimeout(60 * 1000);
+ 
+    // send headers for event-stream connection
+    // see spec for more information
+    res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive'
+    });
+    res.write('\n');
+ 
+    // push this res object to our global variable
+    //console.log('two');
+    openConnections.set(playerName, res);
+    //openConnections.push(res);
+ 
+    // When the request is closed, e.g. the browser window
+    // is closed. We search through the open connections
+    // array and remove this connection.
+    //console.log('three');
+    req.on("close", function() { removeResFromConnections(res); });
+    console.log('four');    
+};
+ 
+function takeClientConnection(res, req) {
+    removeResFromConnections(res);
+}
+
+var broadcastChangeIndex  = 0;
+function broadcastChange(playerActivity) {
+    // we walk through each connection
+    //console.log('broadcastChangeIndex',broadcastChangeIndex);
+    openConnections.forEach(function(resp,name) {
+        console.log(name);
+        resp.write('id:' + (++broadcastChangeIndex) + '\n');
+        var clone = JSON.parse(JSON.stringify(playerActivity));
+        clone.player = name;
+        resp.write('data:' + JSON.stringify(clone) + '\n\n');
+    });
+ 
+}
 
 function startServer() {
         
