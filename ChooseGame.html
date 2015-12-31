@@ -53,7 +53,7 @@
                     <div class='w3-card-8 card-area card-twisle'>
                         <header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>J</b></span></h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>T</b></span></h6>
                         </header>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
             };
 
             function playRound(passName, playerName) {
-                var playRoundLocation = cardApi.getRoot(window.document.referrer) + '/PlayRoundUi?Game=' + encodeURIComponent( passName )+ '&Player=' + encodeURIComponent( playerName );
+                var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( passName )+ '&Player=' + encodeURIComponent( playerName );
                 window.document.location = playRoundLocation;
             };
             
@@ -137,7 +137,7 @@
                 var passName =  $('#txtGameName').val();
                 var playerName =  $('#txtPlayerName').text();
 
-                var startGameLocation = cardApi.getRoot(window.document.referrer) + '/CreateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
+                var startGameLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
                 var startSuccessFunc = function (responseText, NA, passName, playerName, joinOnly) {
                     playRound(passName, playerName);
                 }
@@ -152,7 +152,7 @@
                 var passName = $('#txtGameName').val();
                 var playerName =  $('#txtPlayerName').text();
 
-                var root = cardApi.getRoot(window.document.referrer);
+                var root = cardApi.getRoot(window.document.URL);
                 var joinGameLocation = root + '/JoinGame?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName );
                 var joinSuccessFunc = function (responseText, xmlhttp, passName, playerName, joinOnly) {
 
@@ -180,7 +180,7 @@
                             if (responseObj.creator == playerName) {
                                 $('.wait-for-game-info2').html('<b class="w3-red w3-animate-opacity w3-middle">YOU CREATED THIS GAME. PRESS START TO START.<br /><i> Or pass the link to invite people </i></b>'); 
                                 $('.start-game').show();
-                                var link = cardApi.getRoot(window.document.referrer) + '/?Game=' + encodeURIComponent( passName );
+                                var link = cardApi.getRoot(window.document.URL) + '/?Game=' + encodeURIComponent( passName );
                                 $('#txtGameLink').val(link).show();
                             }
                         };

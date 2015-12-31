@@ -688,6 +688,7 @@ function cloneRound(games, gameInfo, pram) {
         cloneOfRound.scores = [];
     }
 
+    cloneOfRound.readyForNextRound = false;
     if (cloneOfRound.haveScores) {
         if (cloneOfRound.players.readyForNextRound.indexOf(false) == -1) {
             cloneOfRound.readyForNextRound = true;
@@ -737,7 +738,7 @@ function updateActivity(gameObj, playerName, lastActivity){
     playerActivity.lastActivityOn = Date.now();
     playerActivity.lastActivity = lastActivity;    
     if (!hasThem) gameObj.playerActivity.set(playerName, playerActivity);
-    broadcastChange(playerActivity);
+    broadcastChange(playerActivity, playerName);
 }
 
 function isPlayerActive(gameObj, playerName) {
@@ -1272,10 +1273,10 @@ function handleRequest(req, res) {
             
             if (Current == games[gameInfo.index].roundCount) {
                 games[gameInfo.index].readyForNextRound.set(pram.playerName.toString(), true);
+                updateActivity(games[gameInfo.index], pram.playerName, 'Next');                
             }
             
             var cloneOfRound = cloneRound(games, gameInfo, pram);
-            updateActivity(games[gameInfo.index], pram.playerName, 'Next');                
             res.writeHeader(200, {"Content-Type": "text/plain"});
             res.write(JSON.stringify( cloneOfRound ) );
             res.end();
@@ -1526,14 +1527,14 @@ function takeClientConnection(res, req) {
 }
 
 var broadcastChangeIndex  = 0;
-function broadcastChange(playerActivity) {
+function broadcastChange(playerActivity, playerName) {
     // we walk through each connection
     //console.log('broadcastChangeIndex',broadcastChangeIndex);
     openConnections.forEach(function(resp,name) {
         console.log(name);
         resp.write('id:' + (++broadcastChangeIndex) + '\n');
         var clone = JSON.parse(JSON.stringify(playerActivity));
-        clone.player = name;
+        clone.player = playerName;
         resp.write('data:' + JSON.stringify(clone) + '\n\n');
     });
  

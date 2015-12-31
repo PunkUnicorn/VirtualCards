@@ -32,7 +32,7 @@
 					<div class='w3-card-8 card-area card-twisle'>
 						<header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>J</b></span></h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>T</b></span></h6>
 						</header>
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 				var xmlhttp = new XMLHttpRequest();
 
                 var gameStr = (game.length == 0) ? '' : '&Game=' + encodeURIComponent(game);
-				var locationUrl = cardApi.getRoot(window.document.referrer) + '/CreatePlayer?Player=' + encodeURIComponent( $('#txtPlayerName').val() ) + gameStr;
+				var locationUrl = cardApi.getRoot(window.document.URL) + '/CreatePlayer?Player=' + encodeURIComponent( $('#txtPlayerName').val() ) + gameStr;
 
 				xmlhttp.open("GET", locationUrl);
 				xmlhttp.onreadystatechange = function () {
@@ -108,7 +108,7 @@
 							if (xmlhttp.responseText == passName) {
 
 								//var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + encodeURIComponent( passName );
-								var locationUrl = cardApi.getRoot(window.document.referrer)+ '/ChooseGameUi?Player=' + encodeURIComponent( passName ) + gameStr;
+								var locationUrl = cardApi.getRoot(window.document.URL)+ '/ChooseGameUi?Player=' + encodeURIComponent( passName ) + gameStr;
 								window.location = locationUrl;
 
 

@@ -13,6 +13,8 @@ cardApi = {
         var requestIt = function () {
             if (xmlhttp.readyState == 4) {
                 $('.wait-for-load').hide();
+                $('#btnJumpRefresh').removeClass('w3-spin');
+                
                 if (xmlhttp.status == 400 || xmlhttp.status == 200) {
                     successFunc(xmlhttp.responseText, userVal, passName, playerName, joinOnly);
                 }
@@ -25,6 +27,7 @@ cardApi = {
         xmlhttp.open("GET", slocation);
         xmlhttp.onreadystatechange = requestIt;
         $('.wait-for-load').show();
+        $('#btnJumpRefresh').addClass('w3-spin');
         xmlhttp.send();
     },
     
