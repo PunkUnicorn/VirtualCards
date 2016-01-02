@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="stylesheets/cards.css">
         <link rel="stylesheet" href="stylesheets/card-effects.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta property="og:title" content="Virtual Cards against Cards" />
     </head>
@@ -20,7 +20,7 @@
             .wait-for-submit {}
             .submit-answer-btn {}
             .wait-for-vote {}
-            .submit-vote-btn {}  
+            .submit-vote-btn {}
             .wait-for-next-round {}
             .click-to-select {}
             .gavelbtn-selected {}
@@ -28,19 +28,18 @@
             .blame-selected { font-weight: bolder; }
             .activity-btn {}
             .blame-name {}
-        </style>	
+        </style>
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
 
-            var cardUi = {}; 
+            var cardUi = {};
 
-            var dragDrop = {}; 
-            
+            var dragDrop = {};
+
             var cardApi = {};
-            
+
             var cardSelection = [];
-            //var innerO = {};
-            //var innerBlame = {};
+
             var gameObj = {o:{}, blame:{}};
 
         </script>
@@ -48,7 +47,7 @@
         <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
         <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
-        <script type="text/javascript">        
+        <script type="text/javascript">
             var autoOn = true;
             var autoUpdateSource = null;
             function onMessage(e) {
@@ -64,7 +63,7 @@
                                     triggerRefresh = true;
                                 }
                                 break;
-                            
+
                             case 'Voted':
                                 if (gameObj.o.haveVoted)
                                     triggerRefresh = true;
@@ -73,8 +72,8 @@
                             case 'Next':
                                 if (gameObj.o.readyForNextRound)
                                     keepVote = false;
-                                
-                                triggerRefresh = true;                                    
+
+                                triggerRefresh = true;
 
                                 break;
                         }
@@ -85,21 +84,24 @@
                                 break;
                         }
                     }
-                    
-                    if (triggerRefresh)
-                        getRefreshed(cardSelection, gameObj, passName, playerName, keepVote, true);
-                    else
-                        allocateBlame(gameObj, passName, playerName);                    
+
+                    const noRUSHrelax = 200; // pause triggers
+                    setTimeout(function(cardSelection, gameObj, passName, playerName, keepVote, triggerRefresh) {
+                        if (triggerRefresh)
+                            getRefreshed(cardSelection, gameObj, passName, playerName, keepVote, triggerRefresh);
+                        else
+                            allocateBlame(gameObj, passName, playerName);
+                    }, noRUSHrelax, cardSelection, gameObj, passName, playerName, keepVote, triggerRefresh);
                 }
             }
-            
+
             function initAutoRefreshPush(passName, playerName) {
                 setTimeout( function(passName, playerName) {
                     if (autoUpdateSource == null) {
-                        autoUpdateSource = new EventSource('/Auto?Game=' 
+                        autoUpdateSource = new EventSource('/Auto?Game='
                                 + encodeURIComponent( passName )
-                                + '&Player=' 
-                                + encodeURIComponent( playerName ) 
+                                + '&Player='
+                                + encodeURIComponent( playerName )
                                 + '&Active=' + JSON.stringify(true) );
 
                         autoUpdateSource.addEventListener('message', onMessage, false);
@@ -111,28 +113,30 @@
                 $('#pauseConfirm').hide();
                 $('#notPlayingConfirm').hide();
                 $('#btnRefreshVote').hide();
-                
+
                 if (!gameObj.o.haveScores && !gameObj.o.readyForNextRound) {
                     $('#btnNextRound').hide();
                     $('#txtNextRoundBlame').hide();
                     $('.wait-for-next-round').hide();
                 }
-                
-                if (!keepVote) 
+
+                $('#txtPleaseWaitForNextRound').hide();
+
+                if (!keepVote)
                     $('.gavelbtn-selected').hide();
-                
+
                 $('#btnKick').hide();
-                
-                
+
+
                 $('.submit-answer-btn').hide();
-            
+
                 $('#autoOn').toggle(autoOn);
                 $('#autoOff').toggle(!autoOn);
-            
+
                 $('#btnResetSelection').hide();
                 $('.submit-vote-btn').hide();
                 $('.wait-for-submit').hide();
-                $('.wait-for-vote').hide();                
+                $('.wait-for-vote').hide();
                 $('.wait-for-kick').hide();
             }
             var passName = ''
@@ -146,15 +150,17 @@
                 passName = cardApi.getParameterByName('Game');
                 $('#txtGameName').text( passName );
 
-                setTimeout( function(cardSelection, gameObj, passName, playerName) { getRefreshed(cardSelection, gameObj, passName, playerName, false); }, 0, 
+                setTimeout( function(cardSelection, gameObj, passName, playerName) { getRefreshed(cardSelection, gameObj, passName, playerName, false); }, 0,
                     cardSelection, gameObj, passName, playerName);
-                    
+
                 const pleaseWAITrendering = 100;
                 setTimeout( function() { document.getElementById("wrapper").style.visibility = "visible"; }, pleaseWAITrendering);
-                
+
                 if (autoOn) {
                     initAutoRefreshPush(passName, playerName);
-                } 
+                }
+
+                makeGameLink(passName, playerName);
             }
         </script>
         <script type="text/javascript">
@@ -173,18 +179,21 @@
             <a id='pauseConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();'>Press again to confirm AFK <span class='fa fa-times' onclick='$("#pauseConfirm").hide();'> </span> </a>
             <a id='notPlayingConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();onActivityHotClick(event, gameObj, passName, playerName);'>Press to return to game <span class='fa fa-play' onclick='onActivityHotClick(event, gameObj, passName, playerName);'></span></a>
 		</div>
-		<div class='w3-padding-tiny card-area-main'> 
+		<div class='w3-padding-tiny card-area-main'>
 			<div class='w3-card-8 card-area card-twisle'>
 				<header>
-					<h1 class='w3-center'>Virtual Cards Against Cards</h1>
-					<h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>T</b></</span></h6>
+                    <h1 class='w3-center'>Virtual Cards Against Cards</h1>
+                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.6</h6>
+                    <div class ='w3-center w3-tiny'>
+                        <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
+                    </div>
 				</header>
 			</div>
 		</div>
         <div class='w3-padding-tiny main-card-area'>
             <div class='w3-row'>
                 <div id='CardHolder' class='w3-card-16 card-area w3-col w3-container m6 w3-animate-opacity w3-slim'>
-					<div id='buttonHolder' class='w3-center'>
+					<div id='buttonHolder' class='w3-right'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
                         <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity' onclick='onSubmitAnswer(event, gameObj, passName, playerName); putQuestoinsInView();'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
                     </div>
@@ -196,7 +205,7 @@
                         <br />
                         <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event, gameObj, passName, playerName)'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
                     </div>
-                    <div id='divAnswersArea' class='w3-padding-16'>                    
+                    <div id='divAnswersArea' class='w3-padding-16'>
                         <div id='txtAnswers' class ='w3-medium'><div> </div></div>
                         <br />
                     </div>
@@ -207,8 +216,26 @@
                         <span class="card-horizontal w3-right w3-tiny w3-slim" id="txtNextRoundBlame"> </span>
                         <button id='MainVoteBtn' class='w3-btn submit-vote-btn w3-animate-opacity w3-right w3-deep-purple' onclick='onSubmitVote(event, gameObj, passName, playerName)'>Vote <span class='fa fa-gavel'> <span class='wait-for-vote fa fa-bell w3-small w3-spin'> </span></button>
                         <button id='btnRefreshVote'
-                            class='w3-btn w3-blue w3-right w3-animate-opacity' 
+                            class='w3-btn w3-blue w3-right w3-animate-opacity'
                             onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
+                    </div>
+                    <div id='txtPleaseWaitForNextRound'>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class='w3-center w3-xxlarge w3-border-top'>
+                            <div class='fa fa-paw'></div>
+                            <div class='fa fa-paw card-shake'></div>
+                            <div class='fa fa-paw card-spin-delay1'></div>
+                        </div>
+                        <p class='w3-center w3-medium w3-light-green'> Welcome! Why the big paws? Please wait for this round to finish </p>
+                        <div class='w3-center w3-xxlarge w3-border-bottom'>
+                            <div class='fa fa-paw'></div>
+                            <div class='fa fa-paw card-shake'></div>
+                            <div class='fa fa-paw'></div>
+                        </div>
+                        <br />
                     </div>
                 </div>
                 <div id='divBlameScreen' class = 'w3-center w3-tiny'>
@@ -219,19 +246,24 @@
                         <br/>
                         <button id='btnActivity' class='w3-btn w3-white w3-center' onclick='onActivityClick(event, gameObj, passName, playerName)'><span class='activity-btn w3-small fa fa-hourglass-o'></span> </button>
                         <button id='btnKick' class='w3-btn w3-white w3-left w3-animate-opacity' onclick='onBooOutDouchebag(event, gameObj, passName, playerName)'><span class='activity-btn w3-small fa fa-hourglass-o'></span> Force</button>
+                        <div class='w3-padding-xlarge'>
+                            <br />
+                            <label for='txtGameLink'>Game link to invite players</label>
+                            <input class='w3-tiny w3-center w3-padding-tiny w3-input w3-light-grey' onclick='this.setSelectionRange(0, this.value.length)' id='txtGameLink' readonly></input>
+                        </div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <div class='w3-row m5 w3-center'>
-                <button 
-                    class='w3-btn w3-blue' 
+                <button
+                    class='w3-btn w3-blue'
                     onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
                 <p class='w3-padding-small w3-tiny'>
                     <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
                 </p>
             </div>
         </div>
-     </div>   
+     </div>
     <script>
         function elementInViewport(el) { //http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
             var top = el.offsetTop;
@@ -252,24 +284,24 @@
                 (left + width) <= (window.pageXOffset + window.innerWidth)
             );
         }
-        
+
         function putQuestoinsInView(focus) {
             var bottomEl = (typeof focus == 'undefined') ? 'QuestionsAndAnswersBottom' : focus;
-            
-            if (elementInViewport(document.getElementById('QuestionsAndAnswersTop')) && elementInViewport( document.getElementById(bottomEl)) ) 
+
+            if (elementInViewport(document.getElementById('QuestionsAndAnswersTop')) && elementInViewport( document.getElementById(bottomEl)) )
                 return;
 
-            window.document.location.hash =''; 
-            window.document.location.hash = '#'+bottomEl;             
-            window.document.location.hash =''; 
+            window.document.location.hash ='';
+            window.document.location.hash = '#'+bottomEl;
+            window.document.location.hash ='';
             window.document.location.hash = '#QuestionsAndAnswersTop';
         }
-        
+
         function onClickAutoRefresh(event, gameObj, passName, playerName) {
             autoOn = !autoOn;
             $('#autoOn').toggle(autoOn);
             $('#autoOff').toggle(!autoOn);
-            
+
             showOrHideAnswerRefreshButton(gameObj);
         }
 
@@ -277,7 +309,7 @@
         function cardSelect(ev, gameObj, passName, playerName) {
             if (freezeSelect) return;
             freezeSelect = true;
-            
+
             if (!gameObj.o.isActive) return;
             if (gameObj.o.haveSubmitted) return;
 
@@ -295,21 +327,21 @@
                     cardSelection.splice(removeIndex, 1);
                 } else {
                     var questionBlankCount = 1;
-                    try { questionBlankCount = gameObj.o.questionBlankCount; } 
+                    try { questionBlankCount = gameObj.o.questionBlankCount; }
                     catch (err) { return false; }
-                    
+
                     // simply refuse more than the alowed cards
                     if (questionBlankCount != -1 && cardSelection.length >= questionBlankCount) {
                         return false; // im sorry dave you can't do that
                     } else {
-                        cardSelection.push(target.text());                            
+                        cardSelection.push(target.text());
                     }
                 }
 
                 window.setTimeout( function (gameObj, cardSelection) {
-                    refreshQuestionText(gameObj, cardSelection);                        
+                    refreshQuestionText(gameObj, cardSelection);
                 }, 0, gameObj, cardSelection);
-                
+
                 return true;
             }
 
@@ -318,30 +350,30 @@
 
             var anySelected = ($('.card-selected').length > 0) ? true : false;
             $('#btnResetSelection').toggle(anySelected);
-            
+
         }
-        
+
         function onActivityChangeSuccess(cardSelection, gameObj, passName, playerName, xmlhttp) {
             gameObj.o = JSON.parse(xmlhttp.responseText);
             getRefreshed(cardSelection, gameObj, passName, playerName, true);
         }
-                
+
         function onBooOutDouchebag(event, gameObj, passName, playerName) {
             var blameNameArea = $('.blame-selected');
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
-                window.document.location.reload(); //do a runner 
+                window.document.location.reload(); //do a runner
             }
             doActivityChange(gameObj, passName, getBlameName(blameNameArea), false, onSuccess);
         }
-        
+
         function doActivityChange(gameObj, passName, playerName, activity, onSuccess) {
-            cardApi.sendSomething(cardSelection, '/Active?Game=' 
+            cardApi.sendSomething(cardSelection, '/Active?Game='
                     + encodeURIComponent( passName )
-                    + '&Player=' 
-                    + encodeURIComponent( playerName ) 
+                    + '&Player='
+                    + encodeURIComponent( playerName )
                     + '&Active=' + JSON.stringify(activity), function() {}, onSuccess, gameObj, passName, playerName);
         }
-        
+
         var clearPauseMsg = null;
         function onActivityHotClick(event, gameObj, passName, playerName) {
             var isPaused = gameObj.o.isActive ? true : false;
@@ -353,13 +385,13 @@
                 } else {
                     $('#pauseConfirm').show();
                     if (clearPauseMsg != null) clearTimeout(clearPauseMsg);
-                    
+
                     const autoHIDEconfirmMSG = 4000;
                     clearPauseMsg = setTimeout(function() { $("#pauseConfirm").hide(); }, autoHIDEconfirmMSG);
                 }
             } else { // un-pause
-                $('#pauseConfirm').hide();                           
-                doActivityChange(gameObj, passName, playerName, true, onActivityChangeSuccess);                
+                $('#pauseConfirm').hide();
+                doActivityChange(gameObj, passName, playerName, true, onActivityChangeSuccess);
             }
         }
         function onActivityClick(event, gameObj, passName, playerName) {
@@ -370,40 +402,40 @@
             } else {
                 doActivityChange(gameObj, passName, playerName, true, onActivityChangeSuccess);
             }
-            
+
         }
-        
+
         function onClickResetSelection(event, gameObj, passName, playerName) {
-            $('#btnResetSelection').hide(); 
+            $('#btnResetSelection').hide();
             var target = $('.card-selected');
             cardUi.setCardSelectionEffects(target, false);
             target.toggleClass('card-selected', false);
             cardSelection = [];
-            
+
             refreshQuestionText(gameObj, cardSelection);
         }
-        
+
         function getScoreCharmHtml() {
             return '<span class="fa fa-star card-twisle"> </span> ';
         }
-        
+
         function getBlameName(target) {
             var name = $(target).parent().children('.blame-name').text();
             if (name.length == 0) name = $(target).children('.blame-name').text();
             return name;
         }
-        
+
         function onBlameClick(event, gameObj, passName, playerName) {
             var name = getBlameName(event.target);
             var unselect = $(event.target).parent().hasClass('blame-selected') ? true : false;
             $('.blame-selected').removeClass('blame-selected');
-            
+
             if (!unselect) $(event.target).parent().addClass('blame-selected');
-            
+
             var shown = false;
             if ($('.blame-selected').length > 0) {
                 var blameSelected = gameObj.blame.list.indexOf(name);
-                if (blameSelected > -1) {                    
+                if (blameSelected > -1) {
                     $('#btnKick').show();
                     shown = true;
                 }
@@ -412,13 +444,13 @@
                 $('#btnKick').hide();
             }
         }
-        
+
         function allocateBlame(gameObj, passName, playerName) {
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
                 var getActivityIcon = function(retObj, player) {
                     return (retObj.activity[player].isActive) ? 'fa-play' : 'fa-hourglass-o';
                 };
-                
+
                 gameObj.blame = JSON.parse(xmlhttp.responseText);
                 var activityStr = '<table class="w3-table w3-bordered w3-striped w3-hoverable"><thead><tr><th>Player</th><th>Last</th><th>When</th><th><span class="fa fa-star" /></th><th></th> </tr></thead>';
                 var now = new Date();
@@ -440,27 +472,27 @@
                     activityStr += '<td class="fa ' + getActivityIcon(gameObj.blame, player) + '"></td>';
                 }
                 activityStr += '</table>';
-                $('#txtBlame').html(activityStr);					
+                $('#txtBlame').html(activityStr);
             };
-            cardApi.sendSomething(cardSelection, '/Players?Game=' 
+            cardApi.sendSomething(cardSelection, '/Players?Game='
                                     + encodeURIComponent( passName ), function() {}, onSuccess, gameObj, passName, playerName);
         }
-        
-        function onClickRefresh(event, gameObj, passName, playerName) {                
+
+        function onClickRefresh(event, gameObj, passName, playerName) {
             getRefreshed(cardSelection, gameObj, passName, playerName, true);
         }
-        
+
         function ansCardOk(ansCards) {
             if (typeof ansCards === 'undefined') return false;
             if (ansCards == null) return false;
             if (ansCards.length == 0) return false;
             return true;
         }
-        
+
         function updateRoundSuccessFunc(responseText, gameObj, passName, playerName, ignoredParameter) {
             //var getDifference = function(gameObj, oldObj) {
             //    diffs = {};
-            //    
+            //
                 var countEntries = function(countMe) {
                     var count = 0;
                     for (var i in countMe) {
@@ -475,12 +507,12 @@
             //    diffs.readyForNextRound = (gameObj.o.readyForNextRound != oldObj.readyForNextRound);
             //    diffs.newAnswer = (countEntries(gameObj.o.players.submitted[playerIndex]) != countEntries(oldObj.players.submitted[playerIndex]));
             //    diffs.
-            //    
+            //
             //    return diffs;
             //};
             var getPriorRound = function(gameObj, responseTextLength) {
                 var priorRound = {};
-                
+
                 if (responseTextLength == 0 || typeof gameObj.o == 'undefined' || typeof gameObj.o.players == 'undefined') {
                     priorRound.roundCount = 0;
                     priorRound.haveSubmitted = false;
@@ -498,34 +530,40 @@
                 }
                 return priorRound;
             };
-            
+
             priorRound = getPriorRound(gameObj, responseText.length);
             if (responseText.length > 0) {
                 gameObj.o = JSON.parse(responseText);
                 gameObj.o.answerCount = countEntries(gameObj.o.players.submitted);
             }
-            
+
             if (gameObj.o.game != passName) return;
-            
+            var isJoinedPlayerNotInRound = gameObj.o.players.list.indexOf(playerName) == -1;
+            if (isJoinedPlayerNotInRound) {
+                $('#txtPleaseWaitForNextRound').show();
+                $('#btnNextRound').show();
+            }
+
             if (typeof priorRound.roundCount != 'undefined' && priorRound.roundCount != gameObj.o.roundCount) {
                 getRefreshed(/*closure->*/cardSelection, gameObj, passName, playerName, false, true);
                 return;
             }
-            
+
             $('#divQuestionArea').toggle(!gameObj.o.haveSubmitted && !gameObj.o.haveVoted);
             $('#divAnswersArea').toggle(gameObj.o.haveSubmitted || gameObj.o.haveVoted);
-            
+
             var showPauseButton = (gameObj.o.isActive ? true : false);
             var isPaused = (gameObj.o.isActive ? false : true);
             $('.activity-btn').toggleClass('fa-hourglass-o', showPauseButton);
-            $('.activity-btn').toggleClass('fa-play', !showPauseButton); 
+            $('.activity-btn').toggleClass('fa-play', !showPauseButton);
 
-            $('#notPlayingConfirm').toggle(isPaused);
+            var showMsg = !isJoinedPlayerNotInRound && isPaused;
+            $('#notPlayingConfirm').toggle(showMsg);
 
-            
-            
+
+
             window.setTimeout( function () { allocateBlame(gameObj, passName, playerName); }, 0);
-            
+
             window.setTimeout( function (gameObj, priorRound, playerName, isVoteSelectedOnUi) {
                 $('#txtRoundNumber').text('Round ' + gameObj.o.roundCount);
 
@@ -539,22 +577,22 @@
                     $('.submit-vote-btn').show();
                 }
 
-                
+
                 if (!gameObj.o.haveSubmitted) {
                     refreshQuestionText(gameObj, cardSelection);
-                    
+
                     //draw attention to the new question
                     const pauseForDramaticEffect = 500;
                     setTimeout(function() { $('#divQuestionArea').addClass('card-spin');}, pauseForDramaticEffect);
                 }
-                
+
                 var cardIdSelectorTemplate = '#card';
                 var existingCards = $('#CardHolder').children('.card').length > 0;
                 var index = 0;
                 for (var myCard in gameObj.o.heldCards) {
-                    index++; 
+                    index++;
                     var cardText = gameObj.o.heldCards[myCard];
-                    
+
                     var cardHtml = makeCardHtml(cardText, index);
                     if (existingCards) {
                         $(cardIdSelectorTemplate + index.toString()).text(cardText);
@@ -575,15 +613,18 @@
                     return scoreCharm;
                 };
 
-                var needToSeeNewAnswer = (gameObj.o.haveSubmitted && gameObj.o.answerCount != priorRound.answerCount);
+                var needToSeeOwnSubmission = (gameObj.o.haveSubmitted && gameObj.o.haveSubmitted != priorRound.haveSubmitted);
+                var needToSeeNewAnswer = (gameObj.o.answerCount != priorRound.answerCount);
                 var needToSeeScores = (gameObj.o.haveScores && gameObj.o.haveScores != priorRound.haveScores);
+                var needToSeeOwnVote = (gameObj.o.haveVoted && gameObj.o.haveVoted != priorRound.haveVoted);
+                var itsBlankRenderItAnyway = $('#txtAnswers').text().trim().length == 0;
                 
                 var myIndex = gameObj.o.players.list.indexOf(playerName);
-                var waitingAroundLikeLemonForNextRound = (gameObj.o.haveScores && gameObj.o.players.readyForNextRound[myIndex] && !gameObj.o.readyForNextRound);
-                
-                if (gameObj.o.haveSubmitted || gameObj.o.haveVoted || needToSeeNewAnswer || needToSeeScores || waitingAroundLikeLemonForNextRound) { 
-                    var submittedStr = '';                                
-                    
+                var waitingAroundLikeLemonForNextRound = (myIndex == -1 || gameObj.o.haveScores && gameObj.o.players.readyForNextRound[myIndex] && !gameObj.o.readyForNextRound);
+
+                if (itsBlankRenderItAnyway || needToSeeOwnSubmission ||  needToSeeOwnVote || needToSeeNewAnswer || needToSeeScores || waitingAroundLikeLemonForNextRound) {
+                    var submittedStr = '';
+
                     var shuffle = function(me){
                         var tem,temp;
                         var L= me.length, A= [];
@@ -600,15 +641,16 @@
                         return A;
                     };
                     var randomList = shuffle(gameObj.o.players.list);
-                    
+
                     for (var randomIndxed in randomList) {
                         var playerIndex = gameObj.o.players.list.indexOf(randomList[randomIndxed]);
-                        
+                        if (playerIndex == -1) continue;
+
                         var ansCards = gameObj.o.players.submitted[playerIndex];
                         if (!ansCardOk(ansCards)) continue;
                         var filledOut = fillQuestion(gameObj, ansCards);
 
-                        var myId = 'ansNumber' + playerIndex.toString();  
+                        var myId = 'ansNumber' + playerIndex.toString();
 
                         var imSelected = (!waitingAroundLikeLemonForNextRound && currentVoteSelection == myId);
                         var hasGavel =  (!waitingAroundLikeLemonForNextRound && imSelected) ? ' fa-gavel' : '';
@@ -623,61 +665,66 @@
                                 (gameObj.o.haveVoted) ? '' :
                                 (waitingAroundLikeLemonForNextRound) ? '' : ' press to select ';
 
-                        submittedStr += '<li id="' + myId + '" class="card-spin">' + scoreCharms 
+                        submittedStr += '<li id="' + myId + '" class="card-spin">' + scoreCharms
                             +'<button class="gavelbtn-selected w3-deep-purple w3-btn w3-tiny fa'+hasGavel+'" onclick="onVoteClick(event, gameObj, passName, playerName)">'
                             + hasClickToSelect + '</button> <br/>'+filledOut+'</li>';
                     }
-                    
+
                     $('#txtAnswers').html('<ul class="w3-ul w3-small w3-dark-grey w3-border"> '+ submittedStr + '</ul>');
-                    
+
                     putQuestoinsInView();
                 }
-                
+
                 if (waitingAroundLikeLemonForNextRound) {
                     cantMoveOnSoQuicklyAllocateBlame();
                 }
-                
+
                 if (isVoteSelectedOnUi || gameObj.o.haveVoted) {
                     $('.gavelbtn-selected:not(.fa-gavel)').hide()
                 }
                 if ( (gameObj.o.haveVoted || gameObj.o.haveSubmitted) && !gameObj.o.haveScores) {
                     $('.gavelbtn-selected.fa-gavel').show()
                 }
-                
+
                 if (gameObj.o.haveScores) {
                     $('.gavelbtn-selected').hide();
                 }else if (gameObj.o.haveVoted) {
                     $('.submit-vote-btn').hide();
                 }
-                
+
                 if (gameObj.o.haveVoted) {
                     putQuestoinsInView();
                 } else if(gameObj.o.roundCount > 1)
                     putQuestoinsInView(); //subsiquent rounds have the next question as the main focus
-                    
+
                 if (gameObj.o.haveScores) {
                     $('#btnNextRound').show();
                     putQuestoinsInView('btnNextRound');
                 }
-                
+
                 const stopFLICKERwars = 200;
-                setTimeout( function (gameObj) { 
+                setTimeout( function (gameObj) {
                     showOrHideAnswerRefreshButton(gameObj);
-                    
+
                 }, stopFLICKERwars, gameObj);
             }, 0, gameObj, priorRound, playerName, isVoteSelectedOnUi);
-        
+
         };
+
+        function makeGameLink(passName, playerName) {
+            var link = cardApi.getRoot(window.document.URL) + '/?Game=' + encodeURIComponent( passName ) + '&Invite=' + encodeURIComponent( playerName ) ;
+            $('#txtGameLink').val(link);
+        }
 
         function showOrHideAnswerRefreshButton(gameObj) {
             var on = (!autoOn) && (gameObj.o.haveSubmitted || gameObj.o.haveVoted) && (!gameObj.o.haveScores);
             $('#btnRefreshVote').toggle(on);
         }
-        
+
         var isVoteSelectedOnUi = false;
         var currentVoteSelection = '';
         function resetUiAfterNext(keepVote) {
-            hideEverything(keepVote);                
+            hideEverything(keepVote);
             if (!keepVote) {
                 $('.gavelbtn-selected').removeClass('fa-gavel');
                 isVoteSelectedOnUi = false;
@@ -696,7 +743,7 @@
             }
             $('#txtNextRoundBlame').text('');
         }
-        
+
         var setBlameCount = function(gameObj) {
             var count = gameObj.o.players.list.length;
             var blameList = [];
@@ -709,24 +756,24 @@
             }
             return blameList;
         };
-        
+
         var cantMoveOnSoQuicklyAllocateBlame = function () {
             var list = setBlameCount(gameObj);
-            $('#txtNextRoundBlame').text('.. waiting for ' + list.length + ' players ..'); 
+            $('#txtNextRoundBlame').text('.. waiting for ' + list.length + ' players ..');
             $('#txtNextRoundBlame').show();
             $('.wait-for-next-round').hide();
-            
+
             window.setTimeout( function () { allocateBlame(gameObj, passName, playerName); }, 0);
         };
-        
+
         var itsOnLetsGo = function (cardSelection, gameObj, passName, playerName) {
             $('#btnNextRound').hide();
             getRefreshed(cardSelection, gameObj, passName, playerName, false);
-            
+
             $('#txtQuestion').html('');
             //$('#txtAnswers').html('');
         };
-        
+
         function onNextRound(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
             var thisRound = gameObj.o.roundCount;
@@ -734,34 +781,34 @@
             var beforeSend = function() {
                 $('.wait-for-next-round').show();
             };
-                        
+
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
                 $.post('/CreateRound?Game=' + encodeURIComponent( passName ) + '&Player='  + encodeURIComponent( playerName ) + '&Current=' + thisRound, function(data, status) {
                     getRefreshed(cardSelection, gameObj, passName, playerName, false, false);
                 });
             };
-            cardApi.sendSomething(cardSelection, '/NextRound?Game=' 
+            cardApi.sendSomething(cardSelection, '/NextRound?Game='
                                     + encodeURIComponent( passName )
-                                    + '&Player=' 
+                                    + '&Player='
                                     + encodeURIComponent( playerName ) + '&Current=' + thisRound/*+ '#QuestionsAndAnswers'*/, beforeSend, onSuccess, gameObj, passName, playerName);
-            
+
         }
-        
+
         function onVoteClick(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
             if (gameObj.o.haveVoted) return;
-            
+
             var dontSelect = $(event.target).hasClass('fa-gavel');
             $('.gavelbtn-selected').removeClass('fa-gavel').text(' press to select ').hide();
-            
-            
+
+
             if (!dontSelect) {
                 $(event.target).addClass('fa-gavel').text('').show();
             }
 
             var anySelected = ($('.fa-gavel').length > 1/*the submit vote button always has a gavel too, as well as the selected pre-submit clickys*/) ? true : false;
             $('.submit-vote-btn').toggle(anySelected);
-            
+
             if (!anySelected) {
                 $('.gavelbtn-selected').show();
             } else {
@@ -771,7 +818,7 @@
 
         function onSubmitVote(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
-            
+
             var beforeSend = function() {
                 $('.wait-for-vote').show();
             };
@@ -784,21 +831,21 @@
             currentVoteSelection = $('.gavelbtn-selected.fa-gavel')
                             .parent()
                             .attr('id');
-                                    
+
             var vote = currentVoteSelection.substr(currentVoteSelection.length-1, 1);
 
-            cardApi.sendSomething(cardSelection, '/SubmitVote?Game=' 
+            cardApi.sendSomething(cardSelection, '/SubmitVote?Game='
                                     + encodeURIComponent( passName )
-                                    + '&Player=' 
+                                    + '&Player='
                                     + encodeURIComponent( playerName )
                                     + '&Vote=' + vote, beforeSend, onSuccess, gameObj, passName, playerName);
         };
 
         function onSubmitAnswer(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
-            
+
             var beforeSend = function() {
-                $('.wait-for-submit').show();                  
+                $('.wait-for-submit').show();
             };
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
                 $('#txtQuestion').html('');
@@ -808,26 +855,26 @@
                 $('.wait-for-submit').hide();
             };
 
-            cardApi.sendSomething(cardSelection, '/SubmitAnswer?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName ) + '&Cards=' 
+            cardApi.sendSomething(cardSelection, '/SubmitAnswer?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName ) + '&Cards='
                 + encodeURIComponent( JSON.stringify(cardSelection)), beforeSend, onSuccess, gameObj, passName, playerName);
-                
+
         }
-        
+
         function fillQuestion(gameObj, cardSelection) {
             var filledInQuestion = gameObj.o.question;
             var hasBlank = filledInQuestion.match(/______/) != null;
-            
+
             for (var answer in cardSelection) {
                 var thisAnswer = '<span class="w3-slim">' + cardSelection[answer] + '</span>';
                 if (hasBlank) {
                     filledInQuestion = filledInQuestion.replace(/______/, thisAnswer);
-                } else {                    
+                } else {
                     filledInQuestion += '<br>'+thisAnswer;
                 }
             }
             return filledInQuestion;
         }
-        
+
         function refreshQuestionText(gameObj, cardSelection) {
             var filledInQuestion = fillQuestion(gameObj, cardSelection);
             $('#txtQuestion').html(filledInQuestion, cardSelection);
@@ -842,18 +889,18 @@
                 $('.submit-answer-btn').hide();
             }
         }
-        
-        const effects = ['card-jump-delay2', 
+
+        const effects = ['card-jump-delay2',
             '',
-            'card-spin-delay2', 
+            'card-spin-delay2',
             '',
-            'card-jump', 
+            'card-jump',
             '',
-            'card-spin-delay1', 
+            'card-spin-delay1',
             '',
-            'card-jump-delay1', 
+            'card-jump-delay1',
             ''];
-            
+
         var effectIndex = 0;
         function makeCardHtml(cardText, index) {
 
@@ -864,24 +911,24 @@
                     'draggable="true" ' +
                     'ondragstart="dragDrop.drag(event, dragStart)"' +
                     'id="card'+ index +'" >' + cardText +  '</div>';
-                    
+
             effectIndex++;
             if (effectIndex == effects.length)
                 effectIndex = 0;
-                
+
             return cardHtml;
         }
-        
+
         function getRefreshed(cardSelection, gameObj, passName, playerName, keepVote, gotoServer) {
             if (typeof gotoServer == 'undefined') gotoServer = true;
-            
+
             freezeSelect = false
             var xmlhttp = new XMLHttpRequest();
             var url = cardApi.getRoot(window.document.URL);
-            
+
             resetUiAfterNext(keepVote);
             if (gotoServer) {
-                var updateRoundLocation = url + '/UpdateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName ) ;            
+                var updateRoundLocation = url + '/UpdateRound?Game=' + encodeURIComponent( passName ) + '&Player=' + encodeURIComponent( playerName ) ;
                 cardApi.joinOrCreateThing(xmlhttp, updateRoundLocation, gameObj, passName, playerName, updateRoundSuccessFunc, false);
             } else {
                 updateRoundSuccessFunc('', gameObj, passName, playerName);

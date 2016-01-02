@@ -1,130 +1,358 @@
-﻿<!doctype html>
+<!doctype html>
 <html>
-	<head> <!--DUPLICATE CODE START-->
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="chrome=1">
-		<title>Virtual Cards against Cards</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <title>Virtual Cards against Cards</title>
 
-		<link rel="stylesheet" href="stylesheets/w3.css">
-		<link rel="stylesheet" href="stylesheets/cards.css">
-		<link rel="stylesheet" href="stylesheets/card-effects.css">
+        <link rel="stylesheet" href="stylesheets/w3.css">
+        <link rel="stylesheet" href="stylesheets/cards.css">
+        <link rel="stylesheet" href="stylesheets/card-effects.css">
+        <link rel="stylesheet" href="stylesheets/font-awesome.min.css">
 
-		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:title" content="Virtual Cards against Cards" />
+    </head>
+    <body>
+<script type="text/javascript">
+            var autoOn = true;
+            var autoUpdateSource = null;
+            function onMessage(e) {
+                if (autoOn) {
+                    var triggerRefresh = false;
+                    var dataObj = JSON.parse(e.data);
+                    if (dataObj.player != viewModel.player()) {
+                        if (dataObj.player == viewModel.creator()) {
+                            switch (dataObj.lastActivity) {
+                                case 'Next':
+                                    playRound();
+                                    break;
+                            }
+                        }
 
-		<meta property="og:title" content="Virtual Cards against Cards" />
-	</head>
-	<body>
-        <script>
-        
-            var cardApi = {};
-            
+                        switch (dataObj.lastActivity) {
+                            case 'Joined':
+                                triggerRefresh = true;
+                                break;
+                        }
+                    } else {
+                        switch (dataObj.lastActivity) {
+                            case 'Away': // have been forced 'away'
+                                triggerRefresh = true;
+                                break;
+                        }
+                    }
+
+                    if (triggerRefresh) {
+                        const noRUSHrelax = 200;
+                        setTimeout(function(viewModel) {
+                            joinOrCreate(viewModel);
+                        }, noRUSHrelax, viewModel);
+                    }
+                }
+
+            }
+
+            function initAutoRefreshPush(playerName) {
+                setTimeout( function(playerName) {
+                    if (autoUpdateSource == null) {
+                        autoUpdateSource = new EventSource('/Auto?Player='
+                                + encodeURIComponent( playerName )
+                                + '&Active=' + JSON.stringify(true) );
+
+                        autoUpdateSource.addEventListener('message', onMessage, false);
+                    }
+                }, 0, playerName);
+            }
+
         </script>
-        <script src="javascripts/cardApi.js"></script> <!-- cardApi global is set up as functional object here -->
-		<style>
-			.save-enabled {}
-			.wait-for-load {}
-		</style>
-		<div id='wrapper'> <!--class='w3-animate-opacity'>-->
-			<div class='w3-animate-top'>
-				<div class='w3-animate-bottom'>
-					<div class='w3-card-8 card-area card-twisle'>
-						<header>
+        <script type='text/javascript' src='javascripts/knockout-3-4-0.js'/>
+        <script type="text/javascript">
+            var ko = require('knockout-3.4.0');
+
+            var cardUi = {};
+
+            var dragDrop = {};
+
+            var cardApi = {};
+
+        </script>
+        <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
+        <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
+        <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
+        <script src="javascripts/jQuery.js"></script>
+        <script type="text/javascript">
+            function dragStart(ev) {
+                console.log('drag effect func dragStart called');
+                console.log(ev.target);
+            }
+        </script>
+        <style>
+            .wait-for-load {}
+            .wait-for-game {}
+        </style>
+        <div id='wrapper' class='w3-animate-opacity'>
+            <div><!--  class='w3-animate-top'> -->
+                <div> <!-- class='w3-animate-bottom'> -->
+                    <div class='w3-card-8 card-area card-twisle'>
+                        <header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.5 <span class='w3-large'><b>T</b></span></h6>
-						</header>
-					</div>
-				</div>
-				<div class='w3-center'>
-					<div class='w3-card-16 card-area w3-animate-top'>
-						<p>Welcome Douchebag!</p>
-						<label for='txtPlayerName' class='w3-animate-opacity w3-large'>Please enter player name:</label>
-						<input id='txtPlayerName' oninput="$('.save-enabled').toggle(this.value.length > 2)" class='w3-input w3-light-green'/>                        
-						<div class='card'>
-							<div class='card'>
-								<div class='card'>
-									<div class='card'>
-										<button 
-											onclick='onClick()' 
-											class='save-enabled w3-btn w3-blue w3-animate-opacity'>Create Player <span class='wait-for-load fa fa-bell w3-small w3-spin'/></button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- DUP CODE BREAK STARTS -->
-		<script src="javascripts/jQuery.js"></script>
-		<script type="text/javascript">
-
-			var cardUi = {};
-
-			var dragDrop = {}; 
-
-		</script>
-		<script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
-		<script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
-		<script type="text/javascript">
-			//window.onload = cardUi.setCardSelectionEffects();
-		</script>
-		<script type="text/javascript">
-			function dragStart(ev) {
-				console.log('drag effect func dragStart called');
-				console.log(ev.target);
-			}
-		</script> <!--DUPLICATE CODE END-->        
-		<script>
-            var game = '';
-			window.onload = function (event) {
-			    $('.wait-for-load').hide();
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.6</h6>
+                            <div class ='w3-center w3-tiny'>
+                                <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
+                            </div>
+                        </header>
+                    </div>
+                </div>
+                <div class='w3-row w3-center'>
+                    <div class='w3-col w3-card-16 card-area w3-animate-top'>
+                        <h4>Welcome <span data-bind='text:player'></span></h4>
+                        <p>It's not my place to judge you</p>
+                    </div>
                 
-                var player = cardApi.getParameterByName('Player');
-                $('#txtPlayerName').text(player).focus();
+                    <div class='w3-col w3-card-16 card-area m6 w3-animate-top'>
+                        <label for='pn' class='w3-animate-opacity w3-large'>Player Name</label>
+                        <input id='pn' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" data-bind='textInput:player' class='w3-input w3-light-green'/>
+                    </div>
 
-                game = cardApi.getParameterByName('Game');
-                
-			    $('.save-enabled').toggle($('#txtPlayerName').val().length > 2 ? true : false);
-			};
+                    <div class='w3-col w3-card-16 card-area m5 w3-animate-top'>
+                        <p data-bind='visible:!isInvite()'>Enter the name of an existing game. Or enter the name of a new game to create it</p>
+                        <p data-bind='visible:isInvite()'>Press Join Game to begin</p>
+                        <label for='gn' class='w3-large'>Game Name</label>
+                        <input id='gn' data-bind='textInput:game' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" class='w3-input w3-blue-grey'/>
+                        <div class='w3-center w3-padding-small'>
+                            <div class='card-horizontal'></div>
+                            <div class='card-horizontal'></div>
+                            <div class='card-horizontal'></div>
+                            <div class='card card-horizontal'>
+                                <div class='card-horizontal'></div>
+                                <p><button
+                                    onclick='onClickJoinCreate(event, viewModel)'
+                                    data-bind='visible:player().length>2 && game().length>2 && !isJoined()'
+                                    class='w3-btn w3-blue w3-animate-opacity w3-small'><span data-bind='text:isInvite()?"Join game" : "Create/Join game"'> </span><span
+                                        class='wait-for-load fa fa-bell w3-small w3-spin' />
+                                </button></p>
+                                <p><button
+                                    onclick='onClickJoinCreate(event, viewModel)'
+                                    data-bind='visible:isJoined'
+                                    class='w3-btn w3-blue w3-animate-opacity w3-small'>Refresh <span class='fa fa-refresh w3-small' /><span
+                                        class='wait-for-load fa fa-bell w3-small w3-spin' />
+                                </button></p>
+                            </div>
+                            <div class='w3-small w3-animate-opacity'>
+                                <i>
+                                    <p data-bind='visible: isJoined() && !isStarted() && !isCreator()' class='w3-small'> Waiting for <span data-bind='text:creator'></span> to click start <span class='fa fa-spinner w3-spin'/></p>
+                                    <p data-bind='visible: isJoined() && isCreator()' class='w3-small'> Everyone is waiting for you to click start <span class='fa fa-spinner w3-spin'/></p>
+                                    <p data-bind='visible: isJoined() && isStarted()' class='w3-small'> Join game in progress <span class='fa fa-spinner w3-spin'/></p>
+                                </i>
+                            </div>
+                            <p><button
+                                onclick='onClickStart()'
+                                data-bind='visible:isCreator() || isStarted()'
+                                class='w3-small w3-animate-opacity w3-btn w3-grey w3-right'>Start game <span class='wait-for-game fa fa-cube w3-spin' />
+                            </button></p>
+                        </div>
+                    </div>
 
-			function onClick(event) {
-				var xmlhttp = new XMLHttpRequest();
+                    <div id='divBlameScreen' data-bind='visible:activity().length > 0' class = 'w3-center w3-tiny'>
+                        <div id = 'Blame' class='w3-card-16 card-area w3-container m5 w3-col w3-slim w3-animate-opacity'>
+                            <div class=''><span class='w3-xlarge fa fa-users'/> </div>
+                            <br />
+                            <div id ='txtBlame'>
+                                <table class="w3-table w3-bordered w3-striped w3-hoverable">
+                                    <thead>
+                                        <tr>
+                                            <th>Player</th>
+                                            <th>Last</th>
+                                            <th>When</th>
+                                            <th><span class="fa fa-star" /></th>
+                                            <th>*</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind='foreach: activity'>
+                                        <tr onclick='onBlameClick(event, gameObj, passName, playerName)'>
+                                            <td data-bind='text:displayName, id:playerId' class='blame-name' id='nobind'></td>
+                                            <td data-bind='text:lastActivity'></td>
+                                            <td data-bind='text:when'></td>
+                                            <td data-bind='text:score'></td>
+                                            <td data-bind='class:renderClass' class='fa fa-cube'></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br/>
+                            <div data-bind='visible:isJoined' class='w3-padding-xlarge'>
+                                <label for='txtGameLink'>Game link to invite players</label>
+                                <input class='w3-tiny w3-center w3-padding-tiny w3-input w3-light-grey' onclick='this.setSelectionRange(0, this.value.length)' id='txtGameLink' readonly></input>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                var gameStr = (game.length == 0) ? '' : '&Game=' + encodeURIComponent(game);
-				var locationUrl = cardApi.getRoot(window.document.URL) + '/CreatePlayer?Player=' + encodeURIComponent( $('#txtPlayerName').val() ) + gameStr;
+        <script>
 
-				xmlhttp.open("GET", locationUrl);
-				xmlhttp.onreadystatechange = function () {
-					if (xmlhttp.readyState == 4) {
-						$('.wait-for-load').hide();
-						if (xmlhttp.status == 400 || xmlhttp.status == 200) {
+            var activity = [ { playerId:'noid', displayName:'You', lastActivity:'', when:'', score:'', renderClass:'' } ];
 
-
-							var passName = $('#txtPlayerName').val();
-
-
-							if (xmlhttp.responseText == passName) {
-
-								//var locationUrl = window.location.protocol + '//' + window.location.host + '/ChooseGameUi?Player=' + encodeURIComponent( passName );
-								var locationUrl = cardApi.getRoot(window.document.URL)+ '/ChooseGameUi?Player=' + encodeURIComponent( passName ) + gameStr;
-								window.location = locationUrl;
+            viewModel = {
+                activity: ko.observableArray([]),
+                game: ko.observable(''),
+                player: ko.observable(''),
+                isInvite: ko.observable(false),
+                isCreator: ko.observable(false),
+                creator: ko.observable(''),
+                isJoined: ko.observable(false),
+                isStarted: ko.observable(false)
+            };
 
 
-							}
-							else {
-								console.log("passName error " + passName);
-							}
-						}
-						else {
-							console.log('unsuccessful request');
-						}
-					}
-				}
-				xmlhttp.send();
-				$('.wait-for-load').show();               
-			}
-		</script>
-	</body>
+            // window level globals
+            ko.applyBindings(viewModel);
+            xmlhttp = new XMLHttpRequest();
+
+
+            function cleanUi() {
+                $('.wait-for-load').hide();
+                $('.wait-for-game').hide();
+            };
+
+            window.onload = function (event) {
+                var playerP = cardApi.getParameterByName('Player');
+                viewModel.player(playerP);
+
+                var gameP = cardApi.getParameterByName('Game');
+                viewModel.game(gameP);
+
+                var invite = cardApi.getParameterByName('Invite');
+                viewModel.isInvite( (invite.length > 0) );
+
+                if (playerP.length == 0) $('#pn').focus();
+                else if (gameP.length == 0) $('#gn').focus();
+
+                $('#btnKick').hide();
+
+                cleanUi();
+
+            };
+
+            function playRound() {
+                var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( viewModel.game() )+ '&Player=' + encodeURIComponent( viewModel.player() );
+                window.document.location = playRoundLocation;
+            };
+
+            function onClickStart(event) {
+                var startGameLocation = '';
+                var success = function (responseText, viewModel, gameName, playerName, isCreator) {
+                    startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                    cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), viewModel.player(), playRound, true);
+                };
+
+                if (viewModel.isCreator()) {
+                    createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                    cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
+                } else {
+                    playRound();
+                }
+            }
+
+            function onHaveJoined(gameName, playerName, viewModel, responseObj) {
+                var link = cardApi.getRoot(window.document.URL) + '/?Game=' + encodeURIComponent( gameName) + '&Invite=' + encodeURIComponent( playerName) ;
+                $('#txtGameLink').val(link);
+
+                if (typeof responseObj != 'undefined' && responseObj != null) {
+                    viewModel.isCreator( (responseObj.creator == playerName) );
+                    viewModel.creator(responseObj.creator);
+                }
+
+                setViewModelActivity(viewModel, gameName, playerName);
+            }
+
+            function joinOrCreate(viewModel) {
+                var root = cardApi.getRoot(window.document.URL);
+
+                if (viewModel.isJoined()) {
+                    onHaveJoined(viewModel.game(), viewModel.player(), viewModel, null);
+                    return;
+                }
+
+                var joinGameLocation = root + '/JoinGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
+                var joinSuccessFunc = function (responseText, viewModel, gameName, playerName, joinOnly) {
+                    initAutoRefreshPush( playerName );
+                    var responseObj = JSON.parse(responseText);
+                    if (responseObj.game == gameName) {
+
+                        viewModel.isJoined(true);
+                        viewModel.isStarted(responseObj.roundCount > 0);
+
+                        onHaveJoined(gameName, playerName, viewModel, responseObj);
+
+                    } else {
+                        var createGameLocation = root + '/CreateGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
+                        var createSuccessFunc = function (responseText, viewModel, gameName, playerName, joinOnly) {
+                            cardApi.joinOrCreateThing(/*closure->*/xmlhttp, joinGameLocation, viewModel, gameName, playerName, joinSuccessFunc, true);
+                        }
+
+                        if (!joinOnly) {
+                            cardApi.joinOrCreateThing(xmlhttp, createGameLocation, viewModel, gameName, playerName, createSuccessFunc, false);
+                        }
+                    }
+
+                    if (joinOnly) {
+                        if (!viewModel.isCreator()) {
+                            nextRoundLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                            cardApi.joinOrCreateThing(xmlhttp, nextRoundLocation, viewModel, viewModel.game(), viewModel.player(), function() {}, true);
+                        } // creators do next round after creating the round to ensure the 'Next' event listened by other players is done after the creator clicks start
+                    }
+                }
+
+                cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, viewModel, viewModel.game(), viewModel.player(), joinSuccessFunc, false);
+            }
+
+            function onClickJoinCreate(event, viewModel) {
+                joinOrCreate(viewModel);
+            }
+
+            var setViewModelActivity = function (viewModel, passName, playerName) {
+                var onSuccess = function(responseText, passName, playerName, joinOnly) {
+                    if (responseText.length == 0) return;
+                    var blame = JSON.parse(responseText);
+
+                    var getActivityIcon = function(retObj, player) {
+                        return (retObj.activity[player].isActive) ? 'fa-play' : 'fa-hourglass-o';
+                    };
+
+                    var now = new Date();
+                    var activityDate = new Date();
+                    var activity = [];
+                    for (var player in blame.list) {
+                        var activityObj = {};
+                        activityObj.playerId = 'blame' + player;
+                        activityObj.lastActivity = blame.activity[player].lastActivity;
+
+                        var isMe = (blame.list[player] == playerName);
+                        activityObj.displayName = (isMe) ? 'You' : blame.list[player];
+
+                        var diff = now.getTime() - blame.activity[player].lastActivityOn;
+                        if  (diff < 0) diff = 0;
+                        activityDate.setTime(diff);
+                        activityObj.when = '' + activityDate.getMinutes() + 'm '+activityDate.getSeconds() + 's ';
+
+                        activityObj.score = blame.activity[player].score.toString() ;
+                        activityObj.renderClass = 'fa ' + getActivityIcon(blame, player);
+                        activity.push(activityObj);
+                    }
+
+                    viewModel.activity(activity);
+                };
+                if (passName.length > 0) {
+                    var root = cardApi.getRoot(window.document.URL);
+                    var gameInfoLocation = root + '/Players?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
+                    cardApi.joinOrCreateThing(xmlhttp, gameInfoLocation, self, passName, playerName, onSuccess, false);
+                }
+            };
+        </script>
+    </body>
 </html>

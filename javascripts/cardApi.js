@@ -34,7 +34,7 @@ cardApi = {
     sendSomething: function(takeMeWithYouSuccessILoveYou, thingParams, beforeSend, onSuccess, gameObj, passName, playerName) {
         var xmlhttp = new XMLHttpRequest();
 
-        var url = this.getRoot(window.document.referrer);
+        var url = this.getRoot(window.document.URL);
         var submitThingLocation = url + thingParams
         
         xmlhttp.open("GET", submitThingLocation);
