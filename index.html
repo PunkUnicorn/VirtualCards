@@ -15,7 +15,7 @@
         <meta property="og:title" content="Virtual Cards against Cards" />
     </head>
     <body>
-<script type="text/javascript">
+        <script type="text/javascript">
             var autoOn = true;
             var autoUpdateSource = null;
             function onMessage(e) {
@@ -84,8 +84,8 @@
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
             function dragStart(ev) {
-                console.log('drag effect func dragStart called');
-                console.log(ev.target);
+                //console.log('drag effect func dragStart called');
+                //console.log(ev.target);
             }
         </script>
         <style>
@@ -93,12 +93,18 @@
             .wait-for-game {}
         </style>
         <div id='wrapper' class='w3-animate-opacity'>
+            <a href="SomeSound.wav">Here's My Sound</a>
+
+            <audio id='sndWhistle' preload>
+                <source src='sounds/misc031whistle.mp3' type='audio/mpeg'>
+            </audio>        
+
             <div><!--  class='w3-animate-top'> -->
                 <div> <!-- class='w3-animate-bottom'> -->
                     <div class='w3-card-8 card-area card-twisle'>
                         <header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.6</h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.6 <span> A <audio id='sndLaugh' controls><source src='sounds/comic006laugh.mp3' type='audio/mpeg'></audio>    </span></h6>
                             <div class ='w3-center w3-tiny'>
                                 <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
                             </div>
@@ -239,6 +245,7 @@
             };
 
             function playRound() {
+                $("#sndWhistle").trigger('play');
                 var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( viewModel.game() )+ '&Player=' + encodeURIComponent( viewModel.player() );
                 window.document.location = playRoundLocation;
             };
@@ -271,6 +278,7 @@
             }
 
             function joinOrCreate(viewModel) {
+                
                 var root = cardApi.getRoot(window.document.URL);
 
                 if (viewModel.isJoined()) {

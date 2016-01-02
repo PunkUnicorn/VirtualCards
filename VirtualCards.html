@@ -31,7 +31,6 @@
         </style>
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
-
             var cardUi = {};
 
             var dragDrop = {};
@@ -41,20 +40,20 @@
             var cardSelection = [];
 
             var gameObj = {o:{}, blame:{}};
-
         </script>
         <script src="javascripts/cardUi.js"></script> <!-- cardUi global is set up as functional object here -->
         <script src="javascripts/dragDrop.js"></script> <!-- dragDrop global is set up as functional object here -->
         <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
         <script type="text/javascript">
+            var soundOn = false;
             var autoOn = true;
             var autoUpdateSource = null;
             function onMessage(e) {
                 if (autoOn) {
                     var triggerRefresh = false;
                     var keepVote = true;
-                    console.log(e.data);
+                    //console.log(e.data);
                     var dataObj = JSON.parse(e.data);
                     if (dataObj.player != playerName) {
                         switch (dataObj.lastActivity) {
@@ -132,7 +131,10 @@
 
                 $('#autoOn').toggle(autoOn);
                 $('#autoOff').toggle(!autoOn);
-
+                
+                $('#soundOn').toggle(soundOn);
+                $('#soundOff').toggle(!soundOn);
+                
                 $('#btnResetSelection').hide();
                 $('.submit-vote-btn').hide();
                 $('.wait-for-submit').hide();
@@ -165,11 +167,25 @@
         </script>
         <script type="text/javascript">
             function dragStart(ev) {
-                console.log('drag effect func dragStart called');
-                console.log(ev.target);
+                //console.log('drag effect func dragStart called');
+                //console.log(ev.target);
             }
         </script>
     <div id='wrapper' class='start-invisible'>
+
+        <audio id='sndCreak' preload>
+            <source src='sounds/cartoon013creak.mp3' type='audio/mpeg'>
+        </audio>
+        <audio id='sndCan' preload>
+            <source src='sounds/misc003sodacan.mp3' type='audio/mpeg'>
+        </audio>
+        <audio id='sndKiss' preload>
+            <source src='sounds/cartoon003kiss.mp3' type='audio/mpeg'>
+        </audio>            
+        <audio id='sndBell' preload>
+            <source src='sounds/cartoon003kiss.mp3' type='audio/mpeg'>
+        </audio>       
+
 		<div class='card-fixed-top'>  <!--  https://dribbble.com/shots/779807-Freecns-1-1-Printed-Version -->
 			<a id='jumpRefresh' class='w3-left card-left-down0 w3-animate-opacity' href='' onclick='event.preventDefault(); onClickRefresh(event, gameObj, passName, playerName);'> <span id='btnJumpRefresh' class='fa fa-refresh'> </span> </a>
 			<a id='jumpWhite' class='w3-left card-left-down1 w3-animate-opacity' href='#CardHolder' > <img src="234PagesView4.PNG" alt="Your white cards" border="0"> </img> </a>
@@ -183,7 +199,7 @@
 			<div class='w3-card-8 card-area card-twisle'>
 				<header>
                     <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.6</h6>
+                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.6 <span> A <audio id='sndLaugh' controls><source src='sounds/comic006laugh.mp3' type='audio/mpeg'></audio>    </span></h6>
                     <div class ='w3-center w3-tiny'>
                         <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
                     </div>
@@ -259,6 +275,10 @@
                     class='w3-btn w3-blue'
                     onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
                 <p class='w3-padding-small w3-tiny'>
+                    <p>
+                        <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event, gameObj, passName, playerName)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
+                    </p>
+                
                     <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
                 </p>
             </div>
@@ -297,6 +317,13 @@
             window.document.location.hash = '#QuestionsAndAnswersTop';
         }
 
+        function onSound(event, gameObj, passName, playerName) {
+            soundOn = !soundOn;
+            $('#soundOn').toggle(soundOn);
+            $('#soundOff').toggle(!soundOn);
+        }
+        
+        
         function onClickAutoRefresh(event, gameObj, passName, playerName) {
             autoOn = !autoOn;
             $('#autoOn').toggle(autoOn);
@@ -339,6 +366,8 @@
                 }
 
                 window.setTimeout( function (gameObj, cardSelection) {
+                    if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+
                     refreshQuestionText(gameObj, cardSelection);
                 }, 0, gameObj, cardSelection);
 
@@ -358,7 +387,7 @@
             getRefreshed(cardSelection, gameObj, passName, playerName, true);
         }
 
-        function onBooOutDouchebag(event, gameObj, passName, playerName) {
+        function onBooOutDouchebag(event, gameObj, passName, playerName) {     
             var blameNameArea = $('.blame-selected');
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
                 window.document.location.reload(); //do a runner
@@ -367,6 +396,7 @@
         }
 
         function doActivityChange(gameObj, passName, playerName, activity, onSuccess) {
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
             cardApi.sendSomething(cardSelection, '/Active?Game='
                     + encodeURIComponent( passName )
                     + '&Player='
@@ -413,6 +443,7 @@
             cardSelection = [];
 
             refreshQuestionText(gameObj, cardSelection);
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
         }
 
         function getScoreCharmHtml() {
@@ -642,6 +673,8 @@
                     };
                     var randomList = shuffle(gameObj.o.players.list);
 
+                    if (soundOn) setTimeout(function() {if (soundOn) $("#sndCreak").trigger('play');},0);
+                    
                     for (var randomIndxed in randomList) {
                         var playerIndex = gameObj.o.players.list.indexOf(randomList[randomIndxed]);
                         if (playerIndex == -1) continue;
@@ -776,6 +809,9 @@
 
         function onNextRound(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
+            
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+            
             var thisRound = gameObj.o.roundCount;
 
             var beforeSend = function() {
@@ -798,6 +834,8 @@
             if (!gameObj.o.isActive) return;
             if (gameObj.o.haveVoted) return;
 
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+            
             var dontSelect = $(event.target).hasClass('fa-gavel');
             $('.gavelbtn-selected').removeClass('fa-gavel').text(' press to select ').hide();
 
@@ -817,6 +855,9 @@
         }
 
         function onSubmitVote(event, gameObj, passName, playerName) {
+        
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndKiss").trigger('play');},0);
+        
             if (!gameObj.o.isActive) return;
 
             var beforeSend = function() {
@@ -844,6 +885,8 @@
         function onSubmitAnswer(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
 
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndBell").trigger('play');},0);
+            
             var beforeSend = function() {
                 $('.wait-for-submit').show();
             };
