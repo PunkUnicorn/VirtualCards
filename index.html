@@ -93,18 +93,12 @@
             .wait-for-game {}
         </style>
         <div id='wrapper' class='w3-animate-opacity'>
-            <a href="SomeSound.wav">Here's My Sound</a>
-
-            <audio id='sndWhistle' preload>
-                <source src='sounds/misc031whistle.mp3' type='audio/mpeg'>
-            </audio>        
-
             <div><!--  class='w3-animate-top'> -->
                 <div> <!-- class='w3-animate-bottom'> -->
                     <div class='w3-card-8 card-area card-twisle'>
                         <header>
                             <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.6 <span> A <audio id='sndLaugh' controls><source src='sounds/comic006laugh.mp3' type='audio/mpeg'></audio>    </span></h6>
+                            <h6 class='w3-center'>Virtual Cards Against Humanity 0.7</h6>
                             <div class ='w3-center w3-tiny'>
                                 <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
                             </div>
@@ -194,13 +188,26 @@
                             </div>
                             <br/>
                         </div>
-                    </div>
+                    </div>                    
+                </div>
+                <div class='w3-row w3-center'>
+                    <p>
+                        <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
+                    </p>
+                    <p>
+                        <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
+                        <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>                        
+                    </p>
+                    <audio id='sndWhistle' preload volume='0.4' controls>
+                        <source src='sounds/multimedia_rollover_019.mp3' type='audio/mpeg'>
+                    </audio>                 
                 </div>
             </div>
         </div>
 
         <script>
 
+            soundOn = true;
             var activity = [ { playerId:'noid', displayName:'You', lastActivity:'', when:'', score:'', renderClass:'' } ];
 
             viewModel = {
@@ -214,12 +221,26 @@
                 isStarted: ko.observable(false)
             };
 
-
-            // window level globals
             ko.applyBindings(viewModel);
             xmlhttp = new XMLHttpRequest();
 
-
+            function toggleControls(videoId) {
+                var video = document.getElementById(videoId);
+                if (video.hasAttribute("controls")) {
+                    video.removeAttribute("controls")   
+                } else {
+                    video.setAttribute("controls","controls")   
+                }
+            }
+            
+            function onSound(event) {
+                soundOn = !soundOn;
+                $('#soundOn').toggle(soundOn);
+                $('#soundOff').toggle(!soundOn);
+                
+                toggleControls('sndWhistle');
+            }
+                        
             function cleanUi() {
                 $('.wait-for-load').hide();
                 $('.wait-for-game').hide();
@@ -235,6 +256,10 @@
                 var invite = cardApi.getParameterByName('Invite');
                 viewModel.isInvite( (invite.length > 0) );
 
+                $('#soundOn').toggle(soundOn);
+                $('#soundOff').toggle(!soundOn);
+
+                
                 if (playerP.length == 0) $('#pn').focus();
                 else if (gameP.length == 0) $('#gn').focus();
 
@@ -245,9 +270,12 @@
             };
 
             function playRound() {
-                $("#sndWhistle").trigger('play');
-                var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( viewModel.game() )+ '&Player=' + encodeURIComponent( viewModel.player() );
-                window.document.location = playRoundLocation;
+                if (soundOn) $("#sndWhistle").trigger('play');
+                
+                setTimeout(function() {
+                    var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( viewModel.game() )+ '&Player=' + encodeURIComponent( viewModel.player() );
+                    window.document.location = playRoundLocation;
+                }, 1000);
             };
 
             function onClickStart(event) {

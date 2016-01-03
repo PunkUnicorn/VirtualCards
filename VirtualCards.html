@@ -28,6 +28,7 @@
             .blame-selected { font-weight: bolder; }
             .activity-btn {}
             .blame-name {}
+            .set-volume {}
         </style>
         <script src="javascripts/jQuery.js"></script>
         <script type="text/javascript">
@@ -46,7 +47,7 @@
         <script src="javascripts/cardApi.js"></script> <!-- dragDrop global is set up as functional object here -->
 
         <script type="text/javascript">
-            var soundOn = false;
+            var soundOn = true;
             var autoOn = true;
             var autoUpdateSource = null;
             function onMessage(e) {
@@ -75,6 +76,11 @@
                                 triggerRefresh = true;
 
                                 break;
+                            
+                            case 'Back':
+                            case 'Away':
+                                triggerRefresh = true;
+                                break;                                
                         }
                     } else {
                         switch (dataObj.lastActivity) {
@@ -117,6 +123,8 @@
                     $('#btnNextRound').hide();
                     $('#txtNextRoundBlame').hide();
                     $('.wait-for-next-round').hide();
+                } else {
+                    $('#btnNextRound').show();
                 }
 
                 $('#txtPleaseWaitForNextRound').hide();
@@ -141,6 +149,7 @@
                 $('.wait-for-vote').hide();
                 $('.wait-for-kick').hide();
             }
+            
             var passName = ''
             var playerName = ''
             window.onload = function(event) {
@@ -153,8 +162,24 @@
                 $('#txtGameName').text( passName );
 
                 setTimeout( function(cardSelection, gameObj, passName, playerName) { getRefreshed(cardSelection, gameObj, passName, playerName, false); }, 0,
-                    cardSelection, gameObj, passName, playerName);
+                                cardSelection, gameObj, passName, playerName);
 
+                var vid = document.getElementById("sndWhistle");
+                vid.onvolumechange = function() {
+                    var setVolume = function(setMe, toVol) {
+                        document.getElementById(setMe).volume = toVol;
+                    }                
+                    var vol = vid.volume;
+                    setVolume('sndCreak', vol);
+                    setVolume('sndCan1', vol);
+                    setVolume('sndCan2', vol);
+                    setVolume('sndCan3', vol);
+                    setVolume('sndSubmit', vol);
+                    setVolume('sndClickVote', vol);
+                    setVolume('sndVote', vol);
+                    setVolume('sndClank', vol);
+                 };
+               // https://msdn.microsoft.com/en-us/library/windows/apps/hh441314.aspx
                 const pleaseWAITrendering = 100;
                 setTimeout( function() { document.getElementById("wrapper").style.visibility = "visible"; }, pleaseWAITrendering);
 
@@ -172,20 +197,6 @@
             }
         </script>
     <div id='wrapper' class='start-invisible'>
-
-        <audio id='sndCreak' preload>
-            <source src='sounds/cartoon013creak.mp3' type='audio/mpeg'>
-        </audio>
-        <audio id='sndCan' preload>
-            <source src='sounds/misc003sodacan.mp3' type='audio/mpeg'>
-        </audio>
-        <audio id='sndKiss' preload>
-            <source src='sounds/cartoon003kiss.mp3' type='audio/mpeg'>
-        </audio>            
-        <audio id='sndBell' preload>
-            <source src='sounds/cartoon003kiss.mp3' type='audio/mpeg'>
-        </audio>       
-
 		<div class='card-fixed-top'>  <!--  https://dribbble.com/shots/779807-Freecns-1-1-Printed-Version -->
 			<a id='jumpRefresh' class='w3-left card-left-down0 w3-animate-opacity' href='' onclick='event.preventDefault(); onClickRefresh(event, gameObj, passName, playerName);'> <span id='btnJumpRefresh' class='fa fa-refresh'> </span> </a>
 			<a id='jumpWhite' class='w3-left card-left-down1 w3-animate-opacity' href='#CardHolder' > <img src="234PagesView4.PNG" alt="Your white cards" border="0"> </img> </a>
@@ -199,7 +210,7 @@
 			<div class='w3-card-8 card-area card-twisle'>
 				<header>
                     <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.6 <span> A <audio id='sndLaugh' controls><source src='sounds/comic006laugh.mp3' type='audio/mpeg'></audio>    </span></h6>
+                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.7</h6>
                     <div class ='w3-center w3-tiny'>
                         <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
                     </div>
@@ -276,11 +287,42 @@
                     onclick='onClickRefresh(event, gameObj, passName, playerName)'>Refresh <span class='fa fa-refresh'> </span> <span class='wait-for-load fa fa-bell w3-small w3-spin'> </span></button>
                 <p class='w3-padding-small w3-tiny'>
                     <p>
-                        <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event, gameObj, passName, playerName)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
+                        <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
                     </p>
-                
-                    <b><span id='txtPlayerName'>douchebag</span></b>,   <i><span id='txtGameName'></span></i>  (<span id='txtRoundNumber' class='w3-tiny'></span>)
+                    <p>
+                        <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event, gameObj, passName, playerName)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
+                        <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>
+                    </p>
                 </p>
+                <audio class='set-volume' id='sndCreak' preload volume='0.4'>
+                    <source src='sounds/multimedia_rollover_018.mp3' type='audio/mpeg'>
+                </audio>
+                
+                <audio class='set-volume' id='sndCan1' preload volume='0.4'>
+                    <source src='sounds/multimedia_button_click_022.mp3' type='audio/mpeg'><!-- multimedia_percussive_element.mp3 -->
+                </audio>         
+                <audio class='set-volume' id='sndCan2' preload volume='0.4'>
+                    <source src='sounds/multimedia_button_click_020.mp3' type='audio/mpeg'>
+                </audio>         
+                <audio class='set-volume' id='sndCan3' preload volume='0.4'>
+                    <source src='sounds/multimedia_button_click_029.mp3' type='audio/mpeg'>
+                </audio> 
+                        
+                <audio class='set-volume' id='sndSubmit' preload volume='0.4'>
+                    <source src='sounds/multimedia_button_click_011.mp3' type='audio/mpeg'>
+                </audio>
+                <audio class='set-volume' id='sndClickVote' preload volume='0.4'>
+                    <source src='sounds/short_pop_sound.mp3' type='audio/mpeg'>
+                </audio>
+                <audio class='set-volume' id='sndVote' preload volume='0.4'>
+                    <source src='sounds/multimedia_percussive_element.mp3' type='audio/mpeg'>
+                </audio>
+                <audio class='set-volume' id='sndClank' preload volume='0.4'>
+                    <source src='sounds/multimedia_rollover_028.mp3' type='audio/mpeg'>
+                </audio>       
+                <audio class='set-volume' id='sndWhistle' preload volume='0.4' controls>
+                    <source src='sounds/multimedia_rollover_019.mp3' type='audio/mpeg'>
+                </audio>                  
             </div>
         </div>
      </div>
@@ -317,14 +359,29 @@
             window.document.location.hash = '#QuestionsAndAnswersTop';
         }
 
+        function toggleControls(videoId) {
+            var video = document.getElementById(videoId);
+            if (video.hasAttribute("controls")) {
+                video.removeAttribute("controls")   
+            } else {
+                video.setAttribute("controls","controls")   
+            }
+        }
+        
         function onSound(event, gameObj, passName, playerName) {
+            if (soundOn) setTimeout(function() { if (soundOn) $("#sndClank").trigger('stop').trigger('play'); }, 0);
+            
             soundOn = !soundOn;
             $('#soundOn').toggle(soundOn);
             $('#soundOff').toggle(!soundOn);
+
+            toggleControls('sndWhistle');
         }
         
         
         function onClickAutoRefresh(event, gameObj, passName, playerName) {
+            if (soundOn) setTimeout(function() { if (soundOn) $("#sndClank").trigger('stop').trigger('play');},0);
+            
             autoOn = !autoOn;
             $('#autoOn').toggle(autoOn);
             $('#autoOff').toggle(!autoOn);
@@ -332,6 +389,15 @@
             showOrHideAnswerRefreshButton(gameObj);
         }
 
+        const cardSounds = ['#sndCan1', '#sndCan2', '#sndCan3'];
+        var cardSoundsIndex = 0;
+        function playCardSound() {
+            if (soundOn) setTimeout(function() {
+                if (soundOn) $(cardSounds[cardSoundsIndex++]).trigger('stop').trigger('play');
+                if (cardSoundsIndex >= cardSounds.length) cardSoundsIndex = 0;
+            }, 0);
+        }
+        
         var freezeSelect = false;
         function cardSelect(ev, gameObj, passName, playerName) {
             if (freezeSelect) return;
@@ -340,6 +406,8 @@
             if (!gameObj.o.isActive) return;
             if (gameObj.o.haveSubmitted) return;
 
+            playCardSound();
+            
             var negociateSelection = function (target, gameObj, isSelected, cardSelection) {
                 // unselect if selected
                 if (!isSelected) {
@@ -366,8 +434,6 @@
                 }
 
                 window.setTimeout( function (gameObj, cardSelection) {
-                    if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
-
                     refreshQuestionText(gameObj, cardSelection);
                 }, 0, gameObj, cardSelection);
 
@@ -396,7 +462,7 @@
         }
 
         function doActivityChange(gameObj, passName, playerName, activity, onSuccess) {
-            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+            if (soundOn) setTimeout(function() { if (soundOn) $("#sndClank").trigger('stop').trigger('play');},0);
             cardApi.sendSomething(cardSelection, '/Active?Game='
                     + encodeURIComponent( passName )
                     + '&Player='
@@ -443,7 +509,7 @@
             cardSelection = [];
 
             refreshQuestionText(gameObj, cardSelection);
-            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+            playCardSound();
         }
 
         function getScoreCharmHtml() {
@@ -580,18 +646,19 @@
                 return;
             }
 
-            $('#divQuestionArea').toggle(!gameObj.o.haveSubmitted && !gameObj.o.haveVoted);
-            $('#divAnswersArea').toggle(gameObj.o.haveSubmitted || gameObj.o.haveVoted);
+            //$('#divQuestionArea').toggle(!gameObj.o.haveSubmitted && !gameObj.o.haveVoted);
+            //$('#divAnswersArea').toggle(gameObj.o.haveSubmitted || gameObj.o.haveVoted);
 
-            var showPauseButton = (gameObj.o.isActive ? true : false);
+            //var showPauseButton = (gameObj.o.isActive ? true : false);
             var isPaused = (gameObj.o.isActive ? false : true);
-            $('.activity-btn').toggleClass('fa-hourglass-o', showPauseButton);
-            $('.activity-btn').toggleClass('fa-play', !showPauseButton);
+            //$('.activity-btn').toggleClass('fa-hourglass-o', showPauseButton);
+            //$('.activity-btn').toggleClass('fa-play', !showPauseButton);
 
             var showMsg = !isJoinedPlayerNotInRound && isPaused;
             $('#notPlayingConfirm').toggle(showMsg);
 
-
+            //$('#txtQuestion').html('');
+            //$('#txtAnswers').html('');
 
             window.setTimeout( function () { allocateBlame(gameObj, passName, playerName); }, 0);
 
@@ -673,7 +740,7 @@
                     };
                     var randomList = shuffle(gameObj.o.players.list);
 
-                    if (soundOn) setTimeout(function() {if (soundOn) $("#sndCreak").trigger('play');},0);
+                    if (soundOn) setTimeout(function() {if (soundOn) $("#sndCreak").trigger('stop').trigger('play');},0);
                     
                     for (var randomIndxed in randomList) {
                         var playerIndex = gameObj.o.players.list.indexOf(randomList[randomIndxed]);
@@ -704,7 +771,6 @@
                     }
 
                     $('#txtAnswers').html('<ul class="w3-ul w3-small w3-dark-grey w3-border"> '+ submittedStr + '</ul>');
-
                     putQuestoinsInView();
                 }
 
@@ -727,7 +793,8 @@
 
                 if (gameObj.o.haveVoted) {
                     putQuestoinsInView();
-                } else if(gameObj.o.roundCount > 1)
+                } else if(!gameObj.o.haveSubmitted && gameObj.o.roundCount > 1)
+                    if (soundOn) $("#sndWhistle").trigger('stop').trigger('play');
                     putQuestoinsInView(); //subsiquent rounds have the next question as the main focus
 
                 if (gameObj.o.haveScores) {
@@ -735,7 +802,16 @@
                     putQuestoinsInView('btnNextRound');
                 }
 
-                const stopFLICKERwars = 200;
+                $('#divQuestionArea').toggle(!gameObj.o.haveSubmitted && !gameObj.o.haveVoted);
+                $('#divAnswersArea').toggle(gameObj.o.haveSubmitted || gameObj.o.haveVoted);
+
+                var showPauseButton = (gameObj.o.isActive ? true : false);
+                var isPaused = (gameObj.o.isActive ? false : true);
+                $('.activity-btn').toggleClass('fa-hourglass-o', showPauseButton);
+                $('.activity-btn').toggleClass('fa-play', !showPauseButton);
+
+                
+                const stopFLICKERwars = 1200;
                 setTimeout( function (gameObj) {
                     showOrHideAnswerRefreshButton(gameObj);
 
@@ -799,23 +875,23 @@
             window.setTimeout( function () { allocateBlame(gameObj, passName, playerName); }, 0);
         };
 
-        var itsOnLetsGo = function (cardSelection, gameObj, passName, playerName) {
+   /*      var itsOnLetsGo = function (cardSelection, gameObj, passName, playerName) {
+
+
             $('#btnNextRound').hide();
             getRefreshed(cardSelection, gameObj, passName, playerName, false);
 
-            $('#txtQuestion').html('');
-            //$('#txtAnswers').html('');
-        };
+        }; */
 
         function onNextRound(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
             
-            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndSubmit").trigger('play');},0);
             
             var thisRound = gameObj.o.roundCount;
 
             var beforeSend = function() {
-                $('.wait-for-next-round').show();
+                $('.wait-for-next-round').show();               
             };
 
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
@@ -834,7 +910,7 @@
             if (!gameObj.o.isActive) return;
             if (gameObj.o.haveVoted) return;
 
-            if (soundOn) setTimeout(function() {if (soundOn) $("#sndCan").trigger('play');},0);
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndClickVote").trigger('play');},0);
             
             var dontSelect = $(event.target).hasClass('fa-gavel');
             $('.gavelbtn-selected').removeClass('fa-gavel').text(' press to select ').hide();
@@ -856,7 +932,7 @@
 
         function onSubmitVote(event, gameObj, passName, playerName) {
         
-            if (soundOn) setTimeout(function() {if (soundOn) $("#sndKiss").trigger('play');},0);
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndVote").trigger('stop').trigger('play');},0);
         
             if (!gameObj.o.isActive) return;
 
@@ -885,14 +961,14 @@
         function onSubmitAnswer(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
 
-            if (soundOn) setTimeout(function() {if (soundOn) $("#sndBell").trigger('play');},0);
+            if (soundOn) setTimeout(function() {if (soundOn) $("#sndSubmit").trigger('stop').trigger('play');},0);
             
             var beforeSend = function() {
                 $('.wait-for-submit').show();
             };
             var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
-                $('#txtQuestion').html('');
-                $('#txtAnswers').html('');
+                //$('#txtQuestion').html('');
+                //$('#txtAnswers').html('');
                 onClickResetSelection(null, gameObj, passName, playerName);
                 getRefreshed(cardSelection, gameObj, passName, playerName, false);
                 $('.wait-for-submit').hide();
