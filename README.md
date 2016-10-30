@@ -10,12 +10,6 @@ https://github.com/flesler/hashmap
 
 #https://github.com/flesler/hashmap
 
--With cards unshuffled due to unfinishedness
-
--Can create a game when a games created due to unfinishedness
-
--No duplicate player or game name check due to unfinishedness
-
 -I didn't make Cards Against Humanity
 
 -I didn't even invent this format of the game, I copied it off a friend. Thanks Tony. 
