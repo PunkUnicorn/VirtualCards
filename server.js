@@ -1168,6 +1168,28 @@ function handleRequest(req, res) {
             res.end();
             break;
 
+		case '/Discard':
+			console.log('Discard');
+			var d = {};
+			d.pram = preamble(reqObj);
+			if (!d.pram.isOk)
+				return d;
+
+			//console.log('Discard ok1');
+			d.gameInfo = getGameIndex(games, d.pram);
+			if (!d.gameInfo.gameExists || !d.gameInfo.playerInGame)
+				return d;
+
+			//console.log('Discard ok2');
+			d.cardsSubmitted = getCards(reqObj);
+			replaceCards(games, d.gameInfo, d.pram, d.cardsSubmitted);
+			
+			var cloneOfRound = cloneRound(games, d.gameInfo, d.pram);
+			//console.log(cloneOfRound);
+			res.writeHeader(200, {"Content-Type": "text/plain"});
+			res.write(JSON.stringify(cloneOfRound));
+			res.end();
+			break;
 
         case '/SubmitVote': //just '/Vote'
             var doSubmitVoteChecks = function(games, reqObj) {

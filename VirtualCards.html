@@ -144,6 +144,7 @@
                 $('#soundOff').toggle(!soundOn);
                 
                 $('#btnResetSelection').hide();
+				$('#btnDiscard').hide();
                 $('.submit-vote-btn').hide();
                 $('.wait-for-submit').hide();
                 $('.wait-for-vote').hide();
@@ -210,7 +211,7 @@
 			<div class='w3-card-8 card-area card-twisle'>
 				<header>
                     <h1 class='w3-center'>Virtual Cards Against Cards</h1>
-                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.7</h6>
+                    <h6 class='w3-center'>Virtual Cards Against Humanity 0.8</h6>
                     <div class ='w3-center w3-tiny'>
                         <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
                     </div>
@@ -222,7 +223,7 @@
                 <div id='CardHolder' class='w3-card-16 card-area w3-col w3-container m6 w3-animate-opacity w3-slim'>
 					<div id='buttonHolder' class='w3-right'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
-                        <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity' onclick='onSubmitAnswer(event, gameObj, passName, playerName); putQuestoinsInView();'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
+                        <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity' onclick='onSubmitAnswer(event, gameObj, passName, playerName); putQuestoinsInView();'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>                        
                     </div>
                 </div>
                 <div id='QuestionsAndAnswers' class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-padding-medium w3-animate-opacity'>
@@ -273,6 +274,7 @@
                         <br/>
                         <button id='btnActivity' class='w3-btn w3-white w3-center' onclick='onActivityClick(event, gameObj, passName, playerName)'><span class='activity-btn w3-small fa fa-hourglass-o'></span> </button>
                         <button id='btnKick' class='w3-btn w3-white w3-left w3-animate-opacity' onclick='onBooOutDouchebag(event, gameObj, passName, playerName)'><span class='activity-btn w3-small fa fa-hourglass-o'></span> Force</button>
+						<button id='btnDiscard' class='w3-btn w3-light-red w3-animate-opacity' onclick='onDiscard(event, gameObj, passName, playerName); putQuestoinsInView();'>Discard Selected Cards <span class='fa fa-trash-o'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
                         <div class='w3-padding-xlarge'>
                             <br />
                             <label for='txtGameLink'>Game link to invite players</label>
@@ -445,7 +447,7 @@
 
             var anySelected = ($('.card-selected').length > 0) ? true : false;
             $('#btnResetSelection').toggle(anySelected);
-
+			$('#btnDiscard').toggle(anySelected);
         }
 
         function onActivityChangeSuccess(cardSelection, gameObj, passName, playerName, xmlhttp) {
@@ -955,9 +957,26 @@
                                     + encodeURIComponent( passName )
                                     + '&Player='
                                     + encodeURIComponent( playerName )
-                                    + '&Vote=' + vote, beforeSend, onSuccess, gameObj, passName, playerName);
+                                    + '&Vote=' + vote, 
+									beforeSend, onSuccess, gameObj, passName, playerName);
         };
-
+		
+        function onDiscard(event, gameObj, passName, playerName) {
+			var beforeSend_BlankFunction = function() {};
+            var onSuccess = function(cardSelection, gameObj, passName, playerName, xmlhttp) {
+                onClickResetSelection(null, gameObj, passName, playerName);
+                getRefreshed(cardSelection, gameObj, passName, playerName, true, true);
+            };
+			
+			cardApi.sendSomething(cardSelection, '/Discard?Game='
+                                    + encodeURIComponent( passName )
+                                    + '&Player='
+                                    + encodeURIComponent( playerName )
+									+ '&Cards='
+									+ encodeURIComponent( JSON.stringify(cardSelection)),
+									beforeSend_BlankFunction, onSuccess, gameObj, passName, playerName);
+		};
+		
         function onSubmitAnswer(event, gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
 
