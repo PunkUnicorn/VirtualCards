@@ -1,4 +1,4 @@
-
+﻿
 //Lets require/import the HTTP module
 var http = require('http');
 var fs = require('fs');
@@ -1476,10 +1476,10 @@ function afterLoadDumpDecks(diag) {
     console.log('http://www.chris.com/ascii/');
     TEST_makeUnderscoresTheSame();
 };
-
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 5000;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var isHosted = (server_port != 5000);
+console.log('Port:', JSON.stringify(process.env));
+var server_port = process.env.PORT /*Heroku*/ || process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address =  'intense-stream-56355.herokuapp.com' /*Heroku*/ || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var isHosted = (server_port != 8080);
 
 /////////////////////////////////
 //http://www.smartjava.org/content/html5-server-sent-events-angularjs-nodejs-and-expressjs
@@ -1557,11 +1557,12 @@ function startServer() {
 
     purgeCycle();
 
+    server.listen(server_port);
     //Lets start our server
-    server.listen(server_port, server_ip_address, function(){ //PORT
-        //Callback triggered when server is successfully listening. Hurray!
-        console.log('Server listening on: http://'+ server_ip_address+':%s', server_port); //PORT localhost
-    });
+    //server.listen(server_port, server_ip_address, function(){ //PORT
+    //    //Callback triggered when server is successfully listening. Hurray!
+    //    console.log('Server listening on: http://'+ server_ip_address+':%s', server_port); //PORT localhost
+    //});
 };
 
 loadAllDecks();

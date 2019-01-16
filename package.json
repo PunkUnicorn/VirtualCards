@@ -1,0 +1,19 @@
+{
+  "name": "virtualcards",
+  "version": "1.0.0",
+  "description": "virtual cards against humanity",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PunkUnicorn/VirtualCards.git"
+  },
+  "author": "Matthew Cocks aka GOTO 10 aka PunkUnicorn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PunkUnicorn/VirtualCards/issues"
+  },
+  "homepage": "https://github.com/PunkUnicorn/VirtualCards#readme"
+}

@@ -128,6 +128,7 @@
                             <div class='card card-horizontal'>
                                 <div class='card-horizontal'></div>
                                 <p><button
+																		id='sg'
                                     onclick='onClickJoinCreate(event, viewModel)'
                                     data-bind='visible:player().length>2 && game().length>2 && !isJoined()'
                                     class='w3-btn w3-blue w3-animate-opacity w3-small'><span data-bind='text:isInvite()?"Join game" : "Create/Join game"'> </span><span
@@ -136,6 +137,7 @@
                                 <p><button
                                     onclick='onClickJoinCreate(event, viewModel)'
                                     data-bind='visible:isJoined'
+																		id='enter'
                                     class='w3-btn w3-blue w3-animate-opacity w3-small'>Refresh <span class='fa fa-refresh w3-small' /><span
                                         class='wait-for-load fa fa-bell w3-small w3-spin' />
                                 </button></p>
