@@ -1,0 +1,286 @@
+Cards Against Humanity: DevOps Against Humanity (https://github.com/bridgetkromhout/devops-against-humanity)
+
+
+...and then there was the time I found _____ on the root partition.
+140 characters is just enough to explain _____.
+_____ - the idiot's guide to _____ and _____.
+_____ all the way down.
+_____ as a service.
+_____ dooms any project to epic failure.
+_____ Driven Development.
+"_____ is a feature, not a bug."
+_____ is for closers.
+_____ is the new _____.
+_____ is weaponized privilege.
+_____ is webscale.
+_____ or it didn't happen.
+_____ with one weird trick.
+"_____, as one does."
+"_____, for some values of _____."
+"_____, is that even HA?"
+"_____, the only thing worse than recruiting spam."
+A sales rep just tried to pitch me on _____; I told them we already have _____.
+Accidental _____.
+"After _____ came up, the retrospective really went downhill."
+All that we had to do to halve our response times was implement _____.
+Amazon built a datacenter on the moon to lessen the risk of _____ causing problems.
+Apple just patented _____.
+Ask Me Anything about _____.
+DevOps: Now with 100% more _____!
+But Google is using _____ so we should too!
+Called on account of _____.
+Chef convergence failed due to _____.
+Continuous _____.
+DevOps: Now with 100% more _____!
+Did you know that we have _____ on pager rotation?
+Disrupting the established players in _____ via _____.
+Doge _____.
+Employees must _____ before returning to work.
+Enterprise _____ in the cloud.
+Enterprise-ready _____.
+Epic yak-shave caused by _____.
+Etsy says we should _____ everything.
+"Every time someone brings up _____, I throw up a little in my mouth."
+Facebook has acquired _____ for $10b and _____.
+Free as in _____.
+Glitter-bombed with _____.
+"Hi, I'm Troy McClure. You may remember me from such commit messages as _____ and _____."
+How even is _____ formed?
+I came up with an awesome regex that converts _____ to _____.
+I can haz _____.
+I don't own any jeans skinny enough to wear to a _____ meetup.
+I ended up having to buy a replacement _____ on eBay.
+I find Java to be way too much like _____.
+I got paged at 3am because of _____.
+I saw the best minds of my generation _____.
+I think maybe I'll leave _____ off my resumé.
+"If _____ is the answer, you are asking the wrong question."
+"If we make this deadline, Management has promised us _____."
+"If you're _____, you're gonna have a bad time."
+"In order to improve security, we're upgrading to _____."
+"In the next planning session, we'll cover _____ and _____."
+It figures - an article about our _____ was posted just as we're pivoting to _____.
+"It turns out that the button labeled ""Don't Push"" actually does _____."
+It's dangerous to go alone; take _____.
+It's like trying to herd _____.
+"Last week, I created a Chef recipe for _____; this week, it's an entire cookbook for _____. Automation FTW!"
+Main benefits of automation: _____ and _____.
+Management just told me I need to get certified in _____.
+Management said it's OK to deploy _____ at 5pm on Friday
+"Marketing says we're leaders in the _____ space, but I think it's more accurate to say we specialize n _____."
+My eyes started bleeding when I opened the editor and saw _____.
+My next blog post will be about how we used _____ to create _____.
+My two most indispensable tools are _____ and _____.
+No route to host: _____.
+It worked on my _____.
+My Linkedin Endorsements include _____.
+"Our app is like _____, but for _____."
+Our competitive advantage is our _____.
+Our entire app is geared towards providing _____.
+Our greatest achievement in the last year is _____.
+Our production backups are stored using _____.
+Pour one out for _____.
+Put some _____ on it
+Restoring from backups failed due to _____.
+Security? We've got that! We use _____.
+"So, I was using Wireshark to check network traffic... Did you know we have _____ in production?"
+Sweet! I just found a Puppet module for _____!
+"The hardest problems in computer science are naming things, cache invalidation, and _____."
+"The Internet is for cat memes and _____,"
+The Internet of Things will be controlled by _____.
+The most stable part of our infrastructure? _____
+The only thing necessary for evil to triumph is _____.
+The production datacenter burned down because of _____.
+"The status console is green, but I can't access _____."
+Nobody ever got fired for buying _____.
+RIAA is suing me for downloading _____.
+Robots are going to make _____ obsolete.
+Root cause of the outage? _____.
+Running Windows in production leads to _____.
+"There was no good solution for _____, so we built our own."
+This account has exceeded the maximum number of _____.
+This isn't going to be all unicorns and _____.
+The two pillars of our Continuous Deployment pipeline are _____ and _____.
+Time to schedule the postmortem for _____ .
+"To secure our next round of funding, Management says we need _____."
+Uber is on surge pricing because of _____.
+WARN: _____ has been deprecated.
+We don't need _____ - we have _____ !
+We really need to open-source our _____.
+We replaced our _____ with _____.
+We run production _____ and _____.
+"When I hooked the 3D printer up to the Internet, it accidentally created _____."
+"When I told Jez Humble about our _____, he actually cried."
+When I was a kid we didn't have _____.
+"When I write a book about my experiences, it'll be called ""_____, the good parts"""
+Who would have known that _____ could destroy an entire datacenter?
+Will merge pull requests for _____.
+Wrap it with the _____ duct tape.
+xkcd.com just made a hilarious comic making fun of _____.
+"You know what our app needs? More _____, less _____."
+You should think of your servers like _____ and not like _____.
+Zero-day _____.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
