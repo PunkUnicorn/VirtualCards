@@ -306,8 +306,8 @@ function loadAllDecks() {
     loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
 	
-    loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    //loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    //loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
 		
     // loadDeckSimple(getIndexVar,'./cards/', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     // loadDeckSimple(getIndexVar,'./cards/', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
