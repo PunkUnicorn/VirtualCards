@@ -8,7 +8,8 @@ div.card
   
   word-wrap: break-word;
   
-  background: #F3F3F3;
+  background: ##000000;
+  color:#F3F3F3;
   /*width:73.6px;*/
   /*height: 102.35px;*/
   /*width:84px;*/
@@ -33,7 +34,7 @@ div.card-selected
   border: 2px solid #734242;
   
   background: #F0F0F0;
-  
+  color:#F3F3F3;
   /*margin: 4px;*/
   
   /*padding: 4px;*/
