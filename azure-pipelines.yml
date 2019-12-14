@@ -14,4 +14,17 @@ steps:
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go (10a7b6de-a9c7-4000-857d-59a90df64616)'
+    appType: 'webAppLinux'
+    WebAppName: 'virtualcardsclassic'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'NODE|10-lts'
+    StartupCommand: 'node server.js'
+- task: Start@1
+  inputs:
+    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+    ConnectedServiceNameARM: 'Pay-As-You-Go (10a7b6de-a9c7-4000-857d-59a90df64616)'
+    WebAppName: 'virtualcardsclassic'
