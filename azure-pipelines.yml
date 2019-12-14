@@ -15,6 +15,3 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
-- script: |
-    node server.js
-  displayName: 'run server'
