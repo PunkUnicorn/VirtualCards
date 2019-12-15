@@ -1,3 +1,7 @@
+[![Build Status](https://matthewcocks.visualstudio.com/AWCards/_apis/build/status/PunkUnicorn.VirtualCards?branchName=master)](https://matthewcocks.visualstudio.com/AWCards/_build/latest?definitionId=5&branchName=master)
+
+Auto publishes to https://virtualcardsclassic.azurewebsites.net on every github check in
+
 # Virtual Cards Against Humanity
 Implementation of Cards Against Humanity to practice my JavaScript.
 It's a play project, so please excuse me while I loath the code and re-write it using underscore and Knockout 
