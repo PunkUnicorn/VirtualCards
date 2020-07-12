@@ -39,7 +39,7 @@ div.card-selected
   border: 2px solid #734242;
   
   background: #F0F0F0;
-  
+  color:#F3F3F3;
   /*margin: 4px;*/
   
   /*padding: 4px;*/
@@ -56,7 +56,7 @@ div.card-area {
     border-radius: 12px;
     border: 1px solid #424242;
     
-    background: #968f8f;
+    background: #E9E9E9;
     
     height: 100%; 
     width: 97%;
