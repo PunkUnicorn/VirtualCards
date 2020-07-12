@@ -1,102 +1,81 @@
-div {
-  background: #000000;
-  color:#F3F3F3;	
-}
-
 .card { /* ratio of playing cards 64mm × 89mm */
 }
 
-div.card 
-{
-  border-radius: 4px;
-  border: 1px solid #734242;
-  
-  word-wrap: break-word;
-  
-  background: ##000000;
-  color:#F3F3F3;
-  /*width:73.6px;*/
-  /*height: 102.35px;*/
-  /*width:84px;*/
-  /*height: 127px;*/
-  width:90px;
-  height: 125.09217px;
-  
-  margin: 2px;
-  
-  padding: 2px;
+div.card {
+    border-radius: 4px;
+    border: 1px solid #734242;
+    word-wrap: break-word;
+    background: #F3F3F3;
+    /*width:73.6px;*/
+    /*height: 102.35px;*/
+    /*width:84px;*/
+    /*height: 127px;*/
+    width: 90px;
+    height: 125.09217px;
+    margin: 2px;
+    padding: 2px;
 }
 
-.card-horizontal 
-{
-  float:left;
-  display:inline;
+.card-horizontal {
+    float: left;
+    display: inline;
 }
 
-div.card-selected
-{
-  border-radius: 4px;
-  border: 2px solid #734242;
-  
-  background: #F0F0F0;
-  color:#F3F3F3;
-  /*margin: 4px;*/
-  
-  /*padding: 4px;*/
+div.card-selected {
+    border-radius: 4px;
+    border: 2px solid #734242;
+    background: #F0F0F0;
+    /*margin: 4px;*/
+    /*padding: 4px;*/
 }
 
 div.main-card-area {
-    height: 100%; 
+    height: 100%;
     width: 96%;
-    
-    margin-left: 4%;    
+    margin-left: 4%;
 }
 
 div.card-area {
     border-radius: 12px;
     border: 1px solid #424242;
-    
     background: #E9E9E9;
-    
-    height: 100%; 
+    height: 100%;
     width: 97%;
-    
     padding-top: 2%;
     padding-bottom: 2%;
     padding-left: 1%;
     padding-right: 1%;
-    
     margin-top: 1.5%;
-    margin-bottom: 1.5%;    
+    margin-bottom: 1.5%;
     margin-left: 1.5%;
-    margin-right: 1.5%;    
+    margin-right: 1.5%;
 }
 
-a.card-left-down0 {	
+a.card-left-down0 {
     -ms-transform: translate(4px,46px); /* IE 9 */
     -webkit-transform: translate(4px,46px); /* Safari */
     transform: translate(4px,46px);
 }
 
-a.card-left-down1 {	
+a.card-left-down1 {
     -ms-transform: translate(-12px,96px); /* IE 9 */
     -webkit-transform: translate(-12px,96px); /* Safari */
     transform: translate(-12px,96px);
 }
 
-a.card-left-down2 {	
+a.card-left-down2 {
     -ms-transform: translate(-28px,160px); /* IE 9 */
     -webkit-transform: translate(-28px,160px); /* Safari */
     transform: translate(-28px,160px);
 }
 
-a.card-left-down3 {	
+a.card-left-down3 {
     -ms-transform: translate(-44px,224px); /* IE 9 */
     -webkit-transform: translate(-44px,224px); /* Safari */
     transform: translate(-44px,224px);
 }
 
-a.card-left-down4 {	
+a.card-left-down4 {
     -ms-transform: translate(-60px,288px); /* IE 9 */
     -webkit-transform: translate(-60px,288px); /* Safari */
     transform: translate(-60px,288px);
@@ -104,9 +83,9 @@ a.card-left-down4 {
 
 /*http://stackoverflow.com/questions/1216114/how-can-i-make-a-div-stick-to-the-top-of-the-screen-once-its-been-scrolled-to*/
 div.card-fixed-top {
-    position:fixed;
-    top:0;
-    width:100%;
-    z-index:100;
-	height:0px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    height: 0px;
 }
