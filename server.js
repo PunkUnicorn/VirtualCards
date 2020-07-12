@@ -1,4 +1,4 @@
-﻿
+
 //Lets require/import the HTTP module
 var http = require('http');
 var fs = require('fs');
@@ -294,17 +294,22 @@ function loadAllDecks() {
     //loadDeckSimple(getIndexVar, './cards/CaHMainWhite.txt', 'white', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
     //loadDeckSimple(getIndexVar,'./cards/CaHUkMainBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     //loadDeckSimple(getIndexVar,'./cards/CaHUkMainWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple(getIndexVar,'./cards/CaHExpansionsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple(getIndexVar,'./cards/CaHExpansionsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
+
     //loadDeckSimple(getIndexVar,'./cards/CaHCrabsAdjustHumidityBlack.txt', 'black', 'Crabs Adjust Humidity', addCard, hasDeckInfo, setDeckInfo);
     //loadDeckSimple(getIndexVar,'./cards/CaHCrabsAdjustHumidityWhite.txt', 'white','Crabs Adjust Humidity', addCard, hasDeckInfo, setDeckInfo);
     //loadDeckSimple(getIndexVar,'./cards/CaHHolidaySpecialsMixed.txt', 'mixed', 'Holiday Special', addCard, hasDeckInfo, setDeckInfo);
+
+    loadDeckSimple(getIndexVar, './cards/CaHExpansionsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple(getIndexVar, './cards/CaHExpansionsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
 	
     loadDeckSimple(getIndexVar,'./cards/CaHUkMainBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple(getIndexVar,'./cards/CaHUkMainWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
 	
     loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+
+    loadDeckSimple(getIndexVar, './cards/CaHJamieQBlack.txt', 'black', 'Jamie Q', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple(getIndexVar, './cards/CaHJamieQWhite.txt', 'white', 'Jamie Q', addCard, hasDeckInfo, setDeckInfo); 
 	
     // loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     // loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
@@ -327,8 +332,6 @@ function loadAllDecks() {
     // loadDeckSimple(getIndexVar,'./cards/', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     // loadDeckSimple(getIndexVar,'./cards/', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);	
 
-    loadDeckSimple(getIndexVar,'./cards/CaHJamieQBlack.txt', 'black', 'Jamie Q', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple(getIndexVar,'./cards/CaHJamieQWhite.txt', 'white', 'Jamie Q', addCard, hasDeckInfo, setDeckInfo); 
 }
 
 
