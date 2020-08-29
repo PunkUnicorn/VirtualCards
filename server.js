@@ -1600,4 +1600,5 @@ function startServer() {
 
 loadAllDecks();
 afterLoadDumpDecks(false);//!isHosted);
+console.log('listening on', server_port);
 startServer();
