@@ -329,6 +329,8 @@
                         var createGameLocation = root + '/CreateGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
                         var createSuccessFunc = function (responseText, viewModel, gameName, playerName, joinOnly) {
                             cardApi.joinOrCreateThing(/*closure->*/xmlhttp, joinGameLocation, viewModel, gameName, playerName, joinSuccessFunc, true);
+
+                            viewModel.creator(playerName);
                         }
 
                         if (!joinOnly) {
@@ -341,6 +343,21 @@
                             nextRoundLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
                             cardApi.joinOrCreateThing(xmlhttp, nextRoundLocation, viewModel, viewModel.game(), viewModel.player(), function() {}, true);
                         } // creators do next round after creating the round to ensure the 'Next' event listened by other players is done after the creator clicks start
+                    }
+
+                    if (viewModel.isCreator()) {
+                        var startGameLocation = '';
+                        var success = function (responseText, viewModel, gameName, playerName, isCreator) {
+                            startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                            cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), viewModel.player(), playRound, true);
+                        };
+
+                        //if (viewModel.isCreator()) {
+                            createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                            cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
+                        //} else {
+                        //    playRound();
+                        //}
                     }
                 }
 
