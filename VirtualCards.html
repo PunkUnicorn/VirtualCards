@@ -223,7 +223,7 @@
                 <div id='CardHolder' class='w3-card-16 card-area w3-col w3-container m6 w3-animate-opacity w3-slim'>
 					<div id='buttonHolder' class='w3-right'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
-                        <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity' onclick='onSubmitAnswer(event, gameObj, passName, playerName); putQuestoinsInView();'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>                        
+                        <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity' onclick='onSubmitAnswer(gameObj, passName, playerName); putQuestoinsInView();'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>                        
                     </div>
                 </div>
                 <div id='QuestionsAndAnswers' class='w3-card-16 card-area w3-container w3-col m5 w3-black w3-padding-medium w3-animate-opacity'>
@@ -231,7 +231,7 @@
                     <div id='divQuestionArea' class='w3-padding-16'>
                         <div id ='txtQuestion' class ='w3-large'></div>
                         <br />
-                        <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(event, gameObj, passName, playerName)'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
+                        <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity w3-right' onclick='onSubmitAnswer(gameObj, passName, playerName)'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>
                     </div>
                     <div id='divAnswersArea' class='w3-padding-16'>
                         <div id='txtAnswers' class ='w3-medium'><div> </div></div>
@@ -296,33 +296,33 @@
                         <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>
                     </p>
                 </p>
-                <audio class='set-volume' id='sndCreak' preload volume='0.4'>
+                <audio class='set-volume' id='sndCreak' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_rollover_018.mp3' type='audio/mpeg'>
                 </audio>
                 
-                <audio class='set-volume' id='sndCan1' preload volume='0.4'>
+                <audio class='set-volume' id='sndCan1' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_button_click_022.mp3' type='audio/mpeg'><!-- multimedia_percussive_element.mp3 -->
                 </audio>         
-                <audio class='set-volume' id='sndCan2' preload volume='0.4'>
+                <audio class='set-volume' id='sndCan2' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_button_click_020.mp3' type='audio/mpeg'>
                 </audio>         
-                <audio class='set-volume' id='sndCan3' preload volume='0.4'>
+                <audio class='set-volume' id='sndCan3' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_button_click_029.mp3' type='audio/mpeg'>
                 </audio> 
                         
-                <audio class='set-volume' id='sndSubmit' preload volume='0.4'>
+                <audio class='set-volume' id='sndSubmit' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_button_click_011.mp3' type='audio/mpeg'>
                 </audio>
-                <audio class='set-volume' id='sndClickVote' preload volume='0.4'>
+                <audio class='set-volume' id='sndClickVote' preload="auto" volume='0.4'>
                     <source src='sounds/short_pop_sound.mp3' type='audio/mpeg'>
                 </audio>
-                <audio class='set-volume' id='sndVote' preload volume='0.4'>
+                <audio class='set-volume' id='sndVote' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_percussive_element.mp3' type='audio/mpeg'>
                 </audio>
-                <audio class='set-volume' id='sndClank' preload volume='0.4'>
+                <audio class='set-volume' id='sndClank' preload="auto" volume='0.4'>
                     <source src='sounds/multimedia_rollover_028.mp3' type='audio/mpeg'>
                 </audio>       
-                <audio class='set-volume' id='sndWhistle' preload volume='0.4' controls>
+                <audio class='set-volume' id='sndWhistle' preload="auto" volume='0.4' controls>
                     <source src='sounds/multimedia_rollover_019.mp3' type='audio/mpeg'>
                 </audio>                  
             </div>
@@ -401,7 +401,7 @@
         }
         
         var freezeSelect = false;
-        function cardSelect(ev, gameObj, passName, playerName) {
+        function cardSelect(ev, gameObj, passName, playerName, isAutoStart) {
             if (freezeSelect) return;
             freezeSelect = true;
 
@@ -436,7 +436,7 @@
                 }
 
                 window.setTimeout( function (gameObj, cardSelection) {
-                    refreshQuestionText(gameObj, cardSelection);
+                    refreshQuestionText(gameObj, cardSelection, isAutoStart);
                 }, 0, gameObj, cardSelection);
 
                 return true;
@@ -510,7 +510,7 @@
             target.toggleClass('card-selected', false);
             cardSelection = [];
 
-            refreshQuestionText(gameObj, cardSelection);
+            refreshQuestionText(gameObj, cardSelection, false);
             playCardSound();
         }
 
@@ -643,6 +643,10 @@
                 $('#btnNextRound').show();
             }
 
+
+            // IF ANSWER COUNT NOT YET EQUAL TO NUMBER OF ACTIVE PLAYERS THEN DON'T SHOW THE VOTE BUTTONS YET
+            //const playerAnswerCount = gameObj.o.players.list;
+
             if (typeof priorRound.roundCount != 'undefined' && priorRound.roundCount != gameObj.o.roundCount) {
                 getRefreshed(/*closure->*/cardSelection, gameObj, passName, playerName, false, true);
                 return;
@@ -679,7 +683,7 @@
 
 
                 if (!gameObj.o.haveSubmitted) {
-                    refreshQuestionText(gameObj, cardSelection);
+                    refreshQuestionText(gameObj, cardSelection, false);
 
                     //draw attention to the new question
                     const pauseForDramaticEffect = 500;
@@ -977,7 +981,7 @@
 									beforeSend_BlankFunction, onSuccess, gameObj, passName, playerName);
 		};
 		
-        function onSubmitAnswer(event, gameObj, passName, playerName) {
+        function onSubmitAnswer(gameObj, passName, playerName) {
             if (!gameObj.o.isActive) return;
 
             if (soundOn) setTimeout(function() {if (soundOn) $("#sndSubmit").trigger('stop').trigger('play');},0);
@@ -1013,7 +1017,7 @@
             return filledInQuestion;
         }
 
-        function refreshQuestionText(gameObj, cardSelection) {
+        function refreshQuestionText(gameObj, cardSelection, isAutoStart) {
             var filledInQuestion = fillQuestion(gameObj, cardSelection);
             $('#txtQuestion').html(filledInQuestion, cardSelection);
 
@@ -1022,6 +1026,12 @@
             if (isAlowedAnyCount || isSelectedCorrectAmount) {
                 if (!gameObj.o.haveSubmitted && !gameObj.o.haveVoted) {
                     $('.submit-answer-btn').show();
+
+                    //if (isAutoStart) {
+                        onSubmitAnswer(gameObj, passName, playerName);
+                    //}
+
+
                 }
             } else if (!isAlowedAnyCount && !isSelectedCorrectAmount) {
                 $('.submit-answer-btn').hide();
@@ -1043,7 +1053,7 @@
         function makeCardHtml(cardText, index) {
 
             var cardHtml = '<div class="card card-horizontal '+ effects[effectIndex]+' w3-padding-small w3-tiny" ' +
-                    'onclick="cardSelect(event, gameObj, passName, playerName)" '+
+                    'onclick="cardSelect(event, gameObj, passName, playerName, false)" '+
                     'ondrop="dragDrop.drop(event, dragStart)" ' +
                     'ondragover="dragDrop.allowDrop(event, dragStart)" ' +
                     'draggable="true" ' +

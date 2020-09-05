@@ -345,19 +345,22 @@
                         } // creators do next round after creating the round to ensure the 'Next' event listened by other players is done after the creator clicks start
                     }
 
-                    if (viewModel.isCreator()) {
+
+                    const isAutoStart = viewModel.isJoined() && viewModel.isStarted();
+
+                    if (isAutoStart && !viewModel.isCreator()) {
                         var startGameLocation = '';
                         var success = function (responseText, viewModel, gameName, playerName, isCreator) {
-                            startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                            startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
                             cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), viewModel.player(), playRound, true);
-                        };
+                        }
 
-                        //if (viewModel.isCreator()) {
-                            createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                        if (viewModel.isCreator()) {
+                            createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
                             cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
-                        //} else {
-                        //    playRound();
-                        //}
+                        } else {
+                            onClickStart();
+                        }
                     }
                 }
 

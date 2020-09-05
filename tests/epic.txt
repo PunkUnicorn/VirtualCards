@@ -1,0 +1,43 @@
+As a bad person with a sick sense of humour 
+I want to play cards against humanity online, with friends, who are also bad people
+To see who is the funniest 
+AND Laugh my tits off
+
+- For the gameflow, everyone submits an answer, then gets to see all the answers everyone has submitted, 
+  then each person votes on which one they thought was funniest, or whatever other reason they like, then 
+  when everyone has voted for their winner, the answer with the most votes wins a point for that round
+- There must be a lobby, with a box to type your player name in
+	- And either start a new game
+	- Or join an existing game
+- A game can be started with all players joining the first round together
+- Players can hot-join a game in progress, and start playing at an appropriate time
+	- Before all the answers have been submitted is OK
+	- After everyone has voted is OK
+	- But after everyone has submitted answers, and before everyone has voted: then new player 
+	  has to wait for the current answers to be voted on first
+	- An invite link to the game is required
+- A player can leave a game at any time
+	- Ether marking themselves as AFK
+	- Or other players force another out because...
+		- One of the players fell asleep at the keyboard, drunk, and is holding everyone up
+		- Someone had to go and see to the kids, and has not been back since, and is holding everyone up
+- Visibility of who the players are and what their last action was, and when (to see if they are holding people up)
+
+
+As a player
+I want to create a new game
+So I can invite my friends to play
+
+As a game invite link holder
+I want to join the game my friend sent me a link to
+So I can play cards against humanity with them
+AND laugh my tits off
+
+As a friend of a player 
+I want to join my friends game that I know the name of
+So I can play them
+
+As a player of an on-going game
+I want to send my other friend a game invite
+So they can join the game I'm playing
+AND laugh their tits off

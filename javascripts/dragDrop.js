@@ -9,7 +9,7 @@ dragDrop = {
     },
 
     allowDrop: function (ev, effectFunc) {
-        processEffectFunc(ev, effectFunc);
+        this.processEffectFunc(ev, effectFunc);
         ev.preventDefault();
     },
 
