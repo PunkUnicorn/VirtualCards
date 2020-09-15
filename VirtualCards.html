@@ -119,9 +119,12 @@
                 $('#notPlayingConfirm').hide();
                 $('#btnRefreshVote').hide();
 
+                if (!gameObj.o.haveSubmitted && !gameObj.o.haveVoted && !gameObj.o.haveScores && !gameObj.o.readyForNextRound) {
+                    $('#txtNextRoundBlame').hide();
+                }
+
                 if (!gameObj.o.haveScores && !gameObj.o.readyForNextRound) {
                     $('#btnNextRound').hide();
-                    $('#txtNextRoundBlame').hide();
                     $('.wait-for-next-round').hide();
                 } else {
                     $('#btnNextRound').show();
@@ -207,7 +210,7 @@
             <a id='pauseConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();'>Press again to confirm AFK <span class='fa fa-times' onclick='$("#pauseConfirm").hide();'> </span> </a>
             <a id='notPlayingConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();onActivityHotClick(event, gameObj, passName, playerName);'>Press to return to game <span class='fa fa-play' onclick='onActivityHotClick(event, gameObj, passName, playerName);'></span></a>
 		</div>
-		<div class='w3-padding-tiny card-area-main'>
+		<div class='w3-padding-tiny main-card-area'>
 			<div class='w3-card-8 card-area card-twisle'>
 				<header>
                     <h1 class='w3-center'>Virtual Cards Against Cards</h1>
@@ -787,7 +790,8 @@
                 if (isVoteSelectedOnUi || gameObj.o.haveVoted) {
                     $('.gavelbtn-selected:not(.fa-gavel)').hide()
                 }
-                if ( (gameObj.o.haveVoted || gameObj.o.haveSubmitted) && !gameObj.o.haveScores) {
+
+                if ((gameObj.o.haveVoted || gameObj.o.haveSubmitted) && !gameObj.o.haveScores) {
                     $('.gavelbtn-selected.fa-gavel').show()
                 }
 
@@ -799,13 +803,24 @@
 
                 if (gameObj.o.haveVoted) {
                     putQuestoinsInView();
-                } else if(!gameObj.o.haveSubmitted && gameObj.o.roundCount > 1)
+                } else if (!gameObj.o.haveSubmitted && gameObj.o.roundCount > 1) {
                     if (soundOn) $("#sndWhistle").trigger('stop').trigger('play');
-                    putQuestoinsInView(); //subsiquent rounds have the next question as the main focus
+                        putQuestoinsInView(); //subsiquent rounds have the next question as the main focus
+                }   
 
                 if (gameObj.o.haveScores) {
                     $('#btnNextRound').show();
                     putQuestoinsInView('btnNextRound');
+                }
+
+                if (!gameObj.o.haveSubmitted || !gameObj.o.haveVoted) {
+                    $('#txtNextRoundBlame').text('');
+                }
+
+                if (gameObj.o.haveSubmitted && !gameObj.o.haveVoted && !gameObj.o.canVoteYet) {
+                    $('.gavelbtn-selected').hide();
+                    $('#txtNextRoundBlame').text('...waiting for others to answer');
+                    $('#txtNextRoundBlame').show();
                 }
 
                 $('#divQuestionArea').toggle(!gameObj.o.haveSubmitted && !gameObj.o.haveVoted);
@@ -934,6 +949,8 @@
             } else {
                 putQuestoinsInView('MainVoteBtn');
             }
+
+            setTimeout(function () { onSubmitVote(event, gameObj, passName, playerName) }, 100);
         }
 
         function onSubmitVote(event, gameObj, passName, playerName) {

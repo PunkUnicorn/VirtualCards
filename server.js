@@ -642,6 +642,18 @@ function cloneRound(games, gameInfo, pram) {
         cloneOfRound.haveSubmitted = (cloneOfRound.players.submitted[playerIndex].length > 0);
     } catch (err) { cloneOfRound.haveSubmitted = false; }
 
+    cloneOfRound.canVoteYet = false;
+    try {
+        const countOfSubmitted = cloneOfRound.players.submitted.filter(name => name.length > 0).length;
+        //console.log(cloneOfRound);
+        const countOfActive = games[gameInfo.index].playerActivity.values().filter(name => name.isActive).length;
+        cloneOfRound.canVoteYet = countOfSubmitted >= countOfActive;
+        console.log('#countOfSubmitted', countOfSubmitted);
+        console.log('#countOfActive', countOfActive);
+
+    } catch (err) { console.log(err); cloneOfRound.canVoteYet = false; }
+
+
 
     cloneOfRound.haveVoted = false;
     cloneOfRound.haveVoted = games[gameInfo.index].votes.has( playerName );
