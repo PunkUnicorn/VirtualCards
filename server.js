@@ -225,13 +225,59 @@ function loadDeckSimple(getIndexVar, file, colour /*'black' 'white' or 'mixed' f
         doSetDeckInfo(colour, deckTitle, JSON.parse(JSON.stringify(deckInfo)));
     }
 
-    //deckInfo.startIndex = cardNo;
-    //allCards.deckInfo.set(possibleDeckTitle, deckInfo);
-
     bigString = '';
     arrayOfLines = 0;
+}
 
-    //return cardNo;
+/*
+
+
+    //loadDeckSimple(getIndexVar,'./cards/CaHCrabsAdjustHumidityBlack.txt', 'black', 'Crabs Adjust Humidity', addCard, hasDeckInfo, setDeckInfo);
+    //loadDeckSimple(getIndexVar,'./cards/CaHCrabsAdjustHumidityWhite.txt', 'white','Crabs Adjust Humidity', addCard, hasDeckInfo, setDeckInfo);
+    //loadDeckSimple(getIndexVar,'./cards/CaHHolidaySpecialsMixed.txt', 'mixed', 'Holiday Special', addCard, hasDeckInfo, setDeckInfo);
+
+    loadDeckSimple(getIndexVar, './cards/CaHExpansionsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple(getIndexVar, './cards/CaHExpansionsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
+
+    loadDeckSimple(getIndexVar,'./cards/CaHUkMainBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple(getIndexVar,'./cards/CaHUkMainWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+
+    loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+
+    loadDeckSimple(getIndexVar, './cards/CaHJamieQBlack.txt', 'black', 'Jamie Q', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple(getIndexVar, './cards/CaHJamieQWhite.txt', 'white', 'Jamie Q', addCard, hasDeckInfo, setDeckInfo);
+
+    // loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    // loadDeckSimple(getIndexVar,'./cards/CaHDevOpsAgainstHumanityWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
+
+ */ 
+
+function getDeckList() {
+    return [
+        { 'path': './cards/CaHMainBlack.txt', 'type': 'black', 'description':'Main Deck'},
+        { 'path': './cards/CaHMainWhite.txt', 'type': 'white', 'description': 'Main Deck' },
+
+        { 'path': './cards/CaHUkMainBlack.txt', 'type': 'black', 'description':'UK/AU Main Deck'},
+        { 'path': './cards/CaHUkMainWhite.txt', 'type': 'white', 'description':'UK/AU Main Deck'},
+
+        { 'path': './cards/CaHCrabsAdjustHumidityBlack.txt', 'type': 'black', 'description':'Crabs Adjust Humidity'},
+        { 'path': './cards/CaHCrabsAdjustHumidityWhite.txt', 'type': 'white', 'description': 'Crabs Adjust Humidity' },
+
+        { 'path': './cards/CaHHolidaySpecialsMixed.txt', 'type': 'mixed', 'description':'Holiday Special' },
+
+        { 'path': './cards/CaHExpansionsBlack.txt', 'type': 'black', 'description':'Expansions' },
+        { 'path': './cards/CaHExpansionsWhite.txt', 'type': 'white', 'description':'Expansions' },
+
+        { 'path': './cards/CaHExpansion90sBlack.txt', 'type': 'black', 'description':'90s Expansion pack' },
+        { 'path': './cards/CaHExpansion90sWhite.txt', 'type': 'white', 'description':'90s Expansion pack' },
+
+        { 'path': './cards/CaHJamieQBlack.txt', 'type': 'black', 'description':'Jamies Q' },
+        { 'path': './cards/CaHJamieQWhite.txt', 'type': 'white', 'description':'Jamies Q' },
+
+        { 'path': './cards/CaHDevOpsAgainstHumanityBlack.txt', 'type': 'black', 'description':'Stackify DevOps Against Humanity'},
+        { 'path': './cards/CaHDevOpsAgainstHumanityWhite.txt', 'type': 'white', 'description':'Stackify DevOps Against Humanity'},
+    ]
 }
 
 function loadAllDecks() {
@@ -529,13 +575,14 @@ function getGameIndex(games, pram) {
     return gameInfo;
 };
 
+/* COULD HAVE AN allCards PER GAME??? */
 function replaceCards(games, gameInfo, pram, cards) {
     var heldCards = games[gameInfo.index].heldCards;
     var heldCardsIndexes = heldCards.get(pram.playerName);
 
     var removeIndexes = [];
     for (var cardIndex in heldCardsIndexes) {
-        var cardDesc = allCards[WHITE].deck[heldCardsIndexes[cardIndex]];
+        var cardDesc = games[gameInfo.index].allCards[WHITE].deck[heldCardsIndexes[cardIndex]];
         var removeIndex = cards.indexOf(cardDesc);
         if (removeIndex > -1) removeIndexes.push( heldCardsIndexes[cardIndex] );
     }
@@ -629,7 +676,7 @@ function cloneRound(games, gameInfo, pram) {
 
     var encodedCards = [];
     for (var cardIndex in cards) {
-        encodedCards.push( /*encodeURIComponent( */allCards[WHITE].deck[cards[cardIndex]] /*)*/ );
+        encodedCards.push(games[gameInfo.index].allCards[WHITE].deck[cards[cardIndex]] );
     }
     cloneOfRound.heldCards = encodedCards;
 
@@ -858,6 +905,15 @@ function handleRequest(req, res) {
             doPageFile('index.html', reqObj, res);
             break;
 
+        case '/GetDeckList':
+            console.log(getDeckList());
+            var decklist = [].map.call(getDeckList(), x => x.description);
+            let uniqueArray = [...new Set(decklist)];
+            res.writeHeader(200, { "Content-Type": "application/json" });
+            res.write(JSON.stringify(uniqueArray));
+            res.end();
+            break;
+
         case '/JoinGame':
             var doJoinGame = function(games, reqObj, res, pram, gameObj) {
                 var pram = preamble(reqObj);
@@ -904,7 +960,7 @@ function handleRequest(req, res) {
             break;
 
         case '/Auto':
-            var doAuto = function(games, reqObj, res, pram, gameObj) {
+            var doAuto = function (games, reqObj, res, pram, gameObj) {
                 var auto = getActive(reqObj, false);
                 var playerName = getPlayer(reqObj);
                 if (playerName.length == 0) { return; }
@@ -918,9 +974,7 @@ function handleRequest(req, res) {
                 }
             };
 
-            if (!doAuto(games, reqObj, res, pram, gameObj)) {
-
-            }
+            doAuto(games, reqObj, res, pram, gameObj);
             break;
 
         case '/CreateGame':
@@ -939,6 +993,7 @@ function handleRequest(req, res) {
                     gameObj.votes = new hashmap.HashMap();
                     gameObj.readyForNextRound = new hashmap.HashMap();
                     gameObj.playerActivity = new hashmap.HashMap();
+                    gameObj.allCards = JSON.parse( JSON.stringify(allCards) );
                     games.push(gameObj);
                 }
 
@@ -1004,13 +1059,13 @@ function handleRequest(req, res) {
 
                             games[gameInfo.index].blackCards = [];
                             games[gameInfo.index].blackCardIndex = 0;
-                            for (var cardIndex in allCards[BLACK].deck) {
+                            for (var cardIndex in games[gameInfo.index].allCards[BLACK].deck) {
                                 games[gameInfo.index].blackCards.push(cardIndex);
                             }
 
                             games[gameInfo.index].whiteCards = [];
                             games[gameInfo.index].whiteCardIndex = 0;
-                            for (var cardIndex in allCards[WHITE].deck) {
+                            for (var cardIndex in games[gameInfo.index].allCards[WHITE].deck) {
                                 games[gameInfo.index].whiteCards.push(cardIndex);
                             }
 
@@ -1033,7 +1088,7 @@ function handleRequest(req, res) {
                     console.log('allocating round info');
                     var roundObj = {};
                     var useIndex = getBlackCard(games, gameInfo);
-                    var question = allCards[BLACK].deck[useIndex];
+                    var question = games[gameInfo.index].allCards[BLACK].deck[useIndex];
 
                     roundObj.question = makeUnderscoresTheSame(question);
                     var count = (roundObj.question.match(/______/g) || []).length;
@@ -1367,6 +1422,7 @@ function handleRequest(req, res) {
             var retObj = {};
             retObj.activity = [];
             retObj.list = [];
+            retObj.decks = getDeckList();
             retObj.game = pram.game;
             for (var player in gameObj.list) {
                 var name = gameObj.list[player];

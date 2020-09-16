@@ -15,7 +15,7 @@
     </head>
     <body>
         <style>
-            .start-invisible { visibility:hidden;} /*display:none*/
+            .start-invisible { visibility:hidden; } /*display:none*/
             .wait-for-load {}
             .wait-for-submit {}
             .submit-answer-btn {}
@@ -592,26 +592,15 @@
         }
 
         function updateRoundSuccessFunc(responseText, gameObj, passName, playerName, ignoredParameter) {
-            //var getDifference = function(gameObj, oldObj) {
-            //    diffs = {};
-            //
-                var countEntries = function(countMe) {
-                    var count = 0;
-                    for (var i in countMe) {
-                        if (!ansCardOk(countMe[i])) continue;
-                        count++;
-                    }
-                    return count;
-                };
-            //    diffs.haveSubmitted = (gameObj.o.haveSubmitted != oldObj.haveSubmitted);
-            //    diffs.haveVoted = (gameObj.o.haveVoted != oldObj.haveVoted);
-            //    diffs.haveScores = (gameObj.o.haveScores != oldObj.haveScores);
-            //    diffs.readyForNextRound = (gameObj.o.readyForNextRound != oldObj.readyForNextRound);
-            //    diffs.newAnswer = (countEntries(gameObj.o.players.submitted[playerIndex]) != countEntries(oldObj.players.submitted[playerIndex]));
-            //    diffs.
-            //
-            //    return diffs;
-            //};
+            var countEntries = function(countMe) {
+                var count = 0;
+                for (var i in countMe) {
+                    if (!ansCardOk(countMe[i])) continue;
+                    count++;
+                }
+                return count;
+            };
+
             var getPriorRound = function(gameObj, responseTextLength) {
                 var priorRound = {};
 
@@ -646,28 +635,15 @@
                 $('#btnNextRound').show();
             }
 
-
-            // IF ANSWER COUNT NOT YET EQUAL TO NUMBER OF ACTIVE PLAYERS THEN DON'T SHOW THE VOTE BUTTONS YET
-            //const playerAnswerCount = gameObj.o.players.list;
-
             if (typeof priorRound.roundCount != 'undefined' && priorRound.roundCount != gameObj.o.roundCount) {
                 getRefreshed(/*closure->*/cardSelection, gameObj, passName, playerName, false, true);
                 return;
             }
 
-            //$('#divQuestionArea').toggle(!gameObj.o.haveSubmitted && !gameObj.o.haveVoted);
-            //$('#divAnswersArea').toggle(gameObj.o.haveSubmitted || gameObj.o.haveVoted);
-
-            //var showPauseButton = (gameObj.o.isActive ? true : false);
             var isPaused = (gameObj.o.isActive ? false : true);
-            //$('.activity-btn').toggleClass('fa-hourglass-o', showPauseButton);
-            //$('.activity-btn').toggleClass('fa-play', !showPauseButton);
 
             var showMsg = !isJoinedPlayerNotInRound && isPaused;
             $('#notPlayingConfirm').toggle(showMsg);
-
-            //$('#txtQuestion').html('');
-            //$('#txtAnswers').html('');
 
             window.setTimeout( function () { allocateBlame(gameObj, passName, playerName); }, 0);
 

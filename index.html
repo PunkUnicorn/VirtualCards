@@ -67,9 +67,9 @@
             }
 
         </script>
-        <script type='text/javascript' src='javascripts/knockout-3-4-0.js'/>
+        <script type='text/javascript' src='javascripts/knockout-3-4-0.js'></script>
         <script type="text/javascript">
-            var ko = require('knockout-3.4.0');
+            //var ko = require('knockout-3.4.0');
 
             var cardUi = {};
 
@@ -91,6 +91,9 @@
         <style>
             .wait-for-load {}
             .wait-for-game {}
+            /*.white, far, fa-square {}
+            .black, fas, fa-square {}
+            .mixed, far, fa-square, fas, fa-square {}*/
         </style>
         <div id='wrapper' class='w3-animate-opacity'>
             <div><!--  class='w3-animate-top'> -->
@@ -106,7 +109,7 @@
                 <div class='w3-row w3-center'>
                     <div class='w3-col w3-card-16 card-area w3-animate-top'>
                         <h4>Welcome <span data-bind='text:player'></span></h4>
-                        <p>Its not my place to judge you</p>
+                        <p>It's not my place to judge you</p>
                     </div>
                 
                     <div class='w3-col w3-card-16 card-area m6 w3-animate-top'>
@@ -126,7 +129,7 @@
                             <div class='card card-horizontal'>
                                 <div class='card-horizontal'></div>
                                 <p><button
-																		id='sg'
+									id='sg'
                                     onclick='onClickJoinCreate(event, viewModel)'
                                     data-bind='visible:player().length>2 && game().length>2 && !isJoined()'
                                     class='w3-btn w3-blue w3-animate-opacity w3-small'><span data-bind='text:isInvite()?"Join game" : "Create/Join game"'> </span><span
@@ -134,8 +137,8 @@
                                 </button></p>
                                 <p><button
                                     onclick='onClickJoinCreate(event, viewModel)'
-                                    data-bind='visible:isJoined'
-																		id='enter'
+                                    data-bind='visible:isJoined' 
+                                    id='enter'
                                     class='w3-btn w3-blue w3-animate-opacity w3-small'>Refresh <span class='fa fa-refresh w3-small' /><span
                                         class='wait-for-load fa fa-bell w3-small w3-spin' />
                                 </button></p>
@@ -147,11 +150,16 @@
                                     <p data-bind='visible: isJoined() && isStarted()' class='w3-small'> Join game in progress <span class='fa fa-spinner w3-spin'/></p>
                                 </i>
                             </div>
-                            <p><button
-                                onclick='onClickStart()'
-                                data-bind='visible:isCreator() || isStarted()'
+                            <p>
+                            <button data-bind='visible:isCreator() || isStarted()'
+                                onclick='onClickStart()'                                
                                 class='w3-small w3-animate-opacity w3-btn w3-grey w3-right'>Start game <span class='wait-for-game fa fa-cube w3-spin' />
-                            </button></p>
+                            </button>
+                            <div data-bind='visible:isCreator() || isStarted()'>
+                                <!-- ko foreach: decks -->
+                                <div><input type="checkbox" checked="checked"> <!--ko text: $data--><!--/ko--></div>
+                                 <!-- /ko -->
+                            </div></p>
                         </div>
                     </div>
 
@@ -198,31 +206,40 @@
                         <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
                         <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>                        
                     </p>
-                    <audio id='sndWhistle' preload volume='0.4' controls>
+                    <audio id='sndWhistle' volume='0.4' controls>
                         <source src='sounds/multimedia_rollover_019.mp3' type='audio/mpeg'>
                     </audio>                 
                 </div>
             </div>
         </div>
 
+
         <script>
+            var decks = {};
 
             soundOn = true;
             var activity = [ { playerId:'noid', displayName:'You', lastActivity:'', when:'', score:'', renderClass:'' } ];
 
             viewModel = {
                 activity: ko.observableArray([]),
+                decks: ko.observable(decks),
                 game: ko.observable(''),
                 player: ko.observable(''),
                 isInvite: ko.observable(false),
                 isCreator: ko.observable(false),
                 creator: ko.observable(''),
                 isJoined: ko.observable(false),
-                isStarted: ko.observable(false)
+                isStarted: ko.observable(false),
+                selectedDecks: ko.observableArray([])
             };
 
             ko.applyBindings(viewModel);
+
             xmlhttp = new XMLHttpRequest();
+            var onSuccess = function (takeMeWithYouSuccessILoveYou, gameObj, passName, playerName, xmlhttp) {
+                viewModel.decks( JSON.parse(xmlhttp.response) );
+            };
+            cardApi.sendSomething(null, '/GetDeckList', function () { }, onSuccess, function () { }, viewModel.game, viewModel.player);
 
             function toggleControls(videoId) {
                 var video = document.getElementById(videoId);
@@ -334,7 +351,7 @@
                         }
 
                         if (!joinOnly) {
-                            cardApi.joinOrCreateThing(xmlhttp, createGameLocation, viewModel, gameName, playerName, createSuccessFunc, false);
+                            cardApi.joinOrCreateThing(xmlhttp, createGameLocation, viewModel, gameName, playerName, createSuccessFunc, false); //, SELECTED DECKS
                         }
                     }
 
