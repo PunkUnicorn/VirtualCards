@@ -254,6 +254,8 @@ function loadDeckSimple(getIndexVar, file, colour /*'black' 'white' or 'mixed' f
  */ 
 
 function getDeckList() {
+    return allCards[WHITE].deckInfo.keys()
+        .concat(allCards[BLACK].deckInfo.keys());
     return [
         { 'path': './cards/CaHMainBlack.txt', 'type': 'black', 'description':'Main Deck'},
         { 'path': './cards/CaHMainWhite.txt', 'type': 'white', 'description': 'Main Deck' },
@@ -575,14 +577,13 @@ function getGameIndex(games, pram) {
     return gameInfo;
 };
 
-/* COULD HAVE AN allCards PER GAME??? */
 function replaceCards(games, gameInfo, pram, cards) {
     var heldCards = games[gameInfo.index].heldCards;
     var heldCardsIndexes = heldCards.get(pram.playerName);
 
     var removeIndexes = [];
     for (var cardIndex in heldCardsIndexes) {
-        var cardDesc = games[gameInfo.index].allCards[WHITE].deck[heldCardsIndexes[cardIndex]];
+        var cardDesc = allCards[WHITE].deck[heldCardsIndexes[cardIndex]];
         var removeIndex = cards.indexOf(cardDesc);
         if (removeIndex > -1) removeIndexes.push( heldCardsIndexes[cardIndex] );
     }
@@ -676,7 +677,7 @@ function cloneRound(games, gameInfo, pram) {
 
     var encodedCards = [];
     for (var cardIndex in cards) {
-        encodedCards.push(games[gameInfo.index].allCards[WHITE].deck[cards[cardIndex]] );
+        encodedCards.push(allCards[WHITE].deck[cards[cardIndex]] );
     }
     cloneOfRound.heldCards = encodedCards;
 
@@ -907,7 +908,7 @@ function handleRequest(req, res) {
 
         case '/GetDeckList':
             console.log(getDeckList());
-            var decklist = [].map.call(getDeckList(), x => x.description);
+            var decklist = getDeckList();//[].map.call(getDeckList(), x => x.description);
             let uniqueArray = [...new Set(decklist)];
             res.writeHeader(200, { "Content-Type": "application/json" });
             res.write(JSON.stringify(uniqueArray));
@@ -993,7 +994,7 @@ function handleRequest(req, res) {
                     gameObj.votes = new hashmap.HashMap();
                     gameObj.readyForNextRound = new hashmap.HashMap();
                     gameObj.playerActivity = new hashmap.HashMap();
-                    gameObj.allCards = JSON.parse( JSON.stringify(allCards) );
+                    gameObj.allCards = [];
                     games.push(gameObj);
                 }
 
@@ -1057,16 +1058,57 @@ function handleRequest(req, res) {
 
                             console.log('initialising game');
 
+                            //function getDeck(deckDesc, deckColour) {
+                            //    const deckInfo = allCards[deckColour].deckInfo.get(deckDesc);
+                            //    const deck = allCards[deckColour].deck;
+                            //    const ret = [];
+                            //    for (var i = deckInfo.startIndex; i < deckInfo.endIndex; i++) {
+                            //        ret.push( deck[i] );
+                            //    }
+                            //    return ret;
+                            //}
+
+                            //console.log(typeof reqObj.query.Decks);
+                            if (!reqObj.query.Decks) reqObj.query.Decks = [];
+                            //for (var val in reqObj.query.Decks) {
+                            //    console.log('val', val);
+                            //    const foundBlack = getDeck(val, BLACK);
+                            //    const foundWhite = getDeck(val, WHITE);
+                            //    games[retObjPhaseOne.gameInfo.index].allCards.deck.push( found ); //<--- found is an array
+                            //    console.log('found ', found );
+                            //};
+                            //console.log('if (initGame) {', games[retObjPhaseOne.gameInfo.index].allCards);
+                            //games[retObjPhaseOne.gameInfo.index].allCards = JSON.parse(JSON.stringify(allCards));
+
+                            function deckIsSelected(cardsObj, selectedDecks, cardIndex) {
+                                //console.log("deckIsSelected", JSON.stringify( selectedDecks ), cardIndex)
+                                for (const deck in selectedDecks) {
+                                    const key = selectedDecks[deck].trim(' ');
+                                    //console.log(key, cardsObj);
+                                    const thisDeck = cardsObj.deckInfo.get(key);
+                                    if (!thisDeck) continue;
+                                    if (thisDeck.startIndex <= cardIndex && thisDeck.endIndex >= cardIndex) {
+                                        //console.log("is in deck:");
+                                        return true;
+                                    }
+                                }
+
+                                //console.log("is not in deck:");
+                                return false;
+                            }
+                            const selectedDecksArray = reqObj.query.Decks.split(',');
                             games[gameInfo.index].blackCards = [];
                             games[gameInfo.index].blackCardIndex = 0;
-                            for (var cardIndex in games[gameInfo.index].allCards[BLACK].deck) {
-                                games[gameInfo.index].blackCards.push(cardIndex);
+                            for (var cardIndex in allCards[BLACK].deck) { //games[gameInfo.index].
+                                if (deckIsSelected(allCards[BLACK], selectedDecksArray, cardIndex))
+                                    games[gameInfo.index].blackCards.push(cardIndex);
                             }
 
                             games[gameInfo.index].whiteCards = [];
                             games[gameInfo.index].whiteCardIndex = 0;
-                            for (var cardIndex in games[gameInfo.index].allCards[WHITE].deck) {
-                                games[gameInfo.index].whiteCards.push(cardIndex);
+                            for (var cardIndex in allCards[WHITE].deck) { //games[gameInfo.index].
+                                if (deckIsSelected(allCards[WHITE], selectedDecksArray, cardIndex))
+                                    games[gameInfo.index].whiteCards.push(cardIndex);
                             }
 
                             games[gameInfo.index].blackCards = shuffle(games[gameInfo.index].blackCards);
@@ -1088,7 +1130,7 @@ function handleRequest(req, res) {
                     console.log('allocating round info');
                     var roundObj = {};
                     var useIndex = getBlackCard(games, gameInfo);
-                    var question = games[gameInfo.index].allCards[BLACK].deck[useIndex];
+                    var question = allCards[BLACK].deck[useIndex];
 
                     roundObj.question = makeUnderscoresTheSame(question);
                     var count = (roundObj.question.match(/______/g) || []).length;
@@ -1142,7 +1184,20 @@ function handleRequest(req, res) {
                 // Only the creator can make the first round
                 if (initGame && !retObjPhaseOne.iMadeThisGame) return true;
 
-                // Any tom, dick or harry can make subsiquent rounds as long as the round hasn't been created already
+                //if (initGame) {
+                //    function findDeck(deckDesc) {
+                //        //allCards[BLACK].deckInfo.set(deckTitle, deckInfo);
+                //        return allCards[BLACK].deckInfo.get(deckDesk);
+                //    }
+                //    reqObj.query.Decks.forEach(function (val, index) {
+                //        games[retObjPhaseOne.gameInfo.index].allCards.push( findDeck(val) );
+                //    });
+                //    console.log('if (initGame) {', games[retObjPhaseOne.gameInfo.index].allCards);
+                //    games[retObjPhaseOne.gameInfo.index].allCards = JSON.parse(JSON.stringify(allCards));
+                //}
+
+
+                // Any tom, dick or harry can make subsequent rounds as long as the round hasn't been created already
                 if (retObjPhaseOne.Current != games[retObjPhaseOne.gameInfo.index].roundCount) return true;
 
                 var roundObj = phaseThreeRoundWeGoAgain(games, retObjPhaseOne.gameInfo, initGame);
@@ -1422,7 +1477,7 @@ function handleRequest(req, res) {
             var retObj = {};
             retObj.activity = [];
             retObj.list = [];
-            retObj.decks = getDeckList();
+            //retObj.decks = getDeckList();
             retObj.game = pram.game;
             for (var player in gameObj.list) {
                 var name = gameObj.list[player];

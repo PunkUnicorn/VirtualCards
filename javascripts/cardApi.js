@@ -30,8 +30,8 @@ cardApi = {
         $('#btnJumpRefresh').addClass('w3-spin');
         xmlhttp.send();
     },
-    
-    sendSomething: function (takeMeWithYouSuccessILoveYou, thingParams, beforeSend, onSuccess, gameObj, passName, playerName) {//xmlhttp.responseText
+
+    sendSomething: function (takeMeWithYouSuccessILoveYou, thingParams, beforeSend, onSuccess, gameObj, passName, playerName) {
         var xmlhttp = new XMLHttpRequest();
 
         var url = this.getRoot(window.document.URL);

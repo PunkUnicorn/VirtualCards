@@ -91,6 +91,7 @@
         <style>
             .wait-for-load {}
             .wait-for-game {}
+            .deck-option {}
             /*.white, far, fa-square {}
             .black, fas, fa-square {}
             .mixed, far, fa-square, fas, fa-square {}*/
@@ -157,7 +158,7 @@
                             </button>
                             <div data-bind='visible:isCreator() || isStarted()'>
                                 <!-- ko foreach: decks -->
-                                <div><input type="checkbox" checked="checked"> <!--ko text: $data--><!--/ko--></div>
+                                <label><input class="deck-option" type="checkbox" checked="checked"> <!--ko text: $data--><!--/ko--></label>
                                  <!-- /ko -->
                             </div></p>
                         </div>
@@ -303,7 +304,10 @@
                 };
 
                 if (viewModel.isCreator()) {
-                    createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
+                    createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
+
+                    createRoundLocation += '&Decks=' + getSelectedDecksParam();
+
                     cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
                 } else {
                     playRound();
@@ -320,6 +324,12 @@
                 }
 
                 setViewModelActivity(viewModel, gameName, playerName);
+            }
+
+            function getSelectedDecksParam() {
+                var x = [];
+                $('.deck-option:checked').each(function (i) { x.push(encodeURIComponent( this.labels[0].innerText )) });
+                return x.join(encodeURIComponent(','));
             }
 
             function joinOrCreate(viewModel) {
@@ -369,11 +379,13 @@
                         var startGameLocation = '';
                         var success = function (responseText, viewModel, gameName, playerName, isCreator) {
                             startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
+
                             cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), viewModel.player(), playRound, true);
                         }
 
                         if (viewModel.isCreator()) {
                             createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
+
                             cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
                         } else {
                             onClickStart();
