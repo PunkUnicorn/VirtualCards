@@ -3,8 +3,9 @@
 Auto publishes to https://virtualcardsclassic.azurewebsites.net on every github check in
 
 # Virtual Cards Against Humanity
-Implementation of Cards Against Humanity to practice my JavaScript.
-It's a play project, so please excuse me while I loath the code and re-write it using underscore and Knockout 
+Implementation of Cards Against Humanity to use JavaScript. 
+
+I had to dive in and write awful code, to be able to then regret it, to be able to make the next learning step. This project is that shit code. I've learnt a lot since then. But while it's shit code, it's also a fun game so meh.
 
 Cards collated by the magnificent Pileot from boardgamegeek.com
 #https://boardgamegeek.com/user/Pileot
