@@ -1020,9 +1020,9 @@
                 if (!gameObj.o.haveSubmitted && !gameObj.o.haveVoted) {
                     $('.submit-answer-btn').show();
 
-                    //if (isAutoStart) {
+                    if (isSelectedCorrectAmount) {
                         onSubmitAnswer(gameObj, passName, playerName);
-                    //}
+                    }
 
 
                 }

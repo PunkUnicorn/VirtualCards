@@ -329,13 +329,18 @@ function loadAllDecks() {
         else
             return (incrementItToo) ? startWhiteCardNo++ : startWhiteCardNo;
     };
-    //loadDeckSimple(getIndexVar,'./cards/testQuestions.txt', 'black', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
-    //loadDeckSimple(getIndexVar, './cards/testAnswers.txt', 'white', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
+
+
+
+// DEBUG
+    loadDeckSimple('expansion,test', getIndexVar,'./cards/testQuestions.txt', 'black', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple('expansion,test', getIndexVar, './cards/testAnswers.txt', 'white', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
+// DEBUG
+
+
 
     loadDeckSimple('country,AU', getIndexVar, './cards/CaHAustraliaMainBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('country,AU', getIndexVar, './cards/CaHAustraliaMainWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
-
-
 
     loadDeckSimple('expansion,crabs', getIndexVar, './cards/CaHCrabsAdjustHumidityBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('expansion,crabs', getIndexVar, './cards/CaHCrabsAdjustHumidityWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
@@ -346,12 +351,11 @@ function loadAllDecks() {
     loadDeckSimple('expansion,90s', getIndexVar,'./cards/CaHExpansion90sBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('expansion,90s', getIndexVar,'./cards/CaHExpansion90sWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
 
-
     loadDeckSimple('country,CA', getIndexVar, './cards/CaHExpansionCanadianConversionBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('country,CA', getIndexVar, './cards/CaHExpansionCanadianConversionWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
 
-    loadDeckSimple('expansion,housecards', getIndexVar, './cards/CaHExpansionHouseOfCardsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple('expansion,housecards', getIndexVar, './cards/CaHExpansionHouseOfCardsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple('expansion,houseofcards', getIndexVar, './cards/CaHExpansionHouseOfCardsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple('expansion,houseofcards', getIndexVar, './cards/CaHExpansionHouseOfCardsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
 
     loadDeckSimple('expansion,pax', getIndexVar, './cards/CaHExpansionOopsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('expansion,pax', getIndexVar, './cards/CaHExpansionOopsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
@@ -887,8 +891,17 @@ function setPlayerActive(gameObj, playerName, active) {
 function dealPlayerCards(games, gameInfo, heldCards, player) {
     var cardArray = [];
     const TENCARDS = 10;
-    for (var i = 0; i < TENCARDS; i++)
-        cardArray.push(getWhiteCard(games, gameInfo));
+    for (var i = 0; i < TENCARDS; i++) {
+        var cardToAdd = getWhiteCard(games, gameInfo);
+        if (typeof cardToAdd == 'undefined') {
+
+
+            // HAVE RUN OUT OF CARDS
+
+
+        }
+        cardArray.push(cardToAdd);
+    }
 
     heldCards.set(player, cardArray);
 };
@@ -919,12 +932,16 @@ var createDeck = function(reqObj, games, gameInfo) {
     console.log('creating deck');
 
     function deckIsSelected(cardsObj, selectedDecks, cardIndex) {
-        for (const deck in selectedDecks) {
-            const key = selectedDecks[deck];
-            const thisDeck = cardsObj.deckInfo.get(key);
-            if (!thisDeck) continue;
-            if (thisDeck.startIndex <= cardIndex && thisDeck.endIndex >= cardIndex) {
-                return true;
+        const colours = [" (white)", " (black)"];
+        for (const colourIndex in colours) {
+            var colour = colours[colourIndex];
+            for (const deck in selectedDecks) {
+                const key = selectedDecks[deck];
+                var thisDeck = cardsObj.deckInfo.get(key + colour);
+                if (!thisDeck) continue;
+                if (thisDeck.startIndex <= cardIndex && thisDeck.endIndex >= cardIndex) {
+                    return true;
+                }
             }
         }
         return false;
@@ -935,6 +952,15 @@ var createDeck = function(reqObj, games, gameInfo) {
 
     if (!games[gameInfo.index].selectedDecks || games[gameInfo.index].selectedDecks.length == 0)
         games[gameInfo.index].selectedDecks = reqObj.query.Decks.split(',').map(m => m.trim());
+
+
+
+
+
+    /* HERE IS THE TIME TO ADD CUSTOM DECKS INTO THE allCards ARRAY */
+
+
+
 
     const selectedDecksArray = games[gameInfo.index].selectedDecks;
     games[gameInfo.index].blackCards = [];
@@ -1110,71 +1136,6 @@ function handleRequest(req, res) {
                     retObj.cardState = hasCardsBeenDelt(games, gameInfo, pram);
 
                     if (initGame) {
-                        // var createDeck = function(games, gameInfo) {
-                        //     // or http://stackoverflow.com/questions/16801687/javascript-random-ordering-with-seed
-                        //     var shuffle = function (array) { //http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-                        //         var currentIndex = array.length, temporaryValue, randomIndex ;
-
-                        //         // While there remain elements to shuffle...
-                        //         while (0 !== currentIndex) {
-
-                        //             // Pick a remaining element...
-                        //             randomIndex = Math.floor(Math.random() * currentIndex);
-                        //             currentIndex -= 1;
-
-                        //             // And swap it with the current element.
-                        //             temporaryValue = array[currentIndex];
-                        //             array[currentIndex] = array[randomIndex];
-                        //             array[randomIndex] = temporaryValue;
-                        //         }
-
-                        //         return array;
-                        //     }
-
-                        //     console.log('initialising game');
-
-                        //     function deckIsSelected(cardsObj, selectedDecks, cardIndex) {
-                        //         //console.log("deckIsSelected", JSON.stringify( selectedDecks ), cardIndex)
-                        //         for (const deck in selectedDecks) {
-                        //             const key = selectedDecks[deck].trim(' ');
-                        //             //console.log(key, cardsObj);
-                        //             const thisDeck = cardsObj.deckInfo.get(key);
-                        //             if (!thisDeck) continue;
-                        //             if (thisDeck.startIndex <= cardIndex && thisDeck.endIndex >= cardIndex) {
-                        //                 //console.log("is in deck:");
-                        //                 return true;
-                        //             }
-                        //         }
-
-                        //         //console.log("is not in deck:");
-                        //         return false;
-                        //     }
-
-                        //     if (!reqObj.query.Decks) 
-                        //         reqObj.query.Decks = [];
-
-                        //     if (!games[gameInfo.index].selectedDecks || games[gameInfo.index].selectedDecks.length == 0)
-                        //         games[gameInfo.index].selectedDecks = reqObj.query.Decks.split(',').map(m => m.trim());
-
-                        //     const selectedDecksArray = games[gameInfo.index].selectedDecks;
-                        //     games[gameInfo.index].blackCards = [];
-                        //     games[gameInfo.index].blackCardIndex = 0;
-                        //     for (var cardIndex in allCards[BLACK].deck) { //games[gameInfo.index].
-                        //         if (deckIsSelected(allCards[BLACK], selectedDecksArray, cardIndex))
-                        //             games[gameInfo.index].blackCards.push(cardIndex);
-                        //     }
-
-                        //     games[gameInfo.index].whiteCards = [];
-                        //     games[gameInfo.index].whiteCardIndex = 0;
-                        //     for (var cardIndex in allCards[WHITE].deck) { //games[gameInfo.index].
-                        //         if (deckIsSelected(allCards[WHITE], selectedDecksArray, cardIndex))
-                        //             games[gameInfo.index].whiteCards.push(cardIndex);
-                        //     }
-
-                        //     games[gameInfo.index].blackCards = shuffle(games[gameInfo.index].blackCards);
-                        //     games[gameInfo.index].whiteCards = shuffle(games[gameInfo.index].whiteCards);
-                        // };
-
                         console.log('Decks:', reqObj.query.Decks);
                         createDeck(reqObj, games, gameInfo);
                         console.log('dealt cards');
@@ -1189,10 +1150,24 @@ function handleRequest(req, res) {
 
                 var phaseThreeRoundWeGoAgain = function(games, gameInfo, initGame) {
                     console.log('allocating round info');
+
+                    //update scores from previous round
+                    if (!initGame) updateScore(games[gameInfo.index]);
+
                     var roundObj = {};
                     var useIndex = getBlackCard(games, gameInfo);
-                    var question = allCards[BLACK].deck[useIndex];
+                    if (typeof useIndex == 'undefined') {
 
+
+
+
+                        // HAVE RUN OUT OF CARDS!!!!!
+
+
+
+                    }
+                    var question = allCards[BLACK].deck[useIndex];
+                    const amounts = ['any', 'one', 'two', 'three', 'four'];
                     roundObj.question = makeUnderscoresTheSame(question);
                     var count = (roundObj.question.match(/______/g) || []).length;
                     if (count == 0) {
@@ -1200,13 +1175,16 @@ function handleRequest(req, res) {
                             var inYourHand = roundObj.question.indexOf('in your hand');
                             if (inYourHand > -1) {
                                 var checkBeforeForAmount = roundObj.question.substr(0, inYourHand); //'in your hand' specifies the number of cards as written quantity
-                                const amounts = ['any', 'one', 'two', 'three', 'four'];
+                                
                                 for (var i=0; i < amounts.length; i++) {
                                     var foundAmount = checkBeforeForAmount.indexOf(amounts[i]);
                                     if (foundAmount > -1) {
-                                        count = amounts.indexOf(foundAmount);
-                                        if (count == 0)
+                                        count = amounts.indexOf(amounts[i]);
+                                        if (count == 0) {
                                             count = -1; //any
+                                            //but look for a better option if available
+                                            continue;
+                                        }
 
                                         break;
                                     }
@@ -1215,11 +1193,25 @@ function handleRequest(req, res) {
                                 count = 1;
                             }
                         } else {
-                            count = -1
+                            count = -1                            
+                            for (var i=0; i < amounts.length; i++) {
+                                var foundAmount = roundObj.question.indexOf(amounts[i]);
+                                if (foundAmount > -1) {
+                                    count = amounts.indexOf(amounts[i]);
+                                    if (count == 0) {
+                                        count = -1; //any
+                                        //but look for a better option if available
+                                        continue;
+                                    }
+
+                                    break;
+                                }
+                            }                            
+
                         }
                     }
 
-                    roundObj.question = roundObj.question;
+                    //roundObj.question = roundObj.question;
                     roundObj.questionBlankCount = count;
                     roundObj.players = { list:[], submitted:[], voted :[], readyForNextRound: [] };
                     roundObj.players.list = JSON.parse( JSON.stringify(games[gameInfo.index].list) );
@@ -1228,8 +1220,8 @@ function handleRequest(req, res) {
 
                     roundObj.roundCount = ( ++games[gameInfo.index].roundCount );
 
-                    //update scores from previous round
-                    if (!initGame) updateScore(games[gameInfo.index]);
+                    // // // //update scores from previous round
+                    // // // if (!initGame) updateScore(games[gameInfo.index]);
 
                     games[gameInfo.index].votes.clear();
                     games[gameInfo.index].readyForNextRound.clear();
@@ -1244,19 +1236,6 @@ function handleRequest(req, res) {
 
                 // Only the creator can make the first round
                 if (initGame && !retObjPhaseOne.iMadeThisGame) return true;
-
-                //if (initGame) {
-                //    function findDeck(deckDesc) {
-                //        //allCards[BLACK].deckInfo.set(deckTitle, deckInfo);
-                //        return allCards[BLACK].deckInfo.get(deckDesk);
-                //    }
-                //    reqObj.query.Decks.forEach(function (val, index) {
-                //        games[retObjPhaseOne.gameInfo.index].allCards.push( findDeck(val) );
-                //    });
-                //    console.log('if (initGame) {', games[retObjPhaseOne.gameInfo.index].allCards);
-                //    games[retObjPhaseOne.gameInfo.index].allCards = JSON.parse(JSON.stringify(allCards));
-                //}
-
 
                 // Any tom, dick or harry can make subsequent rounds as long as the round hasn't been created already
                 if (retObjPhaseOne.Current != games[retObjPhaseOne.gameInfo.index].roundCount) return true;

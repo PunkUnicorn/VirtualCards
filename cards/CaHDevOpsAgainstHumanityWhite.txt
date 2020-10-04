@@ -19,7 +19,7 @@ A home-rolled systemd replacement
 A JAR full of spaghetti
 A mobile web 2.0 RIA
 A Null-modem cable
-A Piñata full of error messages
+A piÃ±ata full of error messages
 A proof that P=NP written in BASIC
 A Scrum Master
 A self-aware PHP script
@@ -56,11 +56,14 @@ DevOps
 DevOps Days
 Digital Ocean
 done done
+Definition of Done
 Eating sushi with Andrew Clay Shafer
 Edward Snowden
 EFnet in the 90s
 Epoch time in milliseconds
+Facebook
 FileMaker Instant Web Publishing
+Flakey tests
 fuckedcompany.com
 Functional programming
 Git
@@ -83,8 +86,8 @@ Mutation of immutable data
 Netscape Navigator 3.2 support
 Node.js
 NoOps
-NoSQL
-NPM
+NoSql
+Npm
 NullPointerException: null
 O'Reilly
 OpenSSL
@@ -97,7 +100,7 @@ Perl 6
 Posting on Etsy's codeascraft blog
 Private keys in /var/www
 Python
-Python datetime module
+Python's datetime module
 Rebasing the entire fucking repo
 RecruiterFail
 Ruby
@@ -105,7 +108,7 @@ Running out of IPv4 addresses
 Sadness as a Service
 Shift-Ctrl-F12-\
 Stack trace generator
-Sysadmins
+System Admins
 Tech Recruiters
 The Cult of Mac
 The last remaining Multics server on Earth
@@ -122,7 +125,8 @@ uucp
 VisualBasic DLLs
 Waiting for console.aws.amazon.com...
 Web scale
-Windows XP,
+Windows XP
+Windows 95
 Women in tech
 Write-only code
 Yet another package manager

@@ -174,19 +174,20 @@
 
                     <div data-bind='visible:isCreator()' id="divDeckSelect" class='card-area w3-col w3-card-16 card-area m6 w3-animate-top'>
                         <div class="card-jump-delay2">
-                            <select class="w3-btn w3-blue-grey">
+                            <select id="idCountrySelect" class="w3-btn w3-blue-grey" onchange="onCountryChange(event)">
                                 <option value='UK'>UK</option>
                                 <option value='CA'>Canada</option>
                                 <option value='AU'>Aussie</option>
                             </select>
                             <div>
                                 <!-- ko foreach: uniqueTags -->
-                                <button class="w3-btn w3-light-grey"><!--ko text: $data--><!--/ko--></button>
+                                <button class="w3-btn w3-light-grey" onclick="onSelectTag(event)"><!--ko text: $data--><!--/ko--></button>
                                 <!-- /ko -->
                             </div>
+                            <button class="w3-btn w3-blue-grey" onclick='onClearExpansions(event)'>Clear Expansions</button>
+                            <button class="w3-btn w3-blue-grey" onclick='onFlipExpansions(event)'>Flip Expansions</button>
                         </div>
                         <div id='possibleDecks' class='w3-tiny'></div>
-                        <div id='selectedDecks'></div>
                     </div>
 
                     <div data-bind='visible:false && isCreator()' id="divDeckSelectOld" class='w3-col w3-card-16 card-area m6 w3-animate-top'>
@@ -242,6 +243,9 @@
                         <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
                         <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>                        
                     </p>
+                    <audio class='set-volume' id='sndCan1' preload="auto" volume='0.4'>
+                        <source src='sounds/multimedia_button_click_022.mp3' type='audio/mpeg'><!-- multimedia_percussive_element.mp3 -->
+                    </audio>                        
                     <audio id='sndWhistle' volume='0.4' controls>
                         <source src='sounds/multimedia_rollover_019.mp3' type='audio/mpeg'>
                     </audio>                 
@@ -273,13 +277,15 @@
 
             ko.applyBindings(viewModel);
             var table = null;
-            var decksModel = {};
 
             xmlhttp = new XMLHttpRequest();
             var onSuccess = function (takeMeWithYouSuccessILoveYou, gameObj, passName, playerName, xmlhttp) {
                 decks = JSON.parse(xmlhttp.response);                
 
                 viewModel.decks(decks);
+
+                deselectAllCountries();
+                selectCountry('UK');
 
                 const current = [];                    
                 for (var i = 0; i < decks.length; i += 1) {
@@ -291,28 +297,123 @@
                         current.push(tagText);
                     }                    
                 }
-                const uniqueTags = [...new Set(current)];                            
+                uniqueTags = [...new Set(current)];                            
 
                 viewModel.uniqueTags(uniqueTags);
 
-                var table = new Tabulator("#possibleDecks", { 
+                table = new Tabulator("#possibleDecks", { 
+                    reactiveData:true,
+                    rowClick:function(e, row) {
+                        const val = !row._row.cells[0].getValue();
+                        row._row.cells[0].setValue(val);
+                    },
                     data:viewModel.decks(), 
-                    columns:[
-                        {title:"", field:"selected", widthGrow:1, formatter:"tickCross", formatterParams:{
-                            allowEmpty:true,
-                            allowTruthy:true,
-                            tickElement:"<i class='fa fa-check'></i>",
-                            crossElement:"<i class='fa fa-times'></i>",
-                        }},
+                    columns:[ {
+                            title:"", field:"selected", widthGrow:1, formatter:"tickCross", formatterParams:{
+                                allowEmpty:true,
+                                allowTruthy:true,
+                                tickElement:"<i class='w3-green fa fa-check'></i>",
+                                crossElement:"",//"<i class='fa fa-times'></i>",
+                            }//,
+                            // cellClick: function (e, cell) {
+                            //     //e - the click event object
+                            //     //cell - cell component
+                            //     //cell._cell.value = !cell._cell.value;
+                            //     cell._cell.setValue(!cell._cell.value);
+                            // }
+                        },
                         {title:'Title',widthGrow:9,field:'title', formatter:"textarea"}, 
                         {title:'Tags',widthGrow:4,field:'tags',formatter:"textarea" }
                     ], 
                     layout:'fitColumns',
                     initialSort:[
+                        {column:"selected", dir:"desc"},
                         {column:"tags", dir:"asc"}
                     ]});
             };
             cardApi.sendSomething(null, '/GetDeckList', function () { }, onSuccess, function () { }, viewModel.game, viewModel.player);
+
+            function selectCountry(countryCode) {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('country') && value.tags.includes(countryCode)) {
+                        value.selected = true;
+                    }
+                });
+            }
+
+            function deselectAllCountries(){
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('country')) {
+                        value.selected = false;
+                    }
+                });
+            }
+
+            function deselectAllExpansions() {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('expansion')) {
+                        value.selected = false;
+                    }
+                });
+            }
+
+            function invertAllExpansions() {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('expansion')) {
+                        value.selected = !value.selected;
+                    }
+                });
+            }
+
+            function selectAllExpansionsWithTag(tag) {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes(tag)) {
+                        value.selected = true;
+                    }
+                });
+            }
+            function onCountryChange(event) {
+                // select the deck
+                const selectedCountry = $('#idCountrySelect  option:selected').val();
+                deselectAllCountries();
+                switch (selectedCountry) {
+                    case 'CA':
+                        selectCountry('CA');
+                        selectCountry('UK');
+                        break;
+
+                    default:
+                        selectCountry(selectedCountry);
+                        break;
+                }
+                resort();               
+            }
+
+            function resort() {
+                //var sorter = table.getSorters();
+                //if (sorter == null) sorter = [{column:"selected", dir:"desc"}];
+                const sorter = [{column:"selected", dir:"desc"}];
+                table.setSort(sorter);
+            }
+
+            function onClearExpansions(event) {
+                if (soundOn) $("#sndCan1").trigger('play');
+                deselectAllExpansions();
+                resort();
+            }
+
+            function onFlipExpansions(event) {
+                if (soundOn) $("#sndCan1").trigger('play');                
+                invertAllExpansions();
+                resort();
+            }
+
+            function onSelectTag(event) {
+                const selectedTag = event.target.innerText;
+                if (soundOn) $("#sndCan1").trigger('play');                
+                selectAllExpansionsWithTag(selectedTag);
+                resort();
+            }
 
             function toggleControls(videoId) {
                 var video = document.getElementById(videoId);
@@ -400,8 +501,9 @@
             }
 
             function getSelectedDecksParam() {
-                var x = [];
-                $('.deck-option:checked').each(function (i) { x.push(encodeURIComponent( this.labels[0].innerText )) });
+                //var x = [];
+                //$('.deck-option:checked').each(function (i) { x.push(encodeURIComponent( this.labels[0].innerText )) });
+                var x = viewModel.decks().filter(f => f.selected).map(m => encodeURIComponent( m.title ));
                 return x.join(encodeURIComponent(','));
             }
 
