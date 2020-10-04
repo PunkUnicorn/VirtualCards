@@ -5,6 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
         <title>Virtual Cards against Cards</title>
 
+        <!-- https://github.com/olifolkerd/tabulator -->
+        <link href="https://unpkg.com/tabulator-tables@4.8.2/dist/css/tabulator.min.css" rel="stylesheet">
+                
         <link rel="stylesheet" href="stylesheets/w3.css">
         <link rel="stylesheet" href="stylesheets/cards.css">
         <link rel="stylesheet" href="stylesheets/card-effects.css">
@@ -15,6 +18,7 @@
         <meta property="og:title" content="Virtual Cards against Cards" />
     </head>
     <body>
+        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.2/dist/js/tabulator.min.js"></script>
         <script type="text/javascript">
             var autoOn = true;
             var autoUpdateSource = null;
@@ -95,6 +99,13 @@
             /*.white, far, fa-square {}
             .black, fas, fa-square {}
             .mixed, far, fa-square, fas, fa-square {}*/
+            .tabulator {
+                border: none;
+            }
+
+            .tabulator-row .tabulator-cell {
+                border-right: none;
+            }
         </style>
         <div id='wrapper' class='w3-animate-opacity'>
             <div><!--  class='w3-animate-top'> -->
@@ -113,12 +124,12 @@
                         <p>It's not my place to judge you</p>
                     </div>
                 
-                    <div class='w3-col w3-card-16 card-area m6 w3-animate-top'>
+                    <div class='w3-col w3-card-16 card-area m5 w3-animate-top'>
                         <label for='pn' class='w3-animate-opacity w3-large'>Player Name</label>
                         <input id='pn' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" data-bind='textInput:player' class='w3-input w3-light-green'/>
                     </div>
 
-                    <div class='w3-col w3-card-16 card-area m5 w3-animate-top'>
+                    <div class='w3-col w3-card-16 card-area m6 w3-animate-top'>
                         <p data-bind='visible:!isInvite()'>Enter the name of an existing game. Or enter the name of a new game to create it</p>
                         <p data-bind='visible:isInvite()'>Press Join Game to begin</p>
                         <label for='gn' class='w3-large'>Game Name</label>
@@ -147,7 +158,8 @@
                             <div class='w3-small w3-animate-opacity'>
                                 <i>
                                     <p data-bind='visible: isJoined() && !isStarted() && !isCreator()' class='w3-small'> Waiting for <span data-bind='text:creator'></span> to click start <span class='fa fa-spinner w3-spin'/></p>
-                                    <p data-bind='visible: isJoined() && isCreator()' class='w3-small'> Everyone is waiting for you to click start <span class='fa fa-spinner w3-spin'/></p>
+                                    <input data-bind='visible: isJoined() && isCreator()' class='card-jiggle-delay1 w3-tiny w3-center w3-padding-tiny w3-input w3-light-grey' onclick='this.setSelectionRange(0, this.value.length)' id='creatorInviteLink' readonly></input>
+                                    <p data-bind='visible: isJoined() && isCreator()' class='w3-small'><strong>Invite link created!</strong><br>Tweak decks below<br/>Everyone is waiting for you to click start <span class='fa fa-spinner w3-spin'/></p>
                                     <p data-bind='visible: isJoined() && isStarted()' class='w3-small'> Join game in progress <span class='fa fa-spinner w3-spin'/></p>
                                 </i>
                             </div>
@@ -156,12 +168,36 @@
                                 onclick='onClickStart()'                                
                                 class='w3-small w3-animate-opacity w3-btn w3-grey w3-right'>Start game <span class='wait-for-game fa fa-cube w3-spin' />
                             </button>
-                            <div data-bind='visible:isCreator() || isStarted()'>
-                                <!-- ko foreach: decks -->
-                                <label><input class="deck-option" type="checkbox" checked="checked"> <!--ko text: $data--><!--/ko--></label>
-                                 <!-- /ko -->
-                            </div></p>
+                           
                         </div>
+                    </div>
+
+                    <div data-bind='visible:isCreator()' id="divDeckSelect" class='card-area w3-col w3-card-16 card-area m6 w3-animate-top'>
+                        <div class="card-jump-delay2">
+                            <select id="idCountrySelect" class="w3-btn w3-blue-grey" onchange="onCountryChange(event)">
+                                <option value='UK'>UK</option>
+                                <option value='CA'>Canada</option>
+                                <option value='AU'>Aussie</option>
+                            </select>
+                            <div>
+                                <!-- ko foreach: uniqueTags -->
+                                <button class="w3-btn w3-light-grey" onclick="onSelectTag(event)"><!--ko text: $data--><!--/ko--></button>
+                                <!-- /ko -->
+                            </div>
+                            <button class="w3-btn w3-blue-grey" onclick='onClearExpansions(event)'>Clear Expansions</button>
+                            <button class="w3-btn w3-blue-grey" onclick='onFlipExpansions(event)'>Flip Expansions</button>
+                        </div>
+                        <div id='possibleDecks' class='w3-tiny'></div>
+                    </div>
+
+                    <div data-bind='visible:false && isCreator()' id="divDeckSelectOld" class='w3-col w3-card-16 card-area m6 w3-animate-top'>
+                        <div id='possibleDecksOld' class='w3-col m3 '>
+                            <!-- ko foreach: decks -->
+                                <button class="card-jump deck-option" onclick="addSelectedDeck(event, this.innerText)"><!--ko text: $data.title--><!--/ko--></button>
+                            <!-- /ko -->
+                        </div>
+
+                        <div id='selectedDecksOld' class='w3-col m3 w3-small'></div>
                     </div>
 
                     <div id='divBlameScreen' data-bind='visible:activity().length > 0' class = 'w3-center w3-tiny'>
@@ -207,6 +243,9 @@
                         <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
                         <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>                        
                     </p>
+                    <audio class='set-volume' id='sndCan1' preload="auto" volume='0.4'>
+                        <source src='sounds/multimedia_button_click_022.mp3' type='audio/mpeg'><!-- multimedia_percussive_element.mp3 -->
+                    </audio>                        
                     <audio id='sndWhistle' volume='0.4' controls>
                         <source src='sounds/multimedia_rollover_019.mp3' type='audio/mpeg'>
                     </audio>                 
@@ -217,10 +256,11 @@
 
         <script>
             var decks = {};
+            var uniqueTags = [];
 
             soundOn = true;
             var activity = [ { playerId:'noid', displayName:'You', lastActivity:'', when:'', score:'', renderClass:'' } ];
-
+            $('#divDeckSelect').hide();
             viewModel = {
                 activity: ko.observableArray([]),
                 decks: ko.observable(decks),
@@ -231,16 +271,149 @@
                 creator: ko.observable(''),
                 isJoined: ko.observable(false),
                 isStarted: ko.observable(false),
-                selectedDecks: ko.observableArray([])
+                selectedDecks: ko.observableArray([]),
+                uniqueTags: ko.observable(uniqueTags)
             };
 
             ko.applyBindings(viewModel);
+            var table = null;
 
             xmlhttp = new XMLHttpRequest();
             var onSuccess = function (takeMeWithYouSuccessILoveYou, gameObj, passName, playerName, xmlhttp) {
-                viewModel.decks( JSON.parse(xmlhttp.response) );
+                decks = JSON.parse(xmlhttp.response);                
+
+                viewModel.decks(decks);
+
+                deselectAllCountries();
+                selectCountry('UK');
+
+                const current = [];                    
+                for (var i = 0; i < decks.length; i += 1) {
+                    if (decks[i].tags.includes('country')) continue;
+                    const tags = decks[i].tags.split(", ");
+                    for (var tag in tags) {
+                        const tagText = tags[tag];
+                        if (tagText == 'expansion') continue;
+                        current.push(tagText);
+                    }                    
+                }
+                uniqueTags = [...new Set(current)];                            
+
+                viewModel.uniqueTags(uniqueTags);
+
+                table = new Tabulator("#possibleDecks", { 
+                    reactiveData:true,
+                    rowClick:function(e, row) {
+                        const val = !row._row.cells[0].getValue();
+                        row._row.cells[0].setValue(val);
+                    },
+                    data:viewModel.decks(), 
+                    columns:[ {
+                            title:"", field:"selected", widthGrow:1, formatter:"tickCross", formatterParams:{
+                                allowEmpty:true,
+                                allowTruthy:true,
+                                tickElement:"<i class='w3-green fa fa-check'></i>",
+                                crossElement:"",//"<i class='fa fa-times'></i>",
+                            }//,
+                            // cellClick: function (e, cell) {
+                            //     //e - the click event object
+                            //     //cell - cell component
+                            //     //cell._cell.value = !cell._cell.value;
+                            //     cell._cell.setValue(!cell._cell.value);
+                            // }
+                        },
+                        {title:'Title',widthGrow:9,field:'title', formatter:"textarea"}, 
+                        {title:'Tags',widthGrow:4,field:'tags',formatter:"textarea" }
+                    ], 
+                    layout:'fitColumns',
+                    initialSort:[
+                        {column:"selected", dir:"desc"},
+                        {column:"tags", dir:"asc"}
+                    ]});
             };
             cardApi.sendSomething(null, '/GetDeckList', function () { }, onSuccess, function () { }, viewModel.game, viewModel.player);
+
+            function selectCountry(countryCode) {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('country') && value.tags.includes(countryCode)) {
+                        value.selected = true;
+                    }
+                });
+            }
+
+            function deselectAllCountries(){
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('country')) {
+                        value.selected = false;
+                    }
+                });
+            }
+
+            function deselectAllExpansions() {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('expansion')) {
+                        value.selected = false;
+                    }
+                });
+            }
+
+            function invertAllExpansions() {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes('expansion')) {
+                        value.selected = !value.selected;
+                    }
+                });
+            }
+
+            function selectAllExpansionsWithTag(tag) {
+                viewModel.decks().forEach(function(value, index) {
+                    if (value.tags.includes(tag)) {
+                        value.selected = true;
+                    }
+                });
+            }
+            function onCountryChange(event) {
+                // select the deck
+                const selectedCountry = $('#idCountrySelect  option:selected').val();
+                deselectAllCountries();
+                switch (selectedCountry) {
+                    case 'CA':
+                        selectCountry('CA');
+                        selectCountry('UK');
+                        break;
+
+                    default:
+                        selectCountry(selectedCountry);
+                        break;
+                }
+                resort();               
+            }
+
+            function resort() {
+                //var sorter = table.getSorters();
+                //if (sorter == null) sorter = [{column:"selected", dir:"desc"}];
+                const sorter = [{column:"selected", dir:"desc"}];
+                table.setSort(sorter);
+            }
+
+            function onClearExpansions(event) {
+                if (soundOn) $("#sndCan1").trigger('play');
+                deselectAllExpansions();
+                resort();
+            }
+
+            function onFlipExpansions(event) {
+                if (soundOn) $("#sndCan1").trigger('play');                
+                invertAllExpansions();
+                resort();
+            }
+
+            function onSelectTag(event) {
+                const selectedTag = event.target.innerText;
+                if (soundOn) $("#sndCan1").trigger('play');                
+                selectAllExpansionsWithTag(selectedTag);
+                resort();
+            }
 
             function toggleControls(videoId) {
                 var video = document.getElementById(videoId);
@@ -317,6 +490,7 @@
             function onHaveJoined(gameName, playerName, viewModel, responseObj) {
                 var link = cardApi.getRoot(window.document.URL) + '/?Game=' + encodeURIComponent( gameName) + '&Invite=' + encodeURIComponent( playerName) ;
                 $('#txtGameLink').val(link);
+                $('#creatorInviteLink').val(link);
 
                 if (typeof responseObj != 'undefined' && responseObj != null) {
                     viewModel.isCreator( (responseObj.creator == playerName) );
@@ -327,8 +501,9 @@
             }
 
             function getSelectedDecksParam() {
-                var x = [];
-                $('.deck-option:checked').each(function (i) { x.push(encodeURIComponent( this.labels[0].innerText )) });
+                //var x = [];
+                //$('.deck-option:checked').each(function (i) { x.push(encodeURIComponent( this.labels[0].innerText )) });
+                var x = viewModel.decks().filter(f => f.selected).map(m => encodeURIComponent( m.title ));
                 return x.join(encodeURIComponent(','));
             }
 
