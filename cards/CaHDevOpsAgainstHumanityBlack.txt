@@ -1,6 +1,4 @@
 Cards Against Humanity: DevOps Against Humanity (https://github.com/bridgetkromhout/devops-against-humanity)
-
-
 ...and then there was the time I found _____ on the root partition.
 140 characters is just enough to explain _____.
 _____ - the idiot's guide to _____ and _____.
@@ -67,7 +65,7 @@ It's like trying to herd _____.
 Main benefits of automation: _____ and _____.
 Management just told me I need to get certified in _____.
 Management said it's OK to deploy _____ at 5pm on Friday
-"Marketing says we're leaders in the _____ space, but I think it's more accurate to say we specialize n _____."
+"Marketing says we're leaders in the _____ space, but I think it's more accurate to say we specialize in _____."
 My eyes started bleeding when I opened the editor and saw _____.
 My next blog post will be about how we used _____ to create _____.
 My two most indispensable tools are _____ and _____.
@@ -102,17 +100,17 @@ This account has exceeded the maximum number of _____.
 This isn't going to be all unicorns and _____.
 The two pillars of our Continuous Deployment pipeline are _____ and _____.
 Time to schedule the postmortem for _____ .
-"To secure our next round of funding, Management says we need _____."
+To secure our next round of funding, Management says we need _____.
 Uber is on surge pricing because of _____.
 WARN: _____ has been deprecated.
 We don't need _____ - we have _____ !
 We really need to open-source our _____.
 We replaced our _____ with _____.
 We run production _____ and _____.
-"When I hooked the 3D printer up to the Internet, it accidentally created _____."
-"When I told Jez Humble about our _____, he actually cried."
+When I hooked the 3D printer up to the Internet, it accidentally created _____.
+When I told Jez Humble about our _____, he actually cried.
 When I was a kid we didn't have _____.
-"When I write a book about my experiences, it'll be called ""_____, the good parts"""
+When I write a book about my experiences, it'll be called "_____, the good parts"
 Who would have known that _____ could destroy an entire datacenter?
 Will merge pull requests for _____.
 Wrap it with the _____ duct tape.
@@ -120,167 +118,3 @@ xkcd.com just made a hilarious comic making fun of _____.
 "You know what our app needs? More _____, less _____."
 You should think of your servers like _____ and not like _____.
 Zero-day _____.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

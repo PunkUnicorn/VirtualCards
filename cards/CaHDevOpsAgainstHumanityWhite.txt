@@ -1,10 +1,10 @@
 Cards Against Humanity: DevOps Against Humanity (https://github.com/bridgetkromhout/devops-against-humanity)
 
 /var/log symlinked to /dev/null
-"10,000 Nagios alerts per second"
+10,000 Nagios alerts per second
 3-hour standups
 A 2400 baud modem
-"A 3.5"" floppy disk"
+A 3.5" floppy disk
 A 500-megabyte UDP packet
 A 75-tier architecture
 A Cisco router with a flaky chip
@@ -31,7 +31,7 @@ A Volker-Craig terminal
 A WSDL from 2003
 Agony-Driven Development
 An angry badger with an electromagnet on its back
-"An army of chaos monkeys all carrying flamethrowers"
+An army of chaos monkeys all carrying flamethrowers
 An epic caffeine bender
 An Exchange email loop
 An untested restore process

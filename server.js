@@ -710,9 +710,15 @@ function cloneRound(games, gameInfo, pram) {
 
     cloneOfRound.canVoteYet = false;
     try {
-        const countOfSubmitted = cloneOfRound.players.submitted.filter(name => name.length > 0).length;
+        const countOfSubmittedArray = cloneOfRound.players.submitted.filter(name => name!=null&&name.length > 0);
+        const countOfSubmitted = countOfSubmittedArray != null ? countOfSubmittedArray.length : 0;
         //console.log(cloneOfRound);
-        const countOfActive = games[gameInfo.index].playerActivity.values().filter(name => name.isActive).length;
+        var countOfActive=0;
+        const playersToCheck = cloneOfRound.players.list.forEach(function (value, index){
+            if (games[gameInfo.index].playerActivity.get(value).isActive) {
+                countOfActive++;
+            }
+        });
         cloneOfRound.canVoteYet = countOfSubmitted >= countOfActive;
         console.log('#countOfSubmitted', countOfSubmitted);
         console.log('#countOfActive', countOfActive);

@@ -110,7 +110,7 @@ We run production _____ and _____.
 "When I hooked the 3D printer up to the Internet, it accidentally created _____."
 "When I told Jez Humble about our _____, he actually cried."
 When I was a kid we didn't have _____.
-"When I write a book about my experiences, it'll be called ""_____, the good parts"""
+When I write a book about my experiences, it'll be called "_____, the good parts"
 Who would have known that _____ could destroy an entire datacenter?
 Will merge pull requests for _____.
 Wrap it with the _____ duct tape.
