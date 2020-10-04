@@ -333,8 +333,8 @@ function loadAllDecks() {
 
 
 // DEBUG
-    loadDeckSimple('expansion,test', getIndexVar,'./cards/testQuestions.txt', 'black', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple('expansion,test', getIndexVar, './cards/testAnswers.txt', 'white', 'Main Deck', addCard, hasDeckInfo, setDeckInfo);
+//    loadDeckSimple('expansion,test', getIndexVar,'./cards/testQuestions.txt', 'black', 'Test cards', addCard, hasDeckInfo, setDeckInfo);
+//    loadDeckSimple('expansion,test', getIndexVar, './cards/testAnswers.txt', 'white', 'Test cards', addCard, hasDeckInfo, setDeckInfo);
 // DEBUG
 
 
