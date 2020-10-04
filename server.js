@@ -340,13 +340,6 @@ function loadAllDecks() {
     /////////loadDeckSimple(getIndexVar, './cards/CaHExpansionsBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
     /////////loadDeckSimple(getIndexVar, './cards/CaHExpansionsWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
 	
-    loadDeckSimple(getIndexVar,'./cards/CaHUkMainBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple(getIndexVar,'./cards/CaHUkMainWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
-	
-    loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple(getIndexVar,'./cards/CaHExpansion90sWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
-
-
     loadDeckSimple('country,AU', getIndexVar, './cards/CaHAustraliaMainBlack.txt', 'black', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('country,AU', getIndexVar, './cards/CaHAustraliaMainWhite.txt', 'white', 'Expansions', addCard, hasDeckInfo, setDeckInfo);
 
