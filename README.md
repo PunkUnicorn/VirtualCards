@@ -5,7 +5,7 @@ Auto publishes to https://virtualcardsclassic.azurewebsites.net on every github 
 # Virtual Cards Against Humanity
 Implementation of Cards Against Humanity to use JavaScript. 
 
-I had to dive in and write awful code, to be able to then regret it, and then make the next learning step. This project is that shit code. I've learnt a lot since then. But while it's shit code, it's also a fun game.
+I had to dive in and write awful code, to be able to then regret it. Only then could I make the next learning step. Significant C++ then C# experience is not always the best thing; Javascript was, no: is, challenging because of its syntatactical simalarity to those two. This project is the shit javascript code I had to write to regret; I've learnt a lot only because of it. And while it's shit code, it's also a fun game. ✨🌟
 
 Cards collated by the magnificent Pileot from boardgamegeek.com
 #https://boardgamegeek.com/user/Pileot
