@@ -24,9 +24,9 @@ AND Laugh my tits off
 - Visibility of who the players are and what their last action was, and when (to see if they are holding people up)
 
 
-As a player
-I want to create a new game
-So I can invite my friends to play
+As someone with friends who play games
+I want to create a new game of cards against humanity
+So I can invite my awful friends to play this awful game
 
 As a game invite link holder
 I want to join the game my friend sent me a link to
