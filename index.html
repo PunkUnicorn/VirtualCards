@@ -26,7 +26,7 @@
                 if (autoOn) {
                     var triggerRefresh = false;
                     var dataObj = JSON.parse(e.data);
-                    if (dataObj.player != viewModel.player()) {
+                    if (/*dataObj.player != viewModel.player()*/ dataObj.player != playerName) {
                         if (dataObj.player == viewModel.creator()) {
                             switch (dataObj.lastActivity) {
                                 case 'Next':
@@ -257,6 +257,7 @@
         <script>
             var decks = {};
             var uniqueTags = [];
+            var playerName = '';
 
             soundOn = true;
             var activity = [ { playerId:'noid', displayName:'You', lastActivity:'', when:'', score:'', renderClass:'' } ];
@@ -464,24 +465,25 @@
                 if (soundOn) $("#sndWhistle").trigger('play');
                 
                 setTimeout(function() {
-                    var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( viewModel.game() )+ '&Player=' + encodeURIComponent( viewModel.player() );
+                    var playRoundLocation = cardApi.getRoot(window.document.URL) + '/PlayRoundUi?Game=' + encodeURIComponent( viewModel.game() )+ '&Player=' + encodeURIComponent( playerName );
                     window.document.location = playRoundLocation;
                 }, 1000);
             };
 
             function onClickStart(event) {
                 var startGameLocation = '';
+
                 var success = function (responseText, viewModel, gameName, playerName, isCreator) {
-                    startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
-                    cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), viewModel.player(), playRound, true);
+                    startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( playerName ) + '&Current=0';
+                    cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), playerName, playRound, true);
                 };
 
                 if (viewModel.isCreator()) {
-                    createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
+                    createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(playerName) + '&Current=0';
 
                     createRoundLocation += '&Decks=' + getSelectedDecksParam();
 
-                    cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
+                    cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), playerName, success, viewModel.isCreator);
                 } else {
                     playRound();
                 }
@@ -507,16 +509,35 @@
                 return x.join(encodeURIComponent(','));
             }
 
-            function joinOrCreate(viewModel) {
+            // Convert to 32bit integer 
+            function stringToHash(string) {                             
+                var hash = 0; 
                 
+                if (string.length == 0) return hash; 
+                
+                for (i = 0; i < string.length; i++) { 
+                    char = string.charCodeAt(i); 
+                    hash = ((hash << 5) - hash) + char; 
+                    hash = hash & hash; 
+                }                     
+                return hash; 
+            } 
+
+            function joinOrCreate(viewModel) {
+                var pn = viewModel.player()+'_';
+                var non=stringToHash(viewModel.player());
+                console.log(pn+non);
+                playerName = pn+non;//viewModel.player(pn+non);
+
                 var root = cardApi.getRoot(window.document.URL);
 
                 if (viewModel.isJoined()) {
-                    onHaveJoined(viewModel.game(), viewModel.player(), viewModel, null);
+                    onHaveJoined(viewModel.game(), playerName, viewModel, null);
                     return;
                 }
 
-                var joinGameLocation = root + '/JoinGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
+
+                var joinGameLocation = root + '/JoinGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( playerName );
                 var joinSuccessFunc = function (responseText, viewModel, gameName, playerName, joinOnly) {
                     initAutoRefreshPush( playerName );
                     var responseObj = JSON.parse(responseText);
@@ -528,7 +549,12 @@
                         onHaveJoined(gameName, playerName, viewModel, responseObj);
 
                     } else {
-                        var createGameLocation = root + '/CreateGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
+                        // var pn = viewModel.player()+'_';
+                        // var non=stringToHash(viewModel.player());
+                        // console.log(pn+non);
+                        // var playerName = pn+non;//viewModel.player(pn+non);
+
+                        var createGameLocation = root + '/CreateGame?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( playerName );
                         var createSuccessFunc = function (responseText, viewModel, gameName, playerName, joinOnly) {
                             cardApi.joinOrCreateThing(/*closure->*/xmlhttp, joinGameLocation, viewModel, gameName, playerName, joinSuccessFunc, true);
 
@@ -542,8 +568,8 @@
 
                     if (joinOnly) {
                         if (!viewModel.isCreator()) {
-                            nextRoundLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() ) + '&Current=0';
-                            cardApi.joinOrCreateThing(xmlhttp, nextRoundLocation, viewModel, viewModel.game(), viewModel.player(), function() {}, true);
+                            nextRoundLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( playerName) + '&Current=0';
+                            cardApi.joinOrCreateThing(xmlhttp, nextRoundLocation, viewModel, viewModel.game(), playerName, function() {}, true);
                         } // creators do next round after creating the round to ensure the 'Next' event listened by other players is done after the creator clicks start
                     }
 
@@ -553,22 +579,22 @@
                     if (isAutoStart && !viewModel.isCreator()) {
                         var startGameLocation = '';
                         var success = function (responseText, viewModel, gameName, playerName, isCreator) {
-                            startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
+                            startGameLocation = cardApi.getRoot(window.document.URL) + '/NextRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(playerName) + '&Current=0';
 
-                            cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), viewModel.player(), playRound, true);
+                            cardApi.joinOrCreateThing(xmlhttp, startGameLocation, viewModel, viewModel.game(), playerName, playRound, true);
                         }
 
                         if (viewModel.isCreator()) {
-                            createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(viewModel.player()) + '&Current=0';
+                            createRoundLocation = cardApi.getRoot(window.document.URL) + '/CreateRound?Game=' + encodeURIComponent(viewModel.game()) + '&Player=' + encodeURIComponent(playerName) + '&Current=0';
 
-                            cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), viewModel.player(), success, viewModel.isCreator);
+                            cardApi.joinOrCreateThing(xmlhttp, createRoundLocation, viewModel, viewModel.game(), playerName, success, viewModel.isCreator);
                         } else {
                             onClickStart();
                         }
                     }
                 }
 
-                cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, viewModel, viewModel.game(), viewModel.player(), joinSuccessFunc, false);
+                cardApi.joinOrCreateThing(xmlhttp, joinGameLocation, viewModel, viewModel.game(), playerName, joinSuccessFunc, false);
             }
 
             function onClickJoinCreate(event, viewModel) {
@@ -609,7 +635,7 @@
                 };
                 if (passName.length > 0) {
                     var root = cardApi.getRoot(window.document.URL);
-                    var gameInfoLocation = root + '/Players?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( viewModel.player() );
+                    var gameInfoLocation = root + '/Players?Game=' + encodeURIComponent( viewModel.game() ) + '&Player=' + encodeURIComponent( playerName);
                     cardApi.joinOrCreateThing(xmlhttp, gameInfoLocation, self, passName, playerName, onSuccess, false);
                 }
             };

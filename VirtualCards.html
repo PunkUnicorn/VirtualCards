@@ -56,6 +56,20 @@
                     var keepVote = true;
                     //console.log(e.data);
                     var dataObj = JSON.parse(e.data);
+
+
+
+                    if (dataObj == null)  {
+                        autoOn = false;
+                        
+
+
+                        return;
+                    }
+
+
+
+                    
                     if (dataObj.player != playerName) {
                         switch (dataObj.lastActivity) {
                             case 'Answered':
@@ -592,6 +606,13 @@
         }
 
         function updateRoundSuccessFunc(responseText, gameObj, passName, playerName, ignoredParameter) {
+            if (responseText == 'error') {
+                return 0;
+            }
+            if (responseText.length == 0 && gameObj == null) {
+                return 0;
+            }
+
             var countEntries = function(countMe) {
                 var count = 0;
                 for (var i in countMe) {

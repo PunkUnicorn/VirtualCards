@@ -2,13 +2,13 @@
 //Lets require/import the HTTP module
 var http = require('http');
 var fs = require('fs');
-var path = require('path');
+//var path = require('path');
 var url = require('url');
 var util = require('util');
 var hashmap = require('./hashmap-2.0.4/hashmap');
-var querystring = require("querystring");
+//var querystring = require("querystring");
 var os = require('os');
-
+//var crypto = require('crypto');
 
 const example_deckInfo_instance = { startIndex:0, endIndex:0 };
 var allCards = [ {deck: [], deckInfo: new hashmap.HashMap(/*deckTitle, deckInfo*/)},
@@ -414,6 +414,25 @@ function getGame(reqObj) {
     return (typeof name == 'undefined') ? '' : name;
 
 };
+
+// Convert to 32bit integer 
+function stringToHash(string) {                             
+    var hash = 0; 
+    
+    if (string.length == 0) return hash; 
+    
+    for (i = 0; i < string.length; i++) { 
+        char = string.charCodeAt(i); 
+        hash = ((hash << 5) - hash) + char; 
+        hash = hash & hash; 
+    }                     
+    return hash; 
+} 
+
+function getPlayerChecksum(name) {
+    return stringToHash(name);
+}
+
 /*          _  ______ _
            | | | ___ \ |
   __ _  ___| |_| |_/ / | __ _ _   _  ___ _ __
@@ -428,10 +447,26 @@ function getPlayer(reqObj) {
     try {
         player = reqObj.query.Player;
         console.log('@' + player);
+        var playerCheck = player.split('_');
+        if (playerCheck.length !== 2) {
+            reqObj.isOk = false;
+            console.log('er wut....... ');
+            return '';
+        }
+        var checkSum = getPlayerChecksum(playerCheck[0]);
+        if (checkSum != playerCheck[1]) {
+            reqObj.isOk = false;
+            console.log('er wut.. ');
+            return '';
+        }    
     }
     catch(err) {
+        reqObj.isOk = false;
         console.log('er....... ' + err);
     }
+    
+
+
     return (typeof player == 'undefined') ? '' : player;
 };
 
@@ -1072,8 +1107,16 @@ function handleRequest(req, res) {
             var doAuto = function (games, reqObj, res, pram, gameObj) {
                 var auto = getActive(reqObj, false);
                 var playerName = getPlayer(reqObj);
-                if (playerName.length == 0) { return; }
 
+
+
+
+                if (playerName.length == 0) { return null; }
+                
+
+
+
+                
                 if (auto) {
                     //console.log('adding', auto);
                     addClientConnection(playerName, res, reqObj.req);
@@ -1270,13 +1313,36 @@ function handleRequest(req, res) {
             };
 
             var retObjPhaseOne = phaseOneAuthenticate(games, reqObj);
-            if (!retObjPhaseOne.result && !retObj.pram.isOk)
+
+            if (!retObjPhaseOne.result && !retObjPhaseOne.pram.isOk)
             {
                 res.end();
                 break;
             }
 
             var gameObj = games[retObjPhaseOne.gameInfo.index];
+
+
+
+
+
+
+
+            if (typeof gameObj =='undefined')
+            {
+                res.writeHeader(200, {"Content-Type": "text/plain"});
+                console.log('why are you doing that dave');
+                res.write('why are you doing that dave');
+                res.end();
+                return;
+            }
+
+
+
+
+
+
+
             var check = canDoNextRoundCheck(gameObj, gameObj.roundCount);
 
             if (retObjPhaseOne.result && !check.waitForPriorRound && doCreateRound(games, reqObj, retObjPhaseOne.pram, gameObj, retObjPhaseOne)) {
@@ -1297,7 +1363,10 @@ function handleRequest(req, res) {
                 var pram = preamble(reqObj);
                 if (!pram.isOk) break;
                 var gameInfo = getGameIndex(games, pram);
-                if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
+                if (!gameInfo.gameExists || !gameInfo.playerInGame) {
+                    res.write('error');
+                    break;
+                }
                 if (games[gameInfo.index].roundCount == 0) break;
 
                 doPageFile('VirtualCards.html', reqObj, res);
@@ -1441,7 +1510,10 @@ function handleRequest(req, res) {
                 if (!pram.isOk) break;
                 var gameInfo = getGameIndex(games, pram);
 
-                if (!gameInfo.gameExists || !gameInfo.playerInGame) break;
+                if (!gameInfo.gameExists || !gameInfo.playerInGame) {
+                    res.write('error');
+                    break;
+                }
 
                 var cloneOfRound = cloneRound(games, gameInfo, pram);
 
@@ -1459,6 +1531,7 @@ function handleRequest(req, res) {
             if (!pram.isOk) break;
             var gameInfo = getGameIndex(games, pram);
             if (!gameInfo.gameExists || !gameInfo.playerInGame) {
+                res.write('error');
                 res.end();
                 break;
             }
@@ -1506,7 +1579,7 @@ function handleRequest(req, res) {
             }
 
             res.writeHeader(200, {"Content-Type": "text/plain"});
-            var playerNames = [];
+            //var playerNames = [];
 
             var gameObj = null;
             for (var index = 0; index < games.length; index++) {
@@ -1549,7 +1622,10 @@ function handleRequest(req, res) {
                 if (!pram.isOk) return false;
 
                 var gameInfo = getGameIndex(games, pram);
-                if (!gameInfo.gameExists || !gameInfo.playerInGame) return false;
+                if (!gameInfo.gameExists || !gameInfo.playerInGame) {
+                    res.write('error');
+                    return false;
+                }
 
                 var active = getActive(reqObj, false);
 
