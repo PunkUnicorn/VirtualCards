@@ -446,6 +446,7 @@ function getPlayer(reqObj) {
     var player = '';
     try {
         player = reqObj.query.Player;
+        if (!player) return '';
         console.log('@' + player);
         var playerCheck = player.split('_');
         if (playerCheck.length !== 2) {
