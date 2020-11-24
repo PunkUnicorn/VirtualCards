@@ -1,10 +1,14 @@
 [![Build Status](https://matthewcocks.visualstudio.com/AWCards/_apis/build/status/PunkUnicorn.VirtualCards?branchName=master)](https://matthewcocks.visualstudio.com/AWCards/_build/latest?definitionId=5&branchName=master)
 
-Auto publishes to https://virtualcardsclassic.azurewebsites.net on every github check in
-
 # Virtual Cards Against Humanity
 Implementation of Cards Against Humanity to use JavaScript. 
 
+### Play it now!
+Auto publishes to https://virtualcardsclassic.azurewebsites.net
+
+And https://cardy-mc-cardface.herokuapp.com/
+
+# TL;DR
 I had to dive in and write awful code, to be able to then regret it. Only then could I make the next learning step. Significant C++ then C# experience is not always the best thing; Javascript was, no: is, challenging because of its syntatactical simalarity to those two. This project is the shit javascript code I had to write to regret; I've learnt a lot only because of it. And while it's shit code, it's also a fun game. ✨🌟
 
 Cards collated by the magnificent Pileot from boardgamegeek.com
