@@ -378,8 +378,13 @@ function loadAllDecks() {
     loadDeckSimple('country,UK', getIndexVar,'./cards/CaHUkMainBlack.txt', 'black', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
     loadDeckSimple('country,UK', getIndexVar,'./cards/CaHUkMainWhite.txt', 'white', 'UK/AU Main Deck', addCard, hasDeckInfo, setDeckInfo);
 	
-    loadDeckSimple('expansion,qanon', getIndexVar, './cards/CaHJamieQBlack.txt', 'black', 'Q-tard 2020', addCard, hasDeckInfo, setDeckInfo);
-    loadDeckSimple('expansion,qanon', getIndexVar, './cards/CaHJamieQWhite.txt', 'white', 'Q-tard 2020', addCard, hasDeckInfo, setDeckInfo); 
+    loadDeckSimple('expansion,qanon', getIndexVar, './cards/CaHJamieQBlack.txt', 'black', 'Q-tard', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple('expansion,qanon', getIndexVar, './cards/CaHJamieQWhite.txt', 'white', 'Q-tard', addCard, hasDeckInfo, setDeckInfo); 
+
+    loadDeckSimple('expansion,2020', getIndexVar, './cards/CaH2020ExpansionBlack.txt', 'black', '2020', addCard, hasDeckInfo, setDeckInfo);
+    loadDeckSimple('expansion,2020', getIndexVar, './cards/CaH2020ExpansionWhite.txt', 'white', '2020', addCard, hasDeckInfo, setDeckInfo); 
+
+
 }
 
 
