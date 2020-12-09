@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <title>Virtual Cards against Cards</title>
+        <title>Christmas Cards Against Humanity</title>
 
         <!-- https://github.com/olifolkerd/tabulator -->
         <link href="https://unpkg.com/tabulator-tables@4.8.2/dist/css/tabulator.min.css" rel="stylesheet">
@@ -15,7 +15,7 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta property="og:title" content="Virtual Cards against Cards" />
+        <meta property="og:title" content="Christmas Cards Against Humanity" />
     </head>
     <body>
         <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.2/dist/js/tabulator.min.js"></script>
@@ -109,9 +109,9 @@
         </style>
         <div id='wrapper' class='w3-animate-opacity'>
             <div><!--  class='w3-animate-top'> -->
-                <div style="margin-left:2%;width:96%;" class='w3-card-8 card-area card-twisle'>
+                <div style="margin-left: 2%;width: 96%;background-image: url(Christmas/Top.jpg);background-size: cover;font-weight:bolder;text-shadow:2px 2px 2px #ffffff" class='w3-card-8 card-area card-twisle'>
                     <header>
-                        <h1 class='w3-center'>Virtual Cards Against Cards</h1>
+                        <h1 class='w3-center'>Christmas Cards Against Humanity</h1>
                         <h6 class='w3-center'>Virtual Cards Against Humanity 0.9c</h6>
                         <div class ='w3-center w3-tiny'>
                             <a href='http://cardsagainsthumanity.com/'>Cards Against Humanity</a>
@@ -125,14 +125,14 @@
                     </div>
                 
                     <div class='w3-col w3-card-16 card-area m5 w3-animate-top'>
-                        <label for='pn' class='w3-animate-opacity w3-large'>Player Name</label>
+                        <label for='pn' class='w3-animate-opacity w3-large'>What's your name?</label>
                         <input id='pn' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" data-bind='textInput:player' class='w3-input w3-light-green'/>
                     </div>
 
                     <div class='w3-col w3-card-16 card-area m6 w3-animate-top'>
-                        <p data-bind='visible:!isInvite()'>Enter the name of an existing game. Or enter the name of a new game to create it</p>
-                        <p data-bind='visible:isInvite()'>Press Join Game to begin</p>
-                        <label for='gn' class='w3-large'>Game Name</label>
+                        <p data-bind='visible:!isInvite()'>Give your game a name!</p>
+                        <p data-bind='visible:isInvite()'>Press Join Game to begin!</p>
+                        <label for='gn' class='w3-large'>Game name</label>
                         <input id='gn' data-bind='textInput:game' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" class='w3-input w3-blue-grey'/>
                         <div class='w3-center w3-padding-small'>
                             <div class='card-horizontal'></div>
@@ -144,7 +144,7 @@
 									id='sg'
                                     onclick='onClickJoinCreate(event, viewModel)'
                                     data-bind='visible:player().length>2 && game().length>2 && !isJoined()'
-                                    class='w3-btn w3-blue w3-animate-opacity w3-small'><span data-bind='text:isInvite()?"Join game" : "Create/Join game"'> </span><span
+                                    class='w3-btn w3-blue w3-animate-opacity w3-small'><span data-bind='text:isInvite()?"Join game" : "Create game"'> </span><span
                                         class='wait-for-load fa fa-bell w3-small w3-spin' />
                                 </button></p>
                                 <p><button
@@ -159,7 +159,7 @@
                                 <i>
                                     <p data-bind='visible: isJoined() && !isStarted() && !isCreator()' class='w3-small'> Waiting for <span data-bind='text:creator'></span> to click start <span class='fa fa-spinner w3-spin'/></p>
                                     <input data-bind='visible: isJoined() && isCreator()' class='card-jiggle-delay1 w3-tiny w3-center w3-padding-tiny w3-input w3-light-grey' onclick='this.setSelectionRange(0, this.value.length)' id='creatorInviteLink' readonly></input>
-                                    <p data-bind='visible: isJoined() && isCreator()' class='w3-small'><strong>Invite link created!</strong><br>Tweak decks below<br/>Everyone is waiting for you to click start <span class='fa fa-spinner w3-spin'/></p>
+                                    <p data-bind='visible: isJoined() && isCreator()' class='w3-small'><strong>Send the link above to invite people to this game!</strong><br>Tweak decks below (if you like) then, when you're ready click <strong>Start game!</strong> <span class='fa fa-spinner w3-spin'/></p>
                                     <p data-bind='visible: isJoined() && isStarted()' class='w3-small'> Join game in progress <span class='fa fa-spinner w3-spin'/></p>
                                 </i>
                             </div>
@@ -436,6 +436,9 @@
             function cleanUi() {
                 $('.wait-for-load').hide();
                 $('.wait-for-game').hide();
+               // if (viewModel.isInvited()) {
+               //     $('#gn').prop("disabled", true);
+               // }
             };
 
             window.onload = function (event) {
@@ -639,6 +642,8 @@
                     cardApi.joinOrCreateThing(xmlhttp, gameInfoLocation, self, passName, playerName, onSuccess, false);
                 }
             };
+
+         
         </script>
     </body>
 </html>
