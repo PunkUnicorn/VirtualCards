@@ -225,7 +225,7 @@
             <a id='notPlayingConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();onActivityHotClick(event, gameObj, passName, playerName);'>Press to return to game <span class='fa fa-play' onclick='onActivityHotClick(event, gameObj, passName, playerName);'></span></a>
 		</div>
 		<div class='w3-padding-tiny main-card-area'>
-            <div class='w3-card-8 card-area card-twisle' style="background-image: url(Christmas/Top.jpg);background-size: cover;font-weight:bolder;text-shadow:2px 2px 2px #ffffff">
+            <div class='w3-card-8 card-area card-twisle' style="background-image: url(Christmas/Top.jpg);background-size: contain;font-weight:bolder;text-shadow:2px 2px 2px #ffffff">
                 <header>
                     <h1 class='w3-center'>Christmas Cards Against Humanity</h1>
                     <h6 class='w3-center'>Virtual Cards Against Humanity 0.9c</h6>
@@ -236,7 +236,7 @@
             </div>
 		</div>
         <div class='w3-padding-tiny main-card-area'>
-            <div class='w3-row' style="background-image: url(Christmas/BottomLeft.jpg);background-size: contain;">
+            <div class='w3-row' style="background-image: url(Christmas/BottomRight.jpg),url(Christmas/BottomLeft.jpg), url(Christmas/TopRightHolly.jpg);background-size: 25%,25%,25%;">
                 <div id='CardHolder' class='w3-card-16 card-area w3-col w3-container m6 w3-animate-opacity w3-slim'>
 					<div id='buttonHolder' class='w3-right'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
@@ -482,6 +482,9 @@
 
         function doActivityChange(gameObj, passName, playerName, activity, onSuccess) {
             if (soundOn) setTimeout(function() { if (soundOn) $("#sndClank").trigger('stop').trigger('play');},0);
+            var pn = playerName+'_';
+            var non=stringToHash(playerName);
+            playerName = pn+non;
             cardApi.sendSomething(cardSelection, '/Active?Game='
                     + encodeURIComponent( passName )
                     + '&Player='
@@ -543,6 +546,9 @@
 
         function onBlameClick(event, gameObj, passName, playerName) {
             var name = getBlameName(event.target);
+            var pn = name+'_';
+            var non=stringToHash(name);
+            name = pn+non;            
             var unselect = $(event.target).parent().hasClass('blame-selected') ? true : false;
             $('.blame-selected').removeClass('blame-selected');
 
@@ -573,7 +579,7 @@
                 var activityDate = new Date();
                 for (var player in gameObj.blame.list) {
                     var isMe = (gameObj.blame.list[player] == playerName);
-                    var displayName = (isMe) ? 'You' : gameObj.blame.list[player];
+                    var displayName = (isMe) ? 'You' : gameObj.blame.list[player].split('_')[0];
                     activityStr += '<tr onclick="onBlameClick(event, gameObj, passName, playerName)"><td class="blame-name" id="blame' + player + '">' + displayName + '</td>';
 
                     var activity = gameObj.blame.activity[player];
@@ -593,6 +599,20 @@
             cardApi.sendSomething(cardSelection, '/Players?Game='
                                     + encodeURIComponent( passName ), function() {}, onSuccess, gameObj, passName, playerName);
         }
+
+        // Convert to 32bit integer 
+        function stringToHash(string) {                             
+            var hash = 0; 
+            
+            if (string.length == 0) return hash; 
+            
+            for (i = 0; i < string.length; i++) { 
+                char = string.charCodeAt(i); 
+                hash = ((hash << 5) - hash) + char; 
+                hash = hash & hash; 
+            }                     
+            return hash; 
+        } 
 
         function onClickRefresh(event, gameObj, passName, playerName) {
             getRefreshed(cardSelection, gameObj, passName, playerName, true);

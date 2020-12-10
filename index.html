@@ -190,16 +190,6 @@
                         <div id='possibleDecks' class='w3-tiny'></div>
                     </div>
 
-                    <div data-bind='visible:false && isCreator()' id="divDeckSelectOld" class='w3-col w3-card-16 card-area m6 w3-animate-top'>
-                        <div id='possibleDecksOld' class='w3-col m3 '>
-                            <!-- ko foreach: decks -->
-                                <button class="card-jump deck-option" onclick="addSelectedDeck(event, this.innerText)"><!--ko text: $data.title--><!--/ko--></button>
-                            <!-- /ko -->
-                        </div>
-
-                        <div id='selectedDecksOld' class='w3-col m3 w3-small'></div>
-                    </div>
-
                     <div id='divBlameScreen' data-bind='visible:activity().length > 0' class = 'w3-center w3-tiny'>
                         <div id = 'Blame' class='w3-card-16 card-area w3-container m5 w3-col w3-slim w3-animate-opacity'>
                             <div class=''><span class='w3-xlarge fa fa-users'/> </div>
@@ -622,7 +612,7 @@
                         activityObj.lastActivity = blame.activity[player].lastActivity;
 
                         var isMe = (blame.list[player] == playerName);
-                        activityObj.displayName = (isMe) ? 'You' : blame.list[player];
+                        activityObj.displayName = (isMe) ? 'You' : blame.list[player].split('_')[0];
 
                         var diff = now.getTime() - blame.activity[player].lastActivityOn;
                         if  (diff < 0) diff = 0;
