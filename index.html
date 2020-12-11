@@ -121,16 +121,12 @@
                 <div class='w3-row w3-center'>
                     <div class='w3-col w3-card-16 card-area w3-animate-top'>
                         <h1>Welcome! <span data-bind='text:player'></span></h1>
-                        <i><sub>A terrible game for terrible people</i></sub>
-
                         <p><span><h3><i>First, please enter your name!</i></h3></span></p>
                         <div data-bind='visible:!isInvite()' style="list-style-type: none;">
                         <p data-bind='visible:!isInvite()'><b><i>Then</i></b> give your game any old name</p>
                         <p data-bind='visible:!isInvite()' style="font-size: small"><b><i>Then</i></b> Click <i>Create Game</i></p>
                         <p data-bind='visible:!isInvite()' style="font-size: smaller"><b><i>Then</i></b> Send the <i>invite link</i> to friends</p>
                         <p data-bind='visible:!isInvite()' style="font-size: x-small"><b><i>Then</i></b> Click <i>Start Game</i> when you like. </p>                        
-                        <p data-bind='visible:!isInvite()' style="font-size: xx-small"><sub><i>People can join a game in progress</sub></i></p>
-                            
                         <p data-bind='visible:!isInvite()'><h3>Enjoy!</h3></p>
                         </div>
                         <p data-bind='visible:isInvite()'>Then click Join Game to begin!!</p>

@@ -852,6 +852,9 @@
                 $('.activity-btn').toggleClass('fa-hourglass-o', showPauseButton);
                 $('.activity-btn').toggleClass('fa-play', !showPauseButton);
 
+                if (gameObj.o.haveSubmitted && !gameObj.o.haveVoted) {
+                    putQuestoinsInView();
+                }
                 
                 const stopFLICKERwars = 1200;
                 setTimeout( function (gameObj) {
