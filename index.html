@@ -441,6 +441,7 @@
             };
 
             window.onload = function (event) {
+                setTimeout(function(){scrollTo(0,0)}, 100);
                 var playerP = cardApi.getParameterByName('Player');
                 viewModel.player(playerP);
 
