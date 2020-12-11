@@ -225,7 +225,7 @@
             <a id='notPlayingConfirm' style='text-decoration: none !important; padding-left:8px; padding-right:8px;' href='' class='w3-left card-left-down4 w3-medium w3-animate-opacity w3-red' onclick='event.preventDefault();onActivityHotClick(event, gameObj, passName, playerName);'>Press to return to game <span class='fa fa-play' onclick='onActivityHotClick(event, gameObj, passName, playerName);'></span></a>
 		</div>
 		<div class='w3-padding-tiny main-card-area'>
-            <div class='w3-card-8 card-area card-twisle' style="background-image: url(Christmas/Top.jpg);background-size: contain;font-weight:bolder;text-shadow:2px 2px 2px #ffffff">
+            <div class='w3-card-8 card-area card-twisle' style="background-image: url(Christmas/Top.jpg);background-size: cover;font-weight:bolder;text-shadow:2px 2px 2px #ffffff">
                 <header>
                     <h1 class='w3-center'>Christmas Cards Against Humanity</h1>
                     <h6 class='w3-center'>Virtual Cards Against Humanity 0.9c</h6>
@@ -237,8 +237,9 @@
 		</div>
         <div class='w3-padding-tiny main-card-area'>
             <div class='w3-row' style="background-image: url(Christmas/BottomRight.jpg),url(Christmas/BottomLeft.jpg), url(Christmas/TopRightHolly.jpg);background-size: 25%,25%,25%;">
+                <div style="text-align: center; font-size: smaller;"><p  style="font-size: smaller;"><i style="font-size: smaller ;margin-right: 15px;">Any glitches, press F5 to refresh the page</i></p></div>
                 <div id='CardHolder' class='w3-card-16 card-area w3-col w3-container m6 w3-animate-opacity w3-slim'>
-					<div id='buttonHolder' class='w3-right'>
+                    <div id='buttonHolder' class='w3-right'>
                         <button id='btnResetSelection' class='w3-btn w3-khaki w3-animate-opacity' onclick='onClickResetSelection(event, gameObj, passName, playerName)'>Reset <span class='fa fa-eraser'> </span></button>
                         <button class='w3-btn submit-answer-btn w3-purple w3-animate-opacity' onclick='onSubmitAnswer(gameObj, passName, playerName); putQuestoinsInView();'>Submit <span class='fa fa-paper-plane'> </span><span class='wait-for-submit fa fa-bell w3-small w3-spin'/></button>                        
                     </div>
@@ -482,9 +483,12 @@
 
         function doActivityChange(gameObj, passName, playerName, activity, onSuccess) {
             if (soundOn) setTimeout(function() { if (soundOn) $("#sndClank").trigger('stop').trigger('play');},0);
-            var pn = playerName+'_';
-            var non=stringToHash(playerName);
-            playerName = pn+non;
+            var hasCode = playerName.split('_').length == 2;
+            if (!hasCode) {
+                var pn = playerName+'_';
+                var non=stringToHash(playerName);
+                playerName = pn+non;
+            }
             cardApi.sendSomething(cardSelection, '/Active?Game='
                     + encodeURIComponent( passName )
                     + '&Player='

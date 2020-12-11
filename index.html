@@ -120,8 +120,20 @@
                 </div>
                 <div class='w3-row w3-center'>
                     <div class='w3-col w3-card-16 card-area w3-animate-top'>
-                        <h4>Welcome <span data-bind='text:player'></span></h4>
-                        <p>It's not my place to judge you</p>
+                        <h1>Welcome! <span data-bind='text:player'></span></h1>
+                        <i><sub>A terrible game for terrible people</i></sub>
+
+                        <p><span><h3><i>First, please enter your name!</i></h3></span></p>
+                        <div data-bind='visible:!isInvite()' style="list-style-type: none;">
+                        <p data-bind='visible:!isInvite()'><b><i>Then</i></b> give your game any old name</p>
+                        <p data-bind='visible:!isInvite()' style="font-size: small"><b><i>Then</i></b> Click <i>Create Game</i></p>
+                        <p data-bind='visible:!isInvite()' style="font-size: smaller"><b><i>Then</i></b> Send the <i>invite link</i> to friends</p>
+                        <p data-bind='visible:!isInvite()' style="font-size: x-small"><b><i>Then</i></b> Click <i>Start Game</i> when you like. </p>                        
+                        <p data-bind='visible:!isInvite()' style="font-size: xx-small"><sub><i>People can join a game in progress</sub></i></p>
+                            
+                        <p data-bind='visible:!isInvite()'><h3>Enjoy!</h3></p>
+                        </div>
+                        <p data-bind='visible:isInvite()'>Then click Join Game to begin!!</p>
                     </div>
                 
                     <div class='w3-col w3-card-16 card-area m5 w3-animate-top'>
@@ -133,7 +145,7 @@
                         <p data-bind='visible:!isInvite()'>Give your game a name!</p>
                         <p data-bind='visible:isInvite()'>Press Join Game to begin!</p>
                         <label for='gn' class='w3-large'>Game name</label>
-                        <input id='gn' data-bind='textInput:game' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" class='w3-input w3-blue-grey'/>
+                        <input id='gn' data-bind='textInput:game, disable:isInvite()' oninput="cleanUi(); viewModel.isJoined(false); viewModel.isCreator(false); viewModel.isStarted(false);" class='w3-input w3-blue-grey'/>
                         <div class='w3-center w3-padding-small'>
                             <div class='card-horizontal'></div>
                             <div class='card-horizontal'></div>
@@ -158,8 +170,9 @@
                             <div class='w3-small w3-animate-opacity'>
                                 <i>
                                     <p data-bind='visible: isJoined() && !isStarted() && !isCreator()' class='w3-small'> Waiting for <span data-bind='text:creator'></span> to click start <span class='fa fa-spinner w3-spin'/></p>
-                                    <input data-bind='visible: isJoined() && isCreator()' class='card-jiggle-delay1 w3-tiny w3-center w3-padding-tiny w3-input w3-light-grey' onclick='this.setSelectionRange(0, this.value.length)' id='creatorInviteLink' readonly></input>
+                                    <div><input  class='card-jiggle-delay1 w3-tiny w3-center w3-padding-tiny w3-input w3-light-grey' onclick='this.setSelectionRange(0, this.value.length)' id='creatorInviteLink' readonly></input></div>
                                     <p data-bind='visible: isJoined() && isCreator()' class='w3-small'><strong>Send the link above to invite people to this game!</strong><br>Tweak decks below (if you like) then, when you're ready click <strong>Start game!</strong> <span class='fa fa-spinner w3-spin'/></p>
+                                    <p data-bind='visible: isJoined() && isCreator()' style="font-size: xx-small"><i>People can join a game in progress</i></p>
                                     <p data-bind='visible: isJoined() && isStarted()' class='w3-small'> Join game in progress <span class='fa fa-spinner w3-spin'/></p>
                                 </i>
                             </div>
@@ -519,7 +532,6 @@
             function joinOrCreate(viewModel) {
                 var pn = viewModel.player()+'_';
                 var non=stringToHash(viewModel.player());
-                console.log(pn+non);
                 playerName = pn+non;//viewModel.player(pn+non);
 
                 var root = cardApi.getRoot(window.document.URL);
