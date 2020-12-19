@@ -242,6 +242,12 @@
                         <button id='btnSound' class='w3-center w3-btn w3-padding-tiny w3-margin-tiny w3-medium w3-white' onclick='onSound(event)'><span id='soundOff' class='fa fa-toggle-off'> <span class='w3-large fa fa-volume-off'></span></span> <span id='soundOn' class='fa fa-toggle-on'> <span class='w3-large fa fa-volume-up'></span> </span> </button>
                         <a class='w3-tiny' href='http://www.freesfx.co.uk'>http://www.freesfx.co.uk</a>                        
                     </p>
+                    <p>
+                        <label>Stella crypto: <input disabled value="GBHSTSYSZZEVU5EQXJ43JYF6LBHHZZF3P5XTX6PW2KOFB5IO3UDQPY2V"/></label>
+                    </p>
+                    <p>
+                        <img src="StellarQR.png"/>
+                    </p>
                     <audio class='set-volume' id='sndCan1' preload="auto" volume='0.4'>
                         <source src='sounds/multimedia_button_click_022.mp3' type='audio/mpeg'><!-- multimedia_percussive_element.mp3 -->
                     </audio>                        
@@ -254,6 +260,16 @@
 
 
         <script>
+            var startingChoice = [
+                '2020 Expansion Pack',
+                'Tabletop Expansion',
+                'First Expansion',
+                '90s Expansion Pack',
+                'Reject Pack',
+                'Third Expansion',
+                'Sixth Expansion',
+                'Science Pack'
+            ];
             var decks = {};
             var uniqueTags = [];
             var playerName = '';
@@ -286,6 +302,13 @@
 
                 deselectAllCountries();
                 selectCountry('UK');
+
+                deselectAllExpansions();
+                viewModel.decks().forEach(function(value, index) {
+                    if (startingChoice.includes(value.title)) {
+                        value.selected = true;
+                    }
+                });
 
                 const current = [];                    
                 for (var i = 0; i < decks.length; i += 1) {
